@@ -23,24 +23,26 @@ New ones
 - **OK** it's not possible to use card from opponents hand
 - **OK** Only able to use Power once a round
 - **OK** Hero should be active at the start of each players turn
-- That first card drawn in round 2 is cuatro
-- Findus wins after 4 rounds at turn 8
-- When cards are drawn its not active
-- When hero attack is used 0 damage is taken by opponent.
-- it's not possible to attack with an inactive minion
-- it's not possible to attack own minion
+- **OK** That first card drawn in round 2 is cuatro
+- **OK** Findus wins after 4 rounds at turn 8
+- **OK** When cards are drawn it's not active
+- **OK** After one round on the field the card is active
+- **OK** Field size is 2 when 2 cards is played
+- **OK** When hero power is used 0 damage is taken by opponent.
+- **OK** minion deals damage to opponents card.
+- **OK** it's not possible to attack with an inactive minion
+- **OK**it's not possible to attack own minion (Vi har ikke brugt getcardsinfield for denne løsning)
+- **OK** Only possible to attack when it's the players turn
+- **OK** if minion has 0 health then it should be removed from field
+- **OK** If minion attacks hero, hero loses health
+- **OK** Minion cannot attack when its not active
+- Minion cannot attack when it is not its turn
+
 
 
 
 Backlog:
-Winning. Player Findus wins after 4 rounds (that is, each of the two players have
-4 turns completed, after which Findus is winner at the start of turn number 8).
--	Fieldsize metoden
--	getField metoden
--	getWinner metoden
--	attackCard metoden
 -	attackHero metoden
--	is the card active on the field? – We need to fix it
 
 
 

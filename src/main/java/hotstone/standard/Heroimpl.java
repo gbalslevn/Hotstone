@@ -58,4 +58,8 @@ public class Heroimpl implements Hero {
         isActive = !isActive;
     }
 
+    public void changeHealth(int healthChange){
+        health += healthChange;
+    }
+
 }

@@ -8,15 +8,18 @@ public class Cardimpl implements Card {
     int manaCost;
     int health;
     int attack;
+    boolean activeStatus;
     Player owner;
 
 
-    public Cardimpl(String name, int manaCost, int health, int attack, Player owner) {
+    public Cardimpl(String name, int manaCost, int health, int attack, boolean activeStatus, Player owner) {
         this.name = name;
         this.manaCost = manaCost;
         this.health = health;
         this.attack = attack;
         this.owner = owner;
+        this.activeStatus = activeStatus;
+
 
     }
 
@@ -42,12 +45,18 @@ public class Cardimpl implements Card {
 
     @Override
     public boolean isActive() {
-        return false;
+        return activeStatus;
     }
-
     @Override
     public Player getOwner() {
         return owner;
     }
 
+    public void changeActiveState(){
+        activeStatus = !activeStatus;
+    }
+
+    public void changeHealth(int healthChange){
+        health += healthChange;
+    }
 }
