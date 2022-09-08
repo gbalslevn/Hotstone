@@ -172,4 +172,5 @@ public interface Game {
    *    invalid.
    */
   Status usePower(Player who);
+
 }

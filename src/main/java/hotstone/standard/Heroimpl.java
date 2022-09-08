@@ -4,14 +4,15 @@ import hotstone.framework.Hero;
 import hotstone.framework.Player;
 
 public class Heroimpl implements Hero {
-
+    int damage;
     int mana;
     int health;
     boolean isActive;
     Player owner;
     String getType;
 
-    public Heroimpl(int mana, int health, boolean isActive, Player owner, String getType) {
+    public Heroimpl(int damage, int mana, int health, boolean isActive, Player owner, String getType) {
+        this.damage = damage;
         this.mana = mana;
         this.health = health;
         this.isActive = isActive;
@@ -43,10 +44,18 @@ public class Heroimpl implements Hero {
     public Player getOwner() {
         return owner;
     }
-    @Override
-    public void useMana(int manaUsed){
-        mana -= manaUsed;
+
+
+    public void changeMana(int manaChange){
+        mana += manaChange;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public void changeActive(){
+        isActive = !isActive;
+    }
 
 }

@@ -55,4 +55,5 @@ public interface Hero {
    * @return the player having this hero
    */
   Player getOwner();
+
 }

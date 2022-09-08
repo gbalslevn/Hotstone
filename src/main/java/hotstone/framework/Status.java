@@ -27,7 +27,7 @@ public enum Status {
   // Everything went OK
   OK,
   // Codes for failure situations
-
+  
   // Not enough mana to play card, use power, etc.
   NOT_ENOUGH_MANA,
   // Trying to attack with a minion that is not active
