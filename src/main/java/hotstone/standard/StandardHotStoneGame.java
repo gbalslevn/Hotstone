@@ -20,13 +20,10 @@ package hotstone.standard;
 import hotstone.framework.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class StandardHotStoneGame implements Game {
     private int turnNumber = 0; //Keeps track of how many turns has passed
-
 
     private ArrayList<Cardimpl> cardsOnPeddersonsField = new ArrayList<Cardimpl>();
     private ArrayList<Cardimpl> cardsInFindusHand = new ArrayList<Cardimpl>();
@@ -36,8 +33,8 @@ public class StandardHotStoneGame implements Game {
     private ArrayList<Cardimpl> peddersonsDeck = new ArrayList<>();
 
     //Creates heros for findus and pedderson
-    Heroimpl heroFindus = new Heroimpl(0, 3, 21, true, Player.FINDUS, "Baby");
-    Heroimpl heroPedderson = new Heroimpl(0, 3, 21, true, Player.PEDDERSEN, "Baby");
+    Heroimpl heroFindus = new Heroimpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.FINDUS, "Baby");
+    Heroimpl heroPedderson = new Heroimpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.PEDDERSEN, "Baby");
 
 
     public StandardHotStoneGame() {
@@ -60,7 +57,7 @@ public class StandardHotStoneGame implements Game {
         peddersonsDeck.add(5, new Cardimpl("Seis", 2, 1, 3, false, Player.PEDDERSEN));
         peddersonsDeck.add(6, new Cardimpl("Siete", 3, 2, 4, false, Player.PEDDERSEN));
 
-        //Deals 3 cards to pedderson and Finduss
+        //Deals 3 cards to pedderson and Findus
         for (int i = 1; i <= 3; i++) {
             drawCard(cardsInFindusHand, findusDeck);
             drawCard(cardsInPeddersonsHand, peddersonsDeck);
@@ -74,7 +71,6 @@ public class StandardHotStoneGame implements Game {
         }
         return Player.PEDDERSEN;
     }
-
 
     @Override
     public Hero getHero(Player who) {
@@ -148,12 +144,15 @@ public class StandardHotStoneGame implements Game {
     public void endTurn() {
         Heroimpl hero = (Heroimpl) getHero(getPlayerInTurn());
         // makes the hero active again
-        if (!hero.isActive) hero.changeActive();
-        // adds 3 mana each round
-        hero.changeMana(3);
+        if (!hero.isActive()) hero.changeActive();
+        // Sets mana to 3 each round
+        hero.setMana(3);
         for (int i = 0; i < getFieldSize(getPlayerInTurn()); i++) {
             Cardimpl card = (Cardimpl) getCardInField(getPlayerInTurn(), i);
-            card.changeActiveState();
+            //Change active state for inactive cards
+            if (!card.isActive()) {
+                card.changeActiveState();
+            }
         }
         turnNumber++;
     }
@@ -271,7 +270,7 @@ public class StandardHotStoneGame implements Game {
     public Status usePower(Player who) {
         Heroimpl hero = (Heroimpl) getHero(who);
         //If hero can use power
-        if (hero.isActive) {
+        if (hero.isActive()) {
             // subtracts 2 mana
             hero.changeMana(-2);
             //Power is on cooldown untill next round

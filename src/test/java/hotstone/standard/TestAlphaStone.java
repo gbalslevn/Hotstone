@@ -47,8 +47,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TestAlphaStone {
     private Game game;
-
-
     /**
      * Fixture for AlphaStone testing.
      */
@@ -151,7 +149,7 @@ public class TestAlphaStone {
     }
 
     @Test
-    public void shoulIncreaseManaBy3EachRound() {
+    public void shoulSetManaTo3EachRound() {
         // Checks if hero starts with 3 mana
         assertThat(game.getHero(Player.FINDUS).getMana(), is(3));
         // gets how much mana is left after players turn
@@ -159,7 +157,7 @@ public class TestAlphaStone {
         // the turn ends
         game.endTurn();
         // should be mana amount before ended turn + 3
-        assertThat(game.getHero(Player.FINDUS).getMana(), is(manaBeforeEndTurn + 3));
+        assertThat(game.getHero(Player.FINDUS).getMana(), is(3));
     }
 
     @Test
@@ -181,12 +179,12 @@ public class TestAlphaStone {
     @Test
     public void shouldHeroBeActiveAfterEachRound() {
         Heroimpl hero = (Heroimpl) game.getHero(Player.FINDUS);
-        assertThat(hero.isActive, is(true));
+        assertThat(hero.isActive(), is(true));
         game.usePower(Player.FINDUS);
-        assertThat(hero.isActive, is(false));
+        assertThat(hero.isActive(), is(false));
         game.endTurn();
         //After the turn has ended the hero is allowed to use power again
-        assertThat(hero.isActive, is(true));
+        assertThat(hero.isActive(), is(true));
     }
 
     @Test
@@ -396,13 +394,11 @@ public class TestAlphaStone {
 
         // Also checks for Pedderson
 
-        // Gets findus card
+        // Gets peddersons card
         Card peddersonCard = game.getCardInHand(Player.PEDDERSEN, 0);
         // Plays card
         game.playCard(Player.PEDDERSEN, peddersonCard);
         game.endTurn();
         assertThat(game.attackHero(Player.PEDDERSEN, peddersonCard), is(Status.NOT_PLAYER_IN_TURN));
-
-
     }
 }

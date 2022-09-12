@@ -13,7 +13,6 @@ New ones
 - **OK** When Findus plays Dos, Then the mana available is two less. 
 - **OK** Cards are removed when drawn 
 - **OK** Card in hand works for both Findus and Pedderson 
-- **OK** when new round starts mana is set to 3 
 - **OK** After each turn 3 mana is added
 - **OK** when power is used 2 mana is used
 - **OK** Only able to use Power once a round - Gusatv
@@ -29,25 +28,19 @@ New ones
 - **OK** After one round on the field the card is active
 - **OK** Field size is 2 when 2 cards is played
 - **OK** When hero power is used 0 damage is taken by opponent.
-- **OK** minion deals damage to opponents card.
-- **OK** it's not possible to attack with an inactive minion
-- **OK**it's not possible to attack own minion (Vi har ikke brugt getcardsinfield for denne løsning)
+- **OK** Minion deals damage to opponents card.
+- **OK** It's not possible to attack with an inactive minion
+- **OK** It's not possible to attack own minion (Vi har ikke brugt getcardsinfield for denne løsning)
 - **OK** Only possible to attack when it's the players turn
 - **OK** if minion has 0 health then it should be removed from field
 - **OK** If minion attacks hero, hero loses health
 - **OK** Minion cannot attack when its not active
-- Minion cannot attack when it is not its turn
-
-
+- **OK** Minion cannot attack when it is not its turn
+- **OK** when new round starts mana is set to 3
+- attacker loses life when attacking. 
 
 
 Backlog:
--	attackHero metoden
-
-
-
-
-
 
 
 

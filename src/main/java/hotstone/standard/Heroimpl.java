@@ -4,12 +4,10 @@ import hotstone.framework.Hero;
 import hotstone.framework.Player;
 
 public class Heroimpl implements Hero {
-    int damage;
-    int mana;
-    int health;
-    boolean isActive;
-    Player owner;
-    String getType;
+    private int damage, mana, health;
+    private boolean isActive;
+    private Player owner;
+    private String getType;
 
     public Heroimpl(int damage, int mana, int health, boolean isActive, Player owner, String getType) {
         this.damage = damage;
@@ -45,10 +43,15 @@ public class Heroimpl implements Hero {
         return owner;
     }
 
+    public void setMana(int newMana){
+        mana = newMana;
+    }
+
 
     public void changeMana(int manaChange){
         mana += manaChange;
     }
+
 
     public int getDamage() {
         return damage;

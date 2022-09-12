@@ -4,12 +4,10 @@ import hotstone.framework.Card;
 import hotstone.framework.Player;
 
 public class Cardimpl implements Card {
-    String name;
-    int manaCost;
-    int health;
-    int attack;
-    boolean activeStatus;
-    Player owner;
+    private String name;
+    private int manaCost, health, attack;
+    private boolean activeStatus;
+    private Player owner;
 
 
     public Cardimpl(String name, int manaCost, int health, int attack, boolean activeStatus, Player owner) {
