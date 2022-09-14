@@ -34,15 +34,16 @@ New ones
 - **OK** Only possible to attack when it's the players turn
 - **OK** if minion has 0 health then it should be removed from field
 - **OK** If minion attacks hero, hero loses health
-- **OK** Minion cannot attack when its not active
+- **OK** Minion cannot attack when it's not active
 - **OK** Minion cannot attack when it is not its turn
 - **OK** when new round starts mana is set to 3
-- attacker loses life when attacking. 
+- **OK** attacker loses life when attacking. 
+- **OK** not able to attack with opponents card
+- **OK** gethand should return uno dos tres in the begining
+- **OK** Minion is only able to attack once per round 
 
 
-Backlog:
-
-
+Make a testcase where a game is started and 1 card from each player is played, and then called in all the test
 
 
 

@@ -31,11 +31,9 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
-import hotstone.utility.TestHelper;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,6 +45,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TestAlphaStone {
     private Game game;
+
     /**
      * Fixture for AlphaStone testing.
      */
@@ -54,6 +53,7 @@ public class TestAlphaStone {
     public void setUp() {
         game = new StandardHotStoneGame();
     }
+
     @Test
     public void shouldHaveUnoDosTresCardsInitially() {
         // Given a game, Findus has 3 cards in hand
@@ -178,7 +178,7 @@ public class TestAlphaStone {
 
     @Test
     public void shouldHeroBeActiveAfterEachRound() {
-        Heroimpl hero = (Heroimpl) game.getHero(Player.FINDUS);
+        HeroImpl hero = (HeroImpl) game.getHero(Player.FINDUS);
         assertThat(hero.isActive(), is(true));
         game.usePower(Player.FINDUS);
         assertThat(hero.isActive(), is(false));
@@ -219,51 +219,52 @@ public class TestAlphaStone {
     }
 
     @Test
-    public void shouldFirstCardBeQuatroInRoundTwo(){
+    public void shouldFirstCardBeQuatroInRoundTwo() {
         // ends turn to  make it round two
         game.endTurn();
         StandardHotStoneGame game1 = (StandardHotStoneGame) game;
         // Pedersen draws a card
-        game1.drawCard((ArrayList) game1.getHand(Player.PEDDERSEN), (ArrayList) game1.getDeck(Player.PEDDERSEN));
+        game1.drawCard(Player.PEDDERSEN, (ArrayList) game1.getDeck(Player.PEDDERSEN));
         // The card at index 0 should be quatro
         assertThat(game.getCardInHand(Player.PEDDERSEN, 0).getName(), is("Cuatro"));
     }
 
     @Test
-    public void shouldFindusWinsAfter8Rounds(){
+    public void shouldFindusWinsAfter8Rounds() {
         for (int i = 0; i < 8; i++) {
             game.endTurn();
         }
         assertThat(game.getWinner(), is(Player.FINDUS));
     }
+
     @Test
-    public void shouldCardBeInactiveWhenDrawn(){
-        assertThat(game.getCardInHand(Player.FINDUS,0).isActive(),is(false));
+    public void shouldCardBeInactiveWhenDrawn() {
+        assertThat(game.getCardInHand(Player.FINDUS, 0).isActive(), is(false));
     }
 
     @Test
-    public void shouldBeActiveAfter1RoundOnTheField(){
+    public void shouldBeActiveAfter1RoundOnTheField() {
         //Findus Plays a card to the field
-        Card tres = game.getCardInHand(Player.FINDUS,0);
-        game.playCard(Player.FINDUS,tres);
+        Card tres = game.getCardInHand(Player.FINDUS, 0);
+        game.playCard(Player.FINDUS, tres);
         game.endTurn();
         //The state of the card should be active next round
-        assertThat(game.getCardInField(Player.FINDUS,0).isActive(),is(true));
+        assertThat(game.getCardInField(Player.FINDUS, 0).isActive(), is(true));
     }
 
     @Test
-    public void shouldBe2CardsOnTheFieldAfter2CardsAreDrawn(){
+    public void shouldBe2CardsOnTheFieldAfter2CardsAreDrawn() {
         //Findus plays 2 cards and the size of the field is 2
         //Note: needs to be enough mana for the two cards
-        Card dos = game.getCardInHand(Player.FINDUS,2);
-        game.playCard(Player.FINDUS,dos);
-        Card uno = game.getCardInHand(Player.FINDUS,1);
-        game.playCard(Player.FINDUS,uno);
-        assertThat(game.getFieldSize(Player.FINDUS),is(2));
+        Card dos = game.getCardInHand(Player.FINDUS, 2);
+        game.playCard(Player.FINDUS, dos);
+        Card uno = game.getCardInHand(Player.FINDUS, 1);
+        game.playCard(Player.FINDUS, uno);
+        assertThat(game.getFieldSize(Player.FINDUS), is(2));
     }
 
     @Test
-    public void shouldUsePowerAndDamageOpponent0(){
+    public void shouldUsePowerAndDamageOpponent0() {
         // get health of opponent
         int opponentHealth = game.getHero(Player.PEDDERSEN).getHealth();
         // findus uses power
@@ -275,7 +276,7 @@ public class TestAlphaStone {
     }
 
     @Test
-    public void shouldMinionDealDamageToOpponentsCard(){
+    public void shouldMinionDealDamageToOpponentsCard() {
         // get card at index 0 from findus hand. Get the damage and play it.
         // It needs to be played so it can attack in the next turn
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
@@ -298,65 +299,67 @@ public class TestAlphaStone {
         int HpAfterAttack = peddernsCard.getHealth();
         assertThat(HpBeforeAttack - findusCardDamage, is(HpAfterAttack));
     }
+
     @Test
-    public void shouldNotBePossibleToAttackWithInactiveMinion(){
+    public void shouldNotBePossibleToAttackWithInactiveMinion() {
         //Set a game up with a card in each field
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, findusCard);
         game.endTurn();
         Card peddernsCard = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, peddernsCard);
-        Card findusCardFromField = game.getCardInField(Player.FINDUS,0);
-        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN,0);
-        assertThat(game.attackCard(Player.PEDDERSEN,peddersonCardFromField,findusCardFromField),is(Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION));
+        Card findusCardFromField = game.getCardInField(Player.FINDUS, 0);
+        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN, 0);
+        assertThat(game.attackCard(Player.PEDDERSEN, peddersonCardFromField, findusCardFromField), is(Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION));
     }
 
     @Test
-    public void shouldNotBeAbleToAttackOwnMinion(){
+    public void shouldNotBeAbleToAttackOwnMinion() {
         //Set a game up with 2 cards in findus field
         Card findusFirstCard = game.getCardInHand(Player.FINDUS, 2);
         game.playCard(Player.FINDUS, findusFirstCard);
         Card findusSecondCard = game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, findusSecondCard);
-        Card findusFirstCardFromField = game.getCardInField(Player.FINDUS,0);
-        Card findusSecondCardFromField = game.getCardInField(Player.FINDUS,1);
+        Card findusFirstCardFromField = game.getCardInField(Player.FINDUS, 0);
+        Card findusSecondCardFromField = game.getCardInField(Player.FINDUS, 1);
         game.endTurn();
         game.endTurn();
-        assertThat(game.attackCard(Player.FINDUS,findusFirstCardFromField,findusSecondCardFromField),is(Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION));
-    }
-    @Test
-    public void shouldOnlyBeAbleToAttakcWhenItsYourTurn(){
-        //Set a game up with a card in each field
-        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, findusCard);
-        game.endTurn();
-        Card peddernsCard = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN, peddernsCard);
-        Card findusCardFromField = game.getCardInField(Player.FINDUS,0);
-        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN,0);
-        game.endTurn();
-        assertThat(game.attackCard(Player.PEDDERSEN,peddersonCardFromField,findusCardFromField),is(Status.NOT_PLAYER_IN_TURN));
+        assertThat(game.attackCard(Player.FINDUS, findusFirstCardFromField, findusSecondCardFromField), is(Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION));
     }
 
     @Test
-    public void shouldRemoveCardFromFieldWhenHealthIs0OrBelow(){
+    public void shouldOnlyBeAbleToAttakcWhenItsYourTurn() {
         //Set a game up with a card in each field
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, findusCard);
         game.endTurn();
         Card peddernsCard = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, peddernsCard);
-        Card findusCardFromField = game.getCardInField(Player.FINDUS,0);
-        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN,0);
+        Card findusCardFromField = game.getCardInField(Player.FINDUS, 0);
+        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN, 0);
+        game.endTurn();
+        assertThat(game.attackCard(Player.PEDDERSEN, peddersonCardFromField, findusCardFromField), is(Status.NOT_PLAYER_IN_TURN));
+    }
+
+    @Test
+    public void shouldRemoveCardFromFieldWhenHealthIs0OrBelow() {
+        //Set a game up with a card in each field
+        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
+        game.playCard(Player.FINDUS, findusCard);
+        game.endTurn();
+        Card peddernsCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        game.playCard(Player.PEDDERSEN, peddernsCard);
+        Card findusCardFromField = game.getCardInField(Player.FINDUS, 0);
+        Card peddersonCardFromField = game.getCardInField(Player.PEDDERSEN, 0);
         game.endTurn();
         //Findus attacks Peddersons card and it dies
-        game.attackCard(Player.FINDUS,findusCardFromField,peddersonCardFromField);
+        game.attackCard(Player.FINDUS, findusCardFromField, peddersonCardFromField);
         //Minions should be romoved from peddersonsfield
-        assertThat(game.getFieldSize(Player.PEDDERSEN),is(0));
+        assertThat(game.getFieldSize(Player.PEDDERSEN), is(0));
     }
 
     @Test
-    public void shouldHeroLoseHealthWhenMinionAttacks(){
+    public void shouldHeroLoseHealthWhenMinionAttacks() {
         // Gets findus card and its attack damage
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
         int findusCardDamage = findusCard.getAttack();
@@ -372,7 +375,7 @@ public class TestAlphaStone {
     }
 
     @Test
-    public void shouldMinionCannotAttackWhenItsNotActive(){
+    public void shouldMinionCannotAttackWhenItsNotActive() {
         // Gets findus card
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
         // Plays card
@@ -382,7 +385,7 @@ public class TestAlphaStone {
     }
 
     @Test
-    public void shouldMinionNotAttackWhenNotInTurn(){
+    public void shouldMinionNotAttackWhenNotInTurn() {
         // Gets findus card
         Card findusCard = game.getCardInHand(Player.FINDUS, 0);
         // Plays card
@@ -400,5 +403,80 @@ public class TestAlphaStone {
         game.playCard(Player.PEDDERSEN, peddersonCard);
         game.endTurn();
         assertThat(game.attackHero(Player.PEDDERSEN, peddersonCard), is(Status.NOT_PLAYER_IN_TURN));
+    }
+
+    @Test
+    public void shouldMinionLooseHealthWhenAttacking() {
+        // Gets findus card
+        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
+        int healthInBeginning = findusCard.getHealth();
+        // Plays card
+        game.playCard(Player.FINDUS, findusCard);
+        // ends turn
+        game.endTurn();
+        // Gets peddersons card
+        Card peddersonCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        int attack = peddersonCard.getAttack();
+        // Plays card
+        game.playCard(Player.PEDDERSEN, peddersonCard);
+        game.endTurn();
+        // Tries to attack
+        game.attackCard(Player.FINDUS, findusCard, peddersonCard);
+        // The attacking card should loose the amount health which pedersons card has in attack
+        assertThat(findusCard.getHealth(), is(healthInBeginning - attack));
+    }
+
+    @Test
+    public void shouldNotBeAbleToAttackWithOpponentsCard() {
+        // Gets findus card
+        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
+        // Plays card
+        game.playCard(Player.FINDUS, findusCard);
+        // ends turn
+        game.endTurn();
+        // Gets peddersons card
+        Card peddersonCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        // Plays card
+        game.playCard(Player.PEDDERSEN, peddersonCard);
+        // Peddersons card is active and its findus turn
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        //Not able to attack with opponents cards
+        assertThat(game.attackCard(Player.FINDUS, peddersonCard, findusCard), is(Status.NOT_OWNER));
+        assertThat(game.attackCard(Player.FINDUS, peddersonCard, peddersonCard), is(Status.NOT_OWNER));
+    }
+
+    @Test
+    public void shouldReturnUnoDosTreInBeginning() {
+        // gets the hand of findus
+        ArrayList hand = (ArrayList) game.getHand(Player.FINDUS);
+        // gets all three cards in the hand
+        CardImpl uno = (CardImpl) game.getCardInHand(Player.FINDUS, 2);
+        CardImpl dos = (CardImpl) game.getCardInHand(Player.FINDUS, 1);
+        CardImpl tres = (CardImpl) game.getCardInHand(Player.FINDUS, 0);
+        // checks all three cards are in the hand
+        assertThat(hand.contains(uno), is(true));
+        assertThat(hand.contains(dos), is(true));
+        assertThat(hand.contains(tres), is(true));
+    }
+
+    @Test
+    public void shouldOnlyBeAbleToAttackOncePerRoundMinion() {
+        // Gets findus card
+        Card findusCard = game.getCardInHand(Player.FINDUS, 2);
+        // Plays card
+        game.playCard(Player.FINDUS, findusCard);
+        // ends turn
+        game.endTurn();
+        // Gets peddersons card
+        Card peddersonCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        // Plays card
+        game.playCard(Player.PEDDERSEN, peddersonCard);
+        // It's findus turn
+        game.endTurn();
+        //Should not be able to attack twice a round
+        game.attackCard(Player.FINDUS, findusCard, peddersonCard);
+        assertThat(game.attackCard(Player.FINDUS, findusCard, peddersonCard),is(Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION));
     }
 }
