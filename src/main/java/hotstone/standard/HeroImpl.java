@@ -3,15 +3,13 @@ package hotstone.standard;
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
 
-public class Heroimpl implements Hero {
-    int damage;
-    int mana;
-    int health;
-    boolean isActive;
-    Player owner;
-    String getType;
+public class HeroImpl implements Hero {
+    private int damage, mana, health;
+    private boolean isActive;
+    private Player owner;
+    private String getType;
 
-    public Heroimpl(int damage, int mana, int health, boolean isActive, Player owner, String getType) {
+    public HeroImpl(int damage, int mana, int health, boolean isActive, Player owner, String getType) {
         this.damage = damage;
         this.mana = mana;
         this.health = health;
@@ -45,17 +43,31 @@ public class Heroimpl implements Hero {
         return owner;
     }
 
+    public void setMana(int newMana){
+        mana = newMana;
+    }
+
 
     public void changeMana(int manaChange){
         mana += manaChange;
     }
 
+
     public int getDamage() {
         return damage;
     }
 
-    public void changeActive(){
-        isActive = !isActive;
+
+    public void setActiveFalse(){
+        isActive = false;
+    }
+    public void setActiveTrue(){
+        isActive = true;
+    }
+
+
+    public void changeHealth(int healthChange){
+        health += healthChange;
     }
 
 }
