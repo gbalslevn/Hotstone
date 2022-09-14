@@ -125,18 +125,12 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getField(Player who) {
-        if (who == Player.FINDUS){
-        return cardsOnFindusField;
-        }
-        return cardsOnPeddersonsField;
+        return  (who == Player.FINDUS)? cardsOnFindusField: cardsOnPeddersonsField;
     }
 
     @Override
     public int getFieldSize(Player who) {
-        if (who == Player.FINDUS) {
-            return cardsOnFindusField.size();
-        }
-        return cardsOnPeddersonsField.size();
+        return  (who == Player.FINDUS)? cardsOnFindusField.size(): cardsOnPeddersonsField.size();
     }
 
     @Override
