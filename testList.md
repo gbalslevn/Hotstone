@@ -41,9 +41,8 @@ New ones
 - **OK** not able to attack with opponents card
 - **OK** gethand should return uno dos tres in the begining
 - **OK** Minion is only able to attack once per round 
-
-
-Make a testcase where a game is started and 1 card from each player is played, and then called in all the test
+- **OK** GetField() should return an iterable of findus field
+- **OK** GetHand().hasNext metoden should return true if there is cards in the hand false otherwise 
 
 
 

@@ -125,8 +125,8 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getField(Player who) {
-        if (who == Player.FINDUS) {
-            return cardsOnFindusField;
+        if (who == Player.FINDUS){
+        return cardsOnFindusField;
         }
         return cardsOnPeddersonsField;
     }
@@ -192,12 +192,11 @@ public class StandardHotStoneGame implements Game {
         // Cast the cards to a Cardimp
         CardImpl defendingCardCast = (CardImpl) defendingCard;
         CardImpl attackingCardCast = (CardImpl) attackingCard;
-        //Not able to attack with opponents card
-        if (playerAttacking != attackingCard.getOwner()) return Status.NOT_OWNER;
         //Only able to play when it's your turn
         if (getPlayerInTurn() != playerAttacking) return Status.NOT_PLAYER_IN_TURN;
-        //If The minion is not active an error status is returned
-        if (!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
+        //Not able to attack with opponents card
+        if (playerAttacking != attackingCard.getOwner()) return Status.NOT_OWNER;
+        if(!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
         //Can not attack own minions
         if (defendingCard.getOwner() == attackingCard.getOwner()) return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
         // Subtract health from defending and attacking cards
@@ -232,7 +231,7 @@ public class StandardHotStoneGame implements Game {
         if (hero.isActive()) {
             // subtracts 2 mana
             hero.changeMana(-2);
-            //Power is on cooldown untill next round
+            //Power is on cooldown until next round
             hero.setActiveFalse();
             // Hero attacks and deals damage to other players Hero. ChangeHealth should be - when subtracting
             ((HeroImpl) getHero(Utility.computeOpponent(who))).changeHealth(((HeroImpl) getHero(who)).getDamage());
