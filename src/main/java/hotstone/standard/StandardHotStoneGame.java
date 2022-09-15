@@ -241,10 +241,16 @@ public class StandardHotStoneGame implements Game {
     }
 
     public void drawCard(Player who, ArrayList deckName) {
+        // If the deck is 0 no card is drawn and hero loses 2 health
+        if(deckName.size() <= 0){
+            HeroImpl playerHero = (HeroImpl) getHero(who);
+            playerHero.changeHealth(-2);
+        } else {
         //Cards drawn always added to index 0
         ArrayList getHand = (ArrayList) getHand(who);
         getHand.add(0, deckName.get(0));
         //Cards is removed from deck at index 0
         deckName.remove(deckName.get(0));
+        }
     }
 }

@@ -1,6 +1,7 @@
 package hotstone.variants;
 
 import hotstone.framework.*;
+import hotstone.framework.Strategies.ManaStrategy;
 import hotstone.standard.HeroImpl;
 import hotstone.variants.BetaStone.IncreaseManaUntil7;
 
@@ -45,4 +46,6 @@ public class TestBetaStone {
         heroPedderson.changeHealth(-21);
         assertThat(game.getWinner(),is(Player.FINDUS));
     }
+
+
 }

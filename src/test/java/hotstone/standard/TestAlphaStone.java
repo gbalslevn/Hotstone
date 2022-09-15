@@ -479,5 +479,18 @@ public class TestAlphaStone {
         assertThat(game.getHand(Player.FINDUS).iterator().hasNext(), is(false));
     }
 
+    @Test
+    public void shouldDamageHeroIfDeckIsEmpty(){
+        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
+        int healthInTheBeginning = game1.getHero(Player.FINDUS).getHealth();
+        // draws 5 cards from deck. The fifth card makes the hero lose two health because it doesnt exist
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        assertThat(game1.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
+    }
+
 
 }

@@ -43,14 +43,22 @@ New ones
 - **OK** Minion is only able to attack once per round 
 - **OK** GetField() should return an iterable of findus field
 - **OK** GetHand().hasNext metoden should return true if there is cards in the hand false otherwise
+- **OK** player should lose 2 health if there is no cards to pick from
 
 
 
 BetaStone Tests
 - **OK** In round 2 the mana should be 2 
-- **10** in round 10 the mana amount in the beginning of the round is 7
-- **ok** If Player Findus hero health is 0 he looses
-- player should lose 2 health if there is no cards to pick from
+- **OK** in round 10 the mana amount in the beginning of the round is 7
+- **OK** If Player Findus hero health is 0 he looses
+
+GammaStone Tests
+- Findus type has the name ThaiChef
+- When chilli power is used opponent health decrease by 2
+- When hero power sovs is used there is a minion on the field with (attack, health) = (1,1).
+
+Lav Uml
+Vi skal have HeroPower i et interface
 
 til jeff 
 - Hvordan fjerne man attacking card når den er en iterable. 
