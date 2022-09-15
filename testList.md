@@ -42,9 +42,18 @@ New ones
 - **OK** gethand should return uno dos tres in the begining
 - **OK** Minion is only able to attack once per round 
 - **OK** GetField() should return an iterable of findus field
-- **OK** GetHand().hasNext metoden should return true if there is cards in the hand false otherwise 
+- **OK** GetHand().hasNext metoden should return true if there is cards in the hand false otherwise
 
 
+
+BetaStone Tests
+- **OK** In round 2 the mana should be 2 
+- **10** in round 10 the mana amount in the beginning of the round is 7
+- **ok** If Player Findus hero health is 0 he looses
+- player should lose 2 health if there is no cards to pick from
+
+til jeff 
+- Hvordan fjerne man attacking card når den er en iterable. 
 
 
 

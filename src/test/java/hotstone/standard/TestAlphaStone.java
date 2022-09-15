@@ -31,6 +31,8 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.variants.AlphaStone.SetMana3;
+import hotstone.variants.AlphaStone.WinAfter4Rounds;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -49,9 +51,10 @@ public class TestAlphaStone {
     /**
      * Fixture for AlphaStone testing.
      */
+    /* setMana3 is default for AlphaStone */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame();
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds());
     }
 
     public void testPlayCard(Player who, int index) {
@@ -154,9 +157,9 @@ public class TestAlphaStone {
 
     @Test
     public void shouldIncreaseTurnNumberAfterEndTurn() {
-        assertThat(game.getTurnNumber(), is(0));
-        game.endTurn();
         assertThat(game.getTurnNumber(), is(1));
+        game.endTurn();
+        assertThat(game.getTurnNumber(), is(2));
     }
 
     @Test
@@ -475,4 +478,6 @@ public class TestAlphaStone {
         //There is 0 cards in the hand
         assertThat(game.getHand(Player.FINDUS).iterator().hasNext(), is(false));
     }
+
+
 }

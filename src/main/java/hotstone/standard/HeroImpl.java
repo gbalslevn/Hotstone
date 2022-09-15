@@ -52,7 +52,6 @@ public class HeroImpl implements Hero {
         mana += manaChange;
     }
 
-
     public int getDamage() {
         return damage;
     }

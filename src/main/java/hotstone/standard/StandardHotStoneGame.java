@@ -18,12 +18,14 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
+import hotstone.framework.Strategies.ManaStrategy;
+import hotstone.framework.Strategies.WinnerStategy;
 
 import java.util.ArrayList;
 
 
 public class StandardHotStoneGame implements Game {
-    private int turnNumber = 0; //Keeps track of how many turns has passed
+    private int turnNumber = 1; //Keeps track of how many turns has passed
     private ArrayList<CardImpl> cardsOnPeddersonsField = new ArrayList<CardImpl>();
     private ArrayList<CardImpl> cardsInFindusHand = new ArrayList<CardImpl>();
     private ArrayList<CardImpl> cardsInPeddersonsHand = new ArrayList<CardImpl>();
@@ -31,12 +33,24 @@ public class StandardHotStoneGame implements Game {
     private ArrayList<CardImpl> findusDeck = new ArrayList<>();
     private ArrayList<CardImpl> peddersonsDeck = new ArrayList<>();
 
+
     //Creates heros for findus and pedderson
     HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.FINDUS, "Baby");
     HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.PEDDERSEN, "Baby");
 
+    // creates the manaStategy
+    private ManaStrategy manaStrategy;
+    private WinnerStategy winnerStategy;
 
-    public StandardHotStoneGame() {
+
+    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy) {
+
+        this.winnerStategy = winnerStategy;
+        this.manaStrategy = manaStrategy;
+
+        // Initialise mana for the given version
+        heroFindus.setMana(manaStrategy.calculateMana(this));
+        heroPedderson.setMana(manaStrategy.calculateMana(this));
 
         //Add 7 cards to findus hand
         findusDeck.add(0, new CardImpl("Uno", 1, 1, 1, false, Player.FINDUS));
@@ -65,12 +79,8 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Player getPlayerInTurn() {
-        if (turnNumber % 2 == 0) {
-            return Player.FINDUS;
-        }
-        return Player.PEDDERSEN;
+        return (turnNumber % 2 == 1)? Player.FINDUS: Player.PEDDERSEN;
     }
-
     @Override
     public Hero getHero(Player who) {
         return who == Player.FINDUS ? heroFindus : heroPedderson;
@@ -78,8 +88,7 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Player getWinner() {
-        if (turnNumber >= 8) return Player.FINDUS;
-        return null;
+        return winnerStategy.calculateWinner(this);
     }
 
     @Override
@@ -100,17 +109,11 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getHand(Player who) {
-        if (who == Player.FINDUS) {
-            return cardsInFindusHand;
-        }
-        return cardsInPeddersonsHand;
+        return who == Player.FINDUS? cardsInFindusHand: cardsInPeddersonsHand;
     }
 
     public Iterable<? extends Card> getDeck(Player who) {
-        if (who == Player.FINDUS) {
-            return findusDeck;
-        }
-        return peddersonsDeck;
+        return who == Player.FINDUS? findusDeck : peddersonsDeck;
     }
 
     @Override
@@ -125,18 +128,12 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getField(Player who) {
-        if (who == Player.FINDUS){
-        return cardsOnFindusField;
-        }
-        return cardsOnPeddersonsField;
+        return who == Player.FINDUS? cardsOnFindusField: cardsOnPeddersonsField;
     }
 
     @Override
     public int getFieldSize(Player who) {
-        if (who == Player.FINDUS) {
-            return cardsOnFindusField.size();
-        }
-        return cardsOnPeddersonsField.size();
+        return who == Player.FINDUS? cardsOnFindusField.size():cardsOnPeddersonsField.size();
     }
 
     @Override
@@ -144,13 +141,16 @@ public class StandardHotStoneGame implements Game {
         HeroImpl hero = (HeroImpl) getHero(getPlayerInTurn());
         // makes the hero active again
         hero.setActiveTrue();
-        // Sets mana to 3 each round
-        hero.setMana(3);
         for (Card c : getField(getPlayerInTurn())) {
             CardImpl cCast = (CardImpl) c;
             cCast.setActiveTrue();
         }
+        //Adds one to turnnumber
         turnNumber++;
+        // 'this' gives itself as a parameter
+        // Sets mana to for the next round
+        int newMana = manaStrategy.calculateMana(this);
+        hero.setMana(newMana);
     }
 
     //Finds index of the given card from parameter.
