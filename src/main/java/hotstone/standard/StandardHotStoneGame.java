@@ -19,7 +19,10 @@ package hotstone.standard;
 
 import hotstone.framework.*;
 import hotstone.framework.Strategies.ManaStrategy;
+import hotstone.framework.Strategies.PowerStrategy;
 import hotstone.framework.Strategies.WinnerStategy;
+import hotstone.framework.Strategies.TypeStrategy;
+import hotstone.variants.GammaStone.HeroAdvancedPower;
 
 import java.util.ArrayList;
 
@@ -42,15 +45,24 @@ public class StandardHotStoneGame implements Game {
     private ManaStrategy manaStrategy;
     private WinnerStategy winnerStategy;
 
+    private TypeStrategy typeStrategy;
 
-    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy) {
+    private PowerStrategy powerStrategy = new HeroAdvancedPower();
+
+
+    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy, TypeStrategy typeStrategy) {
 
         this.winnerStategy = winnerStategy;
         this.manaStrategy = manaStrategy;
+        this.typeStrategy = typeStrategy;
+
 
         // Initialise mana for the given version
         heroFindus.setMana(manaStrategy.calculateMana(this));
         heroPedderson.setMana(manaStrategy.calculateMana(this));
+        heroFindus.setType(typeStrategy.chooseType(Player.FINDUS));
+        heroPedderson.setType(typeStrategy.chooseType(Player.PEDDERSEN));
+
 
         //Add 7 cards to findus hand
         findusDeck.add(0, new CardImpl("Uno", 1, 1, 1, false, Player.FINDUS));
@@ -79,8 +91,9 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Player getPlayerInTurn() {
-        return (turnNumber % 2 == 1)? Player.FINDUS: Player.PEDDERSEN;
+        return (turnNumber % 2 == 1) ? Player.FINDUS : Player.PEDDERSEN;
     }
+
     @Override
     public Hero getHero(Player who) {
         return who == Player.FINDUS ? heroFindus : heroPedderson;
@@ -109,11 +122,11 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getHand(Player who) {
-        return who == Player.FINDUS? cardsInFindusHand: cardsInPeddersonsHand;
+        return who == Player.FINDUS ? cardsInFindusHand : cardsInPeddersonsHand;
     }
 
     public Iterable<? extends Card> getDeck(Player who) {
-        return who == Player.FINDUS? findusDeck : peddersonsDeck;
+        return who == Player.FINDUS ? findusDeck : peddersonsDeck;
     }
 
     @Override
@@ -128,12 +141,12 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Iterable<? extends Card> getField(Player who) {
-        return who == Player.FINDUS? cardsOnFindusField: cardsOnPeddersonsField;
+        return who == Player.FINDUS ? cardsOnFindusField : cardsOnPeddersonsField;
     }
 
     @Override
     public int getFieldSize(Player who) {
-        return who == Player.FINDUS? cardsOnFindusField.size():cardsOnPeddersonsField.size();
+        return who == Player.FINDUS ? cardsOnFindusField.size() : cardsOnPeddersonsField.size();
     }
 
     @Override
@@ -196,7 +209,7 @@ public class StandardHotStoneGame implements Game {
         if (getPlayerInTurn() != playerAttacking) return Status.NOT_PLAYER_IN_TURN;
         //Not able to attack with opponents card
         if (playerAttacking != attackingCard.getOwner()) return Status.NOT_OWNER;
-        if(!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
+        if (!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
         //Can not attack own minions
         if (defendingCard.getOwner() == attackingCard.getOwner()) return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
         // Subtract health from defending and attacking cards
@@ -235,6 +248,7 @@ public class StandardHotStoneGame implements Game {
             hero.setActiveFalse();
             // Hero attacks and deals damage to other players Hero. ChangeHealth should be - when subtracting
             ((HeroImpl) getHero(Utility.computeOpponent(who))).changeHealth(((HeroImpl) getHero(who)).getDamage());
+            powerStrategy.useHeroPower(this);
             return Status.OK;
         }
         return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
@@ -242,15 +256,15 @@ public class StandardHotStoneGame implements Game {
 
     public void drawCard(Player who, ArrayList deckName) {
         // If the deck is 0 no card is drawn and hero loses 2 health
-        if(deckName.size() <= 0){
+        if (deckName.size() <= 0) {
             HeroImpl playerHero = (HeroImpl) getHero(who);
             playerHero.changeHealth(-2);
         } else {
-        //Cards drawn always added to index 0
-        ArrayList getHand = (ArrayList) getHand(who);
-        getHand.add(0, deckName.get(0));
-        //Cards is removed from deck at index 0
-        deckName.remove(deckName.get(0));
+            //Cards drawn always added to index 0
+            ArrayList getHand = (ArrayList) getHand(who);
+            getHand.add(0, deckName.get(0));
+            //Cards is removed from deck at index 0
+            deckName.remove(deckName.get(0));
         }
     }
 }

@@ -1,8 +1,8 @@
 package hotstone.variants;
 
 import hotstone.framework.*;
-import hotstone.framework.Strategies.ManaStrategy;
 import hotstone.standard.HeroImpl;
+import hotstone.variants.AlphaStone.TypeBaby;
 import hotstone.variants.BetaStone.IncreaseManaUntil7;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -18,12 +18,12 @@ public class TestBetaStone {
     private Game game;
 
     /**
-     * Fixture for AlphaStone testing.
+     * Fixture for BetaStone testing.
      */
     /* increaseManaUntil7 is default for BetaStone*/
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new IncreaseManaUntil7(), new WinWhenHealthIs0());
+        game = new StandardHotStoneGame(new IncreaseManaUntil7(), new WinWhenHealthIs0(), new TypeBaby());
     }
     @Test
     public void shouldManaBe2InRound2() {
@@ -34,6 +34,7 @@ public class TestBetaStone {
 
     @Test
     public void shouldManaBe7InRound10(){
+        //Starts in round 1 there 18 turns will make round number 10
         for (int i = 0; i < 18; i++) {
             game.endTurn();
         }

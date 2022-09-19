@@ -33,6 +33,7 @@ package hotstone.standard;
 import hotstone.framework.*;
 import hotstone.variants.AlphaStone.SetMana3;
 import hotstone.variants.AlphaStone.WinAfter4Rounds;
+import hotstone.variants.AlphaStone.TypeBaby;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class TestAlphaStone {
     /* setMana3 is default for AlphaStone */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds());
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby());
     }
 
     public void testPlayCard(Player who, int index) {
@@ -492,5 +493,9 @@ public class TestAlphaStone {
         assertThat(game1.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
     }
 
+    @Test
+    public void shouldPlayerFindusBeTypeBaby(){
+        assertThat(game.getHero(Player.FINDUS).getType(),is(GameConstants.BABY_HERO_TYPE));
+    }
 
 }

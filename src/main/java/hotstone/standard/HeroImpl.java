@@ -56,7 +56,6 @@ public class HeroImpl implements Hero {
         return damage;
     }
 
-
     public void setActiveFalse(){
         isActive = false;
     }
@@ -64,9 +63,11 @@ public class HeroImpl implements Hero {
         isActive = true;
     }
 
-
     public void changeHealth(int healthChange){
         health += healthChange;
     }
 
+    public void setType(String type){
+        getType = type;
+    }
 }
