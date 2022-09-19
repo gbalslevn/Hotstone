@@ -38,23 +38,22 @@ public class StandardHotStoneGame implements Game {
 
 
     //Creates heros for findus and pedderson
-    HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.FINDUS, "Baby");
-    HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.PEDDERSEN, "Baby");
+    HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.FINDUS, "Baby", "Cute");
+    HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.PEDDERSEN, "Baby", "Cute");
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
     private WinnerStategy winnerStategy;
-
     private TypeStrategy typeStrategy;
+    private PowerStrategy powerStrategy;
 
-    private PowerStrategy powerStrategy = new HeroAdvancedPower();
 
-
-    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy, TypeStrategy typeStrategy) {
+    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy, TypeStrategy typeStrategy, PowerStrategy powerStrategy) {
 
         this.winnerStategy = winnerStategy;
         this.manaStrategy = manaStrategy;
         this.typeStrategy = typeStrategy;
+        this.powerStrategy = powerStrategy;
 
 
         // Initialise mana for the given version
@@ -246,8 +245,7 @@ public class StandardHotStoneGame implements Game {
             hero.changeMana(-2);
             //Power is on cooldown until next round
             hero.setActiveFalse();
-            // Hero attacks and deals damage to other players Hero. ChangeHealth should be - when subtracting
-            ((HeroImpl) getHero(Utility.computeOpponent(who))).changeHealth(((HeroImpl) getHero(who)).getDamage());
+            // Hero uses special ability/power
             powerStrategy.useHeroPower(this);
             return Status.OK;
         }

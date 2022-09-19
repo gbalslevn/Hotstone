@@ -8,14 +8,16 @@ public class HeroImpl implements Hero {
     private boolean isActive;
     private Player owner;
     private String getType;
+    private String description;
 
-    public HeroImpl(int damage, int mana, int health, boolean isActive, Player owner, String getType) {
+    public HeroImpl(int damage, int mana, int health, boolean isActive, Player owner, String getType, String description) {
         this.damage = damage;
         this.mana = mana;
         this.health = health;
         this.isActive = isActive;
         this.owner = owner;
         this.getType = getType;
+        this.description = description;
     }
 
     @Override
@@ -42,6 +44,9 @@ public class HeroImpl implements Hero {
     public Player getOwner() {
         return owner;
     }
+
+    @Override
+    public String getEffectDescription() { return description; }
 
     public void setMana(int newMana){
         mana = newMana;
@@ -70,4 +75,6 @@ public class HeroImpl implements Hero {
     public void setType(String type){
         getType = type;
     }
+
+    public void setDescription(String newDescription) {description = newDescription; }
 }

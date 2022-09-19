@@ -53,8 +53,8 @@ BetaStone Tests
 
 GammaStone Tests
 - **OK** Findus type has the name ThaiChef
-- When chilli power is used opponent health decrease by 2
-- When hero power sovs is used there is a minion on the field with (attack, health) = (1,1).
+- **OK** ThaiChef uses chilli power and Pedersens heros health decreases by 2
+- **OK** When hero power sovs is used there is a minion on the field with (attack, health) = (1,1).
 
 
 DeltaStone Tests

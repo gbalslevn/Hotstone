@@ -2,6 +2,7 @@ package hotstone.variants;
 
 import hotstone.framework.*;
 import hotstone.standard.HeroImpl;
+import hotstone.variants.AlphaStone.HeroPower;
 import hotstone.variants.AlphaStone.TypeBaby;
 import hotstone.variants.BetaStone.IncreaseManaUntil7;
 
@@ -23,7 +24,7 @@ public class TestBetaStone {
     /* increaseManaUntil7 is default for BetaStone*/
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new IncreaseManaUntil7(), new WinWhenHealthIs0(), new TypeBaby());
+        game = new StandardHotStoneGame(new IncreaseManaUntil7(), new WinWhenHealthIs0(), new TypeBaby(), new HeroPower());
     }
     @Test
     public void shouldManaBe2InRound2() {

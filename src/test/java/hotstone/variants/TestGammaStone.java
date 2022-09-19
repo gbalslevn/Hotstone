@@ -4,6 +4,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.GammaStone.HeroAdvancedPower;
 import hotstone.variants.GammaStone.TypeChefs;
 import hotstone.variants.AlphaStone.SetMana3;
 import hotstone.variants.AlphaStone.WinAfter4Rounds;
@@ -22,7 +23,7 @@ public class TestGammaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new TypeChefs());
+        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new TypeChefs(), new HeroAdvancedPower());
     }
 
     @Test
@@ -31,5 +32,18 @@ public class TestGammaStone {
         assertThat(game.getHero(Player.PEDDERSEN).getType(), is(GameConstants.DANISH_CHEF_HERO_TYPE));
     }
 
+    @Test
+    public void shouldLooseTwoHealthWhenChiliPowerIsUsed(){
+        int getHealthBefore = game.getHero(Player.PEDDERSEN).getHealth();
+        game.usePower(Player.FINDUS);
+        int getHealthAfter = game.getHero(Player.PEDDERSEN).getHealth();
+        assertThat(getHealthAfter,is(getHealthBefore-2));
+    }
 
+    @Test
+    public void shouldSpawnMinionOnFieldWhenSovsIsUsed(){
+        game.endTurn();
+        game.usePower(Player.PEDDERSEN);
+        assertThat(game.getFieldSize(Player.PEDDERSEN), is(1));
+    }
 }
