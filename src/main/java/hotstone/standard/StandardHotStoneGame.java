@@ -45,9 +45,7 @@ public class StandardHotStoneGame implements Game {
     private WinnerStategy winnerStategy;
     private TypeStrategy typeStrategy;
     private PowerStrategy powerStrategy;
-
     private DeckStrategy deckStrategy;
-
 
 
     public StandardHotStoneGame(ManaStrategy manaStrategy,
@@ -67,7 +65,6 @@ public class StandardHotStoneGame implements Game {
         heroPedderson.setMana(manaStrategy.calculateMana(this));
         typeStrategy.chooseType(this);
         deckStrategy.createDeck(this);
-
 
 
         //Deals 3 cards to pedderson and Findus

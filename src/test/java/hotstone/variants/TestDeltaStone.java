@@ -13,6 +13,8 @@ import hotstone.variants.GammaStone.TypeChefs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLOutput;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -47,6 +49,19 @@ public class TestDeltaStone {
         assertThat(game.getDeckSize(Player.FINDUS),is(21));
     }
     @Test
-    public void shouldBe
+    public void shouldBeMaxCostOf1ManaForFirstCard(){
+        assertThat(game.getCardInHand(Player.FINDUS, 2).getManaCost(), is(1));
+    }
+    @Test
+    public void shouldBeMaxCost2ManaForSecondCard(){
+        int cost = game.getCardInHand(Player.FINDUS, 1).getManaCost();
+        assertThat(cost <= 2,is(true));
+    }
+    @Test
+    public void shouldBeMaxCost4ManaForThirdCard(){
+        int cost = game.getCardInHand(Player.FINDUS, 0).getManaCost();
+        assertThat(cost <= 4,is(true));
+    }
+
 
 }

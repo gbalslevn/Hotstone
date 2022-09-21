@@ -1,4 +1,4 @@
-Alphastone Test
+AlphaStone Test
 
 - **OK** Given an initialized game, Findus is player in turn
 - **OK** When Findus ends its turn, it is Peddersen in turn
@@ -59,24 +59,7 @@ GammaStone Tests
 
 DeltaStone Tests
 - **OK** Each turn your mana is set to 7
-- **OK** The decksize is 21 after dealing 3 cards  
-- There are 2 of each cards in the deck
-- the first card needs to cost a maximum of 1 mana
-- the second card needs to cost a maximum of 2 mana
-- the Third card needs to cost a maximum of 3 mana
-- the Fourth card needs to cost a maximum of 4 mana
-
-
-
-Lav Uml
-Vi skal have HeroPower i et interface
-
-
-Playstation integration klasse TEST
-
-
-
-
-
-
-
+- **OK** The decksize is 21 after dealing 3 cards
+- **OK** the first card needs to cost a maximum of 1 mana
+- **OK** the second card needs to cost a maximum of 2 mana
+- **OK** the Third card needs to cost a maximum of 4 mana
