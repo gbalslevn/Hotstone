@@ -77,4 +77,8 @@ public class HeroImpl implements Hero {
     }
 
     public void setDescription(String newDescription) {description = newDescription; }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }

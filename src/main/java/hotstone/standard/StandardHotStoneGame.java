@@ -18,11 +18,8 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
-import hotstone.framework.Strategies.ManaStrategy;
-import hotstone.framework.Strategies.PowerStrategy;
-import hotstone.framework.Strategies.WinnerStategy;
-import hotstone.framework.Strategies.TypeStrategy;
-import hotstone.variants.GammaStone.HeroAdvancedPower;
+import hotstone.framework.Strategies.*;
+import hotstone.variants.DeltaStone.DishDeck;
 
 import java.util.ArrayList;
 
@@ -38,8 +35,10 @@ public class StandardHotStoneGame implements Game {
 
 
     //Creates heros for findus and pedderson
-    HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.FINDUS, "Baby", "Cute");
-    HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true, Player.PEDDERSEN, "Baby", "Cute");
+    HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
+            Player.FINDUS, "Baby", "Cute");
+    HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
+            Player.PEDDERSEN, "Baby", "Cute");
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -47,39 +46,29 @@ public class StandardHotStoneGame implements Game {
     private TypeStrategy typeStrategy;
     private PowerStrategy powerStrategy;
 
+    private DeckStrategy deckStrategy;
 
-    public StandardHotStoneGame(ManaStrategy manaStrategy, WinnerStategy winnerStategy, TypeStrategy typeStrategy, PowerStrategy powerStrategy) {
+
+
+    public StandardHotStoneGame(ManaStrategy manaStrategy,
+                                WinnerStategy winnerStategy,
+                                TypeStrategy typeStrategy,
+                                PowerStrategy powerStrategy,
+                                DeckStrategy deckStrategy) {
 
         this.winnerStategy = winnerStategy;
         this.manaStrategy = manaStrategy;
         this.typeStrategy = typeStrategy;
         this.powerStrategy = powerStrategy;
-
+        this.deckStrategy = deckStrategy;
 
         // Initialise mana for the given version
         heroFindus.setMana(manaStrategy.calculateMana(this));
         heroPedderson.setMana(manaStrategy.calculateMana(this));
-        heroFindus.setType(typeStrategy.chooseType(Player.FINDUS));
-        heroPedderson.setType(typeStrategy.chooseType(Player.PEDDERSEN));
+        typeStrategy.chooseType(this);
+        deckStrategy.createDeck(this);
 
 
-        //Add 7 cards to findus hand
-        findusDeck.add(0, new CardImpl("Uno", 1, 1, 1, false, Player.FINDUS));
-        findusDeck.add(1, new CardImpl("Dos", 2, 2, 2, false, Player.FINDUS));
-        findusDeck.add(2, new CardImpl("Tres", 3, 3, 3, false, Player.FINDUS));
-        findusDeck.add(3, new CardImpl("Cuatro", 2, 3, 1, false, Player.FINDUS));
-        findusDeck.add(4, new CardImpl("Cinco", 3, 5, 1, false, Player.FINDUS));
-        findusDeck.add(5, new CardImpl("Seis", 2, 1, 3, false, Player.FINDUS));
-        findusDeck.add(6, new CardImpl("Siete", 3, 2, 4, false, Player.FINDUS));
-
-        //Add 7 cards to pedderson hand
-        peddersonsDeck.add(0, new CardImpl("Uno", 1, 1, 1, false, Player.PEDDERSEN));
-        peddersonsDeck.add(1, new CardImpl("Dos", 2, 2, 2, false, Player.PEDDERSEN));
-        peddersonsDeck.add(2, new CardImpl("Tres", 3, 3, 3, false, Player.PEDDERSEN));
-        peddersonsDeck.add(3, new CardImpl("Cuatro", 2, 3, 1, false, Player.PEDDERSEN));
-        peddersonsDeck.add(4, new CardImpl("Cinco", 3, 5, 1, false, Player.PEDDERSEN));
-        peddersonsDeck.add(5, new CardImpl("Seis", 2, 1, 3, false, Player.PEDDERSEN));
-        peddersonsDeck.add(6, new CardImpl("Siete", 3, 2, 4, false, Player.PEDDERSEN));
 
         //Deals 3 cards to pedderson and Findus
         for (int i = 1; i <= 3; i++) {
@@ -195,9 +184,6 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
-        // gets the players fields
-        ArrayList playerAttackingField = (ArrayList) getField(playerAttacking);
-        ArrayList playerDefendingField = (ArrayList) getField(Utility.computeOpponent(playerAttacking));
         // gets damage of the 2 cards minions
         int attackerDamage = attackingCard.getAttack();
         int defenderDamage = defendingCard.getAttack();
@@ -215,8 +201,30 @@ public class StandardHotStoneGame implements Game {
         defendingCardCast.changeHealth(-attackerDamage);
         attackingCardCast.changeHealth(-defenderDamage);
         //If cards/minions health is 0 or below it will be removed from the field
-        if (defendingCardCast.getHealth() <= 0) playerDefendingField.remove(defendingCardCast);
-        if (attackingCardCast.getHealth() <= 0) playerAttackingField.remove(attackingCardCast);
+
+        if (defendingCardCast.getHealth() <= 0) {
+            if (playerAttacking == Player.FINDUS){
+            int indexCardToRemove = cardsOnPeddersonsField.indexOf(defendingCard);
+            Card cardToRemove = getCardInField(Player.PEDDERSEN,indexCardToRemove);
+            cardsOnPeddersonsField.remove(cardToRemove);
+            }else {
+            int indexCardToRemove = cardsOnFindusField.indexOf(defendingCard);
+            Card cardToRemove = getCardInField(Player.FINDUS,indexCardToRemove);
+            cardsOnFindusField.remove(cardToRemove);
+            }
+        }
+        if (attackingCardCast.getHealth() <= 0) {
+            if (playerAttacking == Player.FINDUS){
+                int indexCardToRemove = cardsOnFindusField.indexOf(attackingCard);
+                Card cardToRemove = getCardInField(Player.FINDUS,indexCardToRemove);
+                cardsOnFindusField.remove(cardToRemove);
+            }else {
+            int indexCardToRemove = cardsOnPeddersonsField.indexOf(attackingCard);
+            Card cardToRemove = getCardInField(Player.PEDDERSEN,indexCardToRemove);
+            cardsOnPeddersonsField.remove(cardToRemove);
+            }
+        }
+
         //Sets minion to inactive after attacking
         ((CardImpl) attackingCard).setActiveFalse();
         return Status.OK;

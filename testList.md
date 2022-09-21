@@ -58,8 +58,8 @@ GammaStone Tests
 
 
 DeltaStone Tests
-- Each turn your mana is set to 7
-- The decksize is 24 
+- **OK** Each turn your mana is set to 7
+- **OK** The decksize is 21 after dealing 3 cards  
 - There are 2 of each cards in the deck
 - the first card needs to cost a maximum of 1 mana
 - the second card needs to cost a maximum of 2 mana
@@ -70,10 +70,6 @@ DeltaStone Tests
 
 Lav Uml
 Vi skal have HeroPower i et interface
-
-til jeff 
-- Hvordan fjerne man attacking card når den er en iterable. 
-
 
 
 Playstation integration klasse TEST

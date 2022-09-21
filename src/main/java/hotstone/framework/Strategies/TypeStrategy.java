@@ -1,9 +1,11 @@
 package hotstone.framework.Strategies;
 
+import hotstone.framework.Game;
 import hotstone.framework.Player;
 
 public interface TypeStrategy {
 
-    String chooseType(Player who);
+
+    void chooseType(Game game);
 
 }
