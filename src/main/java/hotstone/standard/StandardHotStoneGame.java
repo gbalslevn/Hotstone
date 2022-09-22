@@ -20,14 +20,14 @@ import hotstone.framework.*;
 import hotstone.framework.Strategies.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StandardHotStoneGame implements Game {
     private int turnNumber = 1; //Keeps track of how many turns has passed
 
     private ArrayList<CardImpl>[] field;
     private ArrayList<CardImpl>[] hand;
-    private ArrayList<CardImpl> findusDeck = new ArrayList<>();
-    private ArrayList<CardImpl> peddersonsDeck = new ArrayList<>();
+    private HashMap<Player, ArrayList<CardImpl>> deck = new HashMap<>();
 
 
     //Creates heros for findus and pedderson
@@ -56,12 +56,21 @@ public class StandardHotStoneGame implements Game {
         this.powerStrategy = powerStrategy;
         this.deckStrategy = deckStrategy;
 
+        initializeFieldVaraiables();
+
+        setGameState(manaStrategy, typeStrategy, deckStrategy);
+    }
+
+    private void setGameState(ManaStrategy manaStrategy, TypeStrategy typeStrategy, DeckStrategy deckStrategy) {
         // Initialise mana for the given version
         heroFindus.setMana(manaStrategy.calculateMana(this));
         heroPedderson.setMana(manaStrategy.calculateMana(this));
         typeStrategy.chooseType(this);
         deckStrategy.createDeck(this);
+        dealsInitial3Cards();
+    }
 
+    private void initializeFieldVaraiables() {
         // Creates two fields
         field = new ArrayList[2];
         field[0] = new ArrayList<>();
@@ -70,15 +79,16 @@ public class StandardHotStoneGame implements Game {
         hand = new ArrayList[2];
         hand[0] = new ArrayList<>();
         hand[1] = new ArrayList<>();
-
-        dealsInitial3Cards();
+        //Creates two decks
+        deck.put(Player.FINDUS, new ArrayList<>());
+        deck.put(Player.PEDDERSEN, new ArrayList<>());
     }
 
     private void dealsInitial3Cards() {
         //Deals 3 cards to pedderson and Findus
         for (int i = 1; i <= 3; i++) {
-            drawCard(Player.FINDUS, findusDeck);
-            drawCard(Player.PEDDERSEN, peddersonsDeck);
+            drawCard(Player.FINDUS);
+            drawCard(Player.PEDDERSEN);
         }
     }
 
@@ -105,7 +115,7 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public int getDeckSize(Player who) {
-        return who == Player.FINDUS ? findusDeck.size() : peddersonsDeck.size();
+        return deck.get(who).size();
     }
 
     @Override
@@ -120,7 +130,7 @@ public class StandardHotStoneGame implements Game {
     }
 
     public Iterable<? extends Card> getDeck(Player who) {
-        return who == Player.FINDUS ? findusDeck : peddersonsDeck;
+        return deck.get(who);
     }
 
     @Override
@@ -197,7 +207,7 @@ public class StandardHotStoneGame implements Game {
         Status status = isPossibleToAttack(playerAttacking, attackingCard, defendingCard);
         if (status != Status.OK) return status;
 
-        executeAttack((CardImpl)attackingCard,(CardImpl)defendingCard);
+        executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
 
         return Status.OK;
     }
@@ -266,30 +276,37 @@ public class StandardHotStoneGame implements Game {
     @Override
     public Status usePower(Player who) {
         HeroImpl hero = (HeroImpl) getHero(who);
-        //If hero can use power
-        if (hero.isActive()) {
-            // subtracts 2 mana
-            hero.changeMana(-2);
-            //Power is on cooldown until next round
-            hero.setActiveFalse();
-            // Hero uses special ability/power
-            powerStrategy.useHeroPower(this);
-            return Status.OK;
-        }
-        return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
+        Boolean isHeroActive = hero.isActive();
+        if (!isHeroActive) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
+        executePower(hero);
+        return Status.OK;
     }
 
-    public void drawCard(Player who, ArrayList deckName) {
-        // If the deck is 0 no card is drawn and hero loses 2 health
-        if (deckName.size() == 0) {
-            HeroImpl playerHero = (HeroImpl) getHero(who);
-            playerHero.changeHealth(-2);
-        } else {
-            //Cards drawn always added to index 0
-            ArrayList getHand = (ArrayList) getHand(who);
-            getHand.add(0, deckName.get(0));
-            //Cards is removed from deck at index 0
-            deckName.remove(deckName.get(0));
+    //Mana is used and hero is set to false, and hero power is executed
+    private void executePower(HeroImpl hero) {
+        hero.changeMana(-2);
+        hero.setActiveFalse();
+        powerStrategy.useHeroPower(this);
+    }
+
+    // Draws card, If the deck is 0 no card is drawn and hero loses 2 health
+    public void drawCard(Player who) {
+        if (deck.get(who).size() == 0) ((HeroImpl) getHero(who)).changeHealth(-2);
+        else {
+            addCardToHandAndRemoveFromDeck(who);
         }
     }
+
+    //Adds card to hand and removes from deck
+    private void addCardToHandAndRemoveFromDeck(Player who) {
+        CardImpl card = deck.get(who).get(0);
+        //Cards drawn always added to index 0
+        hand[card.getOwner().ordinal()].add(0, card);
+        //Cards is removed from deck at index 0
+        deck.get(who).remove(card);
+    }
+
 }
+
+
+

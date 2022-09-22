@@ -13,40 +13,37 @@ import java.util.ArrayList;
 import static java.util.Collections.shuffle;
 
 public class DishDeck implements DeckStrategy {
-    ArrayList findusDeck = new ArrayList();
-    ArrayList peddersonsDeck = new ArrayList();
-
 
     @Override
     public void createDeck(StandardHotStoneGame game) {
         ArrayList findusDeck = (ArrayList) game.getDeck(Player.FINDUS);
         ArrayList peddersonsDeck = (ArrayList) game.getDeck(Player.PEDDERSEN);
 
-        //Add 24 cards to findus hand
-        deckBuilder(findusDeck, Player.FINDUS);
-        deckBuilder(findusDeck, Player.FINDUS);
+        buildAndShuffleDeck(findusDeck, Player.FINDUS);
+        buildAndShuffleDeck(peddersonsDeck, Player.PEDDERSEN);
 
-        //Add 24 cards to pedderson hand
-        deckBuilder(peddersonsDeck, Player.PEDDERSEN);
-        deckBuilder(peddersonsDeck, Player.PEDDERSEN);
+    }
 
-        //Shuffles the 2 decks
-        shuffle(findusDeck);
-        shuffle(peddersonsDeck);
+    //Handles the card shuffle and sorting
+    private void buildAndShuffleDeck(ArrayList deck,Player who) {
+        //Add 24 cards to hand
+        deckBuilder(deck, who);
+        deckBuilder(deck, who);
 
-        Card firstCardP = sortMana(1, peddersonsDeck);
-        Card secondCardP = sortMana(2, peddersonsDeck);
-        Card thirdCardP = sortMana(4, peddersonsDeck);
-        peddersonsDeck.add(firstCardP);
-        peddersonsDeck.add(secondCardP);
-        peddersonsDeck.add(thirdCardP);
+        //Shuffles the deck
+        shuffle(deck);
 
-        Card firstCardF = sortMana(1, findusDeck);
-        Card secondCardF = sortMana(2, findusDeck);
-        Card thirdCardF = sortMana(4, findusDeck);
-        findusDeck.add(0,firstCardF);
-        findusDeck.add(1, secondCardF);
-        findusDeck.add(2, thirdCardF);
+        sortByMana(deck);
+    }
+
+    private void sortByMana(ArrayList deck) {
+        Card firstCard = sortMana(1, deck);
+        Card secondCard = sortMana(2, deck);
+        Card thirdCard = sortMana(4, deck);
+
+        deck.add(0, firstCard);
+        deck.add(1, secondCard);
+        deck.add(2, thirdCard);
     }
 
     private void deckBuilder(ArrayList deckName, Player owner) {

@@ -8,9 +8,10 @@ import hotstone.framework.Utility;
 public class WinWhenHealthIs0 implements WinnerStategy {
     @Override
     public Player calculateWinner(Game game) {
+        Player playerInTurn = game.getPlayerInTurn();
         //Your own hero can only die when it's not your turn
-        if (game.getHero(Utility.computeOpponent(game.getPlayerInTurn())).getHealth() <= 0){
-        return game.getPlayerInTurn();
+        if (game.getHero(Utility.computeOpponent(playerInTurn)).getHealth() <= 0){
+        return playerInTurn;
         } return null;
     }
 }
