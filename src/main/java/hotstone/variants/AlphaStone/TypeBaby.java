@@ -14,6 +14,7 @@ public class TypeBaby implements TypeStrategy {
         findusHero.setType(GameConstants.BABY_HERO_TYPE);
         findusHero.setDescription("Cute");
         findusHero.setDamage(0);
+
         HeroImpl peddersenHero = (HeroImpl) game.getHero(Player.PEDDERSEN);
         peddersenHero.setType(GameConstants.BABY_HERO_TYPE);
         peddersenHero.setDescription("Cute");
