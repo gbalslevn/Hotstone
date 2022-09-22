@@ -56,4 +56,9 @@ public interface Hero {
    */
   Player getOwner();
 
+  /**
+   * Get a the description
+   * @return a description of the Hero
+   */
+  String getEffectDescription();
 }

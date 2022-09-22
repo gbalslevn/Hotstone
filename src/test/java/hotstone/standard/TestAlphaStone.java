@@ -31,6 +31,7 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.variants.AlphaStone.*;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -49,15 +50,15 @@ public class TestAlphaStone {
     /**
      * Fixture for AlphaStone testing.
      */
+    /* setMana3 is default for AlphaStone */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame();
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPower(), new SpanishDeck());
     }
 
     public void testPlayCard(Player who, int index) {
         Card chosenCard = game.getCardInHand(who, index);
         game.playCard(who, chosenCard);
-
     }
 
     public void testPlayOneCardEach(int indexFindus, int indexPedderson) {
@@ -154,9 +155,9 @@ public class TestAlphaStone {
 
     @Test
     public void shouldIncreaseTurnNumberAfterEndTurn() {
-        assertThat(game.getTurnNumber(), is(0));
-        game.endTurn();
         assertThat(game.getTurnNumber(), is(1));
+        game.endTurn();
+        assertThat(game.getTurnNumber(), is(2));
     }
 
     @Test
@@ -474,5 +475,23 @@ public class TestAlphaStone {
         testPlayCard(Player.FINDUS, 0);
         //There is 0 cards in the hand
         assertThat(game.getHand(Player.FINDUS).iterator().hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldDamageHeroIfDeckIsEmpty(){
+        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
+        int healthInTheBeginning = game1.getHero(Player.FINDUS).getHealth();
+        // draws 5 cards from deck. The fifth card makes the hero lose two health because it doesnt exist
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        assertThat(game1.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
+    }
+
+    @Test
+    public void shouldPlayerFindusBeTypeBaby(){
+        assertThat(game.getHero(Player.FINDUS).getType(),is(GameConstants.BABY_HERO_TYPE));
     }
 }
