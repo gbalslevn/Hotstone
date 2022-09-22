@@ -14,22 +14,19 @@
  *  limitations under the License.
  *
  */
-
 package hotstone.standard;
-
 import hotstone.framework.*;
 import hotstone.framework.Strategies.*;
-import hotstone.variants.DeltaStone.DishDeck;
-
 import java.util.ArrayList;
-
 
 public class StandardHotStoneGame implements Game {
     private int turnNumber = 1; //Keeps track of how many turns has passed
     private ArrayList<CardImpl> cardsOnPeddersonsField = new ArrayList<CardImpl>();
+    private ArrayList<CardImpl> cardsOnFindusField = new ArrayList<CardImpl>();
+
+    private ArrayList<CardImpl>[] field;
     private ArrayList<CardImpl> cardsInFindusHand = new ArrayList<CardImpl>();
     private ArrayList<CardImpl> cardsInPeddersonsHand = new ArrayList<CardImpl>();
-    private ArrayList<CardImpl> cardsOnFindusField = new ArrayList<CardImpl>();
     private ArrayList<CardImpl> findusDeck = new ArrayList<>();
     private ArrayList<CardImpl> peddersonsDeck = new ArrayList<>();
 
@@ -66,7 +63,13 @@ public class StandardHotStoneGame implements Game {
         typeStrategy.chooseType(this);
         deckStrategy.createDeck(this);
 
+        dealsInital3Cards();
+        // Creates two fields
+        field = new ArrayList[2];
+        field[0] = new ArrayList<>(); field[1] = new ArrayList<>();
+    }
 
+    private void dealsInital3Cards() {
         //Deals 3 cards to pedderson and Findus
         for (int i = 1; i <= 3; i++) {
             drawCard(Player.FINDUS, findusDeck);
@@ -83,6 +86,7 @@ public class StandardHotStoneGame implements Game {
     public Hero getHero(Player who) {
         return who == Player.FINDUS ? heroFindus : heroPedderson;
     }
+
 
     @Override
     public Player getWinner() {
@@ -137,88 +141,85 @@ public class StandardHotStoneGame implements Game {
     @Override
     public void endTurn() {
         HeroImpl hero = (HeroImpl) getHero(getPlayerInTurn());
-        // makes the hero active again
+        // makes the hero and cards active again
         hero.setActiveTrue();
         for (Card c : getField(getPlayerInTurn())) {
             CardImpl cCast = (CardImpl) c;
             cCast.setActiveTrue();
         }
-        //Adds one to turnnumber
         turnNumber++;
-        // 'this' gives itself as a parameter
-        // Sets mana to for the next round
+        // Finds out how much mana needs to be given to the Hero
         int newMana = manaStrategy.calculateMana(this);
         hero.setMana(newMana);
     }
 
-    //Finds index of the given card from parameter.
     @Override
     public Status playCard(Player who, Card card) {
-        //Makes sure the player owns the card
-        if (who != card.getOwner()) return Status.NOT_OWNER;
-        //Makes sure it's the player in turn
-        if (who != getPlayerInTurn()) return Status.NOT_PLAYER_IN_TURN;
-        //Mana cost of card
-        int manaCost = card.getManaCost();
-        HeroImpl hero = (HeroImpl) getHero(who);
-        //Makes sure player has enough mana
-        if (hero.getMana() < manaCost) return Status.NOT_ENOUGH_MANA;
+        Status status = isPossibleToPlayCard(who, card);
+        if (status != Status.OK) return status;
+
         if (who == Player.FINDUS) {
-            //Adds card to field
             cardsOnFindusField.add((CardImpl) card);
             //remove card from hand
             cardsInFindusHand.remove(card);
         } else {
-            //Adds card to field
             cardsOnPeddersonsField.add((CardImpl) card);
             //remove card from hand
             cardsInPeddersonsHand.remove(card);
         }
         // Hero uses mana when playing the card
-        hero.changeMana(-manaCost);
+        ((HeroImpl) getHero(who)).changeMana(-card.getManaCost());
+        return Status.OK;
+    }
+
+    // Checks if player is owner, in turn and has enough mana
+    private Status isPossibleToPlayCard(Player who, Card card) {
+        Status status = isOwningAndInTurn(who, card);
+        if (status != Status.OK) return status;
+        HeroImpl hero = (HeroImpl) getHero(who);
+        boolean isEnoughMana = hero.getMana() >= card.getManaCost();
+        if (!isEnoughMana) return Status.NOT_ENOUGH_MANA;
         return Status.OK;
     }
 
     @Override
     public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+        Status status = isPossibleToAttack(playerAttacking, attackingCard, defendingCard);
+        if (status != Status.OK) return status;
+
         // gets damage of the 2 cards minions
         int attackerDamage = attackingCard.getAttack();
         int defenderDamage = defendingCard.getAttack();
+
         // Cast the cards to a Cardimp
         CardImpl defendingCardCast = (CardImpl) defendingCard;
         CardImpl attackingCardCast = (CardImpl) attackingCard;
-        //Only able to play when it's your turn
-        if (getPlayerInTurn() != playerAttacking) return Status.NOT_PLAYER_IN_TURN;
-        //Not able to attack with opponents card
-        if (playerAttacking != attackingCard.getOwner()) return Status.NOT_OWNER;
-        if (!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
-        //Can not attack own minions
-        if (defendingCard.getOwner() == attackingCard.getOwner()) return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
+
         // Subtract health from defending and attacking cards
         defendingCardCast.changeHealth(-attackerDamage);
         attackingCardCast.changeHealth(-defenderDamage);
-        //If cards/minions health is 0 or below it will be removed from the field
 
+        //If cards/minions health is 0 or below it will be removed from the field
         if (defendingCardCast.getHealth() <= 0) {
-            if (playerAttacking == Player.FINDUS){
-            int indexCardToRemove = cardsOnPeddersonsField.indexOf(defendingCard);
-            Card cardToRemove = getCardInField(Player.PEDDERSEN,indexCardToRemove);
-            cardsOnPeddersonsField.remove(cardToRemove);
-            }else {
-            int indexCardToRemove = cardsOnFindusField.indexOf(defendingCard);
-            Card cardToRemove = getCardInField(Player.FINDUS,indexCardToRemove);
-            cardsOnFindusField.remove(cardToRemove);
+            if (playerAttacking == Player.FINDUS) {
+                int indexCardToRemove = cardsOnPeddersonsField.indexOf(defendingCard);
+                Card cardToRemove = getCardInField(Player.PEDDERSEN, indexCardToRemove);
+                cardsOnPeddersonsField.remove(cardToRemove);
+            } else {
+                int indexCardToRemove = cardsOnFindusField.indexOf(defendingCard);
+                Card cardToRemove = getCardInField(Player.FINDUS, indexCardToRemove);
+                cardsOnFindusField.remove(cardToRemove);
             }
         }
         if (attackingCardCast.getHealth() <= 0) {
-            if (playerAttacking == Player.FINDUS){
+            if (playerAttacking == Player.FINDUS) {
                 int indexCardToRemove = cardsOnFindusField.indexOf(attackingCard);
-                Card cardToRemove = getCardInField(Player.FINDUS,indexCardToRemove);
+                Card cardToRemove = getCardInField(Player.FINDUS, indexCardToRemove);
                 cardsOnFindusField.remove(cardToRemove);
-            }else {
-            int indexCardToRemove = cardsOnPeddersonsField.indexOf(attackingCard);
-            Card cardToRemove = getCardInField(Player.PEDDERSEN,indexCardToRemove);
-            cardsOnPeddersonsField.remove(cardToRemove);
+            } else {
+                int indexCardToRemove = cardsOnPeddersonsField.indexOf(attackingCard);
+                Card cardToRemove = getCardInField(Player.PEDDERSEN, indexCardToRemove);
+                cardsOnPeddersonsField.remove(cardToRemove);
             }
         }
 
@@ -227,17 +228,44 @@ public class StandardHotStoneGame implements Game {
         return Status.OK;
     }
 
+    //Checks that the minion is active and its not attacking own minion
+    private Status isPossibleToAttack(Player playerAttacking, Card attackingCard, Card defendingCard) {
+        Status status = isOwningAndInTurn(playerAttacking, attackingCard);
+        if (status != Status.OK) return status;
+        boolean isMinionActive = attackingCard.isActive();
+        if (!isMinionActive) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
+        boolean isCardsSameOwner = defendingCard.getOwner() == attackingCard.getOwner();
+        if (isCardsSameOwner) return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
+        return Status.OK;
+    }
+
+    // Checks if the user owns the card and is in turn
+    private Status isOwningAndInTurn(Player who, Card card) {
+        boolean isOwningTheCard = who == card.getOwner();
+        if (!isOwningTheCard) return Status.NOT_OWNER;
+        boolean isPlayerInTurn = who == getPlayerInTurn();
+        if (!isPlayerInTurn) return Status.NOT_PLAYER_IN_TURN;
+        return Status.OK;
+    }
+
     @Override
     public Status attackHero(Player playerAttacking, Card attackingCard) {
-        //Only able to play when it's your turn
-        if (getPlayerInTurn() != playerAttacking) return Status.NOT_PLAYER_IN_TURN;
+        Status status = isPossibleToAttackHero(playerAttacking, attackingCard);
+        if (status != Status.OK) return status;
         // attacks the hero with the card damage
         int cardDamage = attackingCard.getAttack();
-        //Minions needs to be active.
-        if (!attackingCard.isActive()) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
         //Damage the opponents hero
         HeroImpl heroDamaged = (HeroImpl) getHero(Utility.computeOpponent(playerAttacking));
         heroDamaged.changeHealth(-cardDamage);
+        return Status.OK;
+    }
+
+    // Checks if owner, in turn and minion is active. Used in attackHero()
+    public Status isPossibleToAttackHero(Player who, Card attackingCard) {
+        Status status = isOwningAndInTurn(who, attackingCard);
+        if (status != Status.OK) return status;
+        boolean isMinionActive = attackingCard.isActive();
+        if (!isMinionActive) return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
         return Status.OK;
     }
 
@@ -259,7 +287,7 @@ public class StandardHotStoneGame implements Game {
 
     public void drawCard(Player who, ArrayList deckName) {
         // If the deck is 0 no card is drawn and hero loses 2 health
-        if (deckName.size() <= 0) {
+        if (deckName.size() == 0) {
             HeroImpl playerHero = (HeroImpl) getHero(who);
             playerHero.changeHealth(-2);
         } else {
