@@ -13,12 +13,14 @@ public class TypeChefs implements TypeStrategy {
     @Override
     public void chooseType(Game game) {
         HeroImpl findusHero = (HeroImpl) game.getHero(Player.FINDUS);
-        findusHero.setType(GameConstants.THAI_CHEF_HERO_TYPE);
-        findusHero.setDescription("opponent hero suffer (0,-2) on (mana, health)");
-        findusHero.setDamage(2);
         HeroImpl peddersenHero = (HeroImpl) game.getHero(Player.PEDDERSEN);
-        peddersenHero.setType(GameConstants.DANISH_CHEF_HERO_TYPE);
-        peddersenHero.setDescription("Field sovs");
-        peddersenHero.setDamage(0);
+        chooseSettings(GameConstants.THAI_CHEF_HERO_TYPE,
+                "opponent hero suffer (0,-2) on (mana, health)",2,findusHero);
+        chooseSettings(GameConstants.DANISH_CHEF_HERO_TYPE,"Field sovs",0,peddersenHero);
+    }
+    public void chooseSettings(String type, String description, int damage, HeroImpl hero){
+        hero.setType(type);
+        hero.setDescription(description);
+        hero.setDamage(damage);
     }
 }

@@ -8,16 +8,15 @@ import hotstone.standard.HeroImpl;
 
 public class TypeBaby implements TypeStrategy {
 
-    @Override
     public void chooseType(Game game) {
         HeroImpl findusHero = (HeroImpl) game.getHero(Player.FINDUS);
-        findusHero.setType(GameConstants.BABY_HERO_TYPE);
-        findusHero.setDescription("Cute");
-        findusHero.setDamage(0);
         HeroImpl peddersenHero = (HeroImpl) game.getHero(Player.PEDDERSEN);
-        peddersenHero.setType(GameConstants.BABY_HERO_TYPE);
-        peddersenHero.setDescription("Cute");
-        peddersenHero.setDamage(0);
-
+        chooseSettings(GameConstants.BABY_HERO_TYPE,"Cute",0,findusHero);
+        chooseSettings(GameConstants.BABY_HERO_TYPE,"Cute",0,peddersenHero);
+    }
+    public void chooseSettings(String type, String description, int damage, HeroImpl hero){
+        hero.setType(type);
+        hero.setDescription(description);
+        hero.setDamage(damage);
     }
 }

@@ -235,7 +235,7 @@ public class TestAlphaStone {
         game.endTurn();
         StandardHotStoneGame game1 = (StandardHotStoneGame) game;
         // Pedersen draws a card
-        game1.drawCard(Player.PEDDERSEN, (ArrayList) game1.getDeck(Player.PEDDERSEN));
+        game1.drawCard(Player.PEDDERSEN);
         // The card at index 0 should be quatro
         assertThat(game.getCardInHand(Player.PEDDERSEN, 0).getName(), is("Cuatro"));
     }
@@ -482,11 +482,11 @@ public class TestAlphaStone {
         StandardHotStoneGame game1 = (StandardHotStoneGame) game;
         int healthInTheBeginning = game1.getHero(Player.FINDUS).getHealth();
         // draws 5 cards from deck. The fifth card makes the hero lose two health because it doesnt exist
-        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
-        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
-        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
-        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
-        game1.drawCard(Player.FINDUS, (ArrayList) game1.getDeck(Player.FINDUS));
+        game1.drawCard(Player.FINDUS);
+        game1.drawCard(Player.FINDUS);
+        game1.drawCard(Player.FINDUS);
+        game1.drawCard(Player.FINDUS);
+        game1.drawCard(Player.FINDUS);
         assertThat(game1.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
     }
 

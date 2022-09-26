@@ -20,7 +20,8 @@ public class HeroAdvancedPower implements PowerStrategy {
             ((HeroImpl) game.getHero(Player.PEDDERSEN)).changeHealth(-2);
         } else {
             // Pedersen plays DanishChef which spawns a minion with Attack/Damage = 1/1. It adds it to the field.
-            ((ArrayList) game.getField(Player.PEDDERSEN)).add(0, new CardImpl("Sovs", 0, 1, 1, false, Player.PEDDERSEN));
+            ((ArrayList) game.getField(Player.PEDDERSEN)).add(0, new CardImpl
+                    ("Sovs", 0, 1, 1, false, Player.PEDDERSEN));
         }
     }
 }
