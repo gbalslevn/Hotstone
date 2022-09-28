@@ -63,3 +63,14 @@ DeltaStone Tests
 - **OK** the first card needs to cost a maximum of 1 mana
 - **OK** the second card needs to cost a maximum of 2 mana
 - **OK** the Third card needs to cost a maximum of 4 mana
+
+
+EpsilonStone Tests
+- **OK** Findus heroType is french chef
+- **OK** When redwine power is used a minion looses 2 health
+- **OK** When pasta is used a random minion on Peddersens field increases attack by 2. 
+
+
+
+Jeff 
+- Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion). 

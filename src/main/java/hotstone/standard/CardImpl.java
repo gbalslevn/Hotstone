@@ -43,20 +43,27 @@ public class CardImpl implements Card {
     public boolean isActive() {
         return activeStatus;
     }
+
     @Override
     public Player getOwner() {
         return owner;
     }
 
 
-    public void setActiveFalse(){
+    public void setActiveFalse() {
         activeStatus = false;
     }
-    public void setActiveTrue(){
+
+    public void setActiveTrue() {
         activeStatus = true;
     }
 
-    public void changeHealth(int healthChange){
+    public void changeHealth(int healthChange) {
         health += healthChange;
     }
+
+    public void changeAttack(int attackChange) {
+        attack += attackChange;
+    }
 }
+
