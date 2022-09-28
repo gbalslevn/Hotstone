@@ -4,16 +4,13 @@ import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.variants.AlphaStone.SetMana3;
 import hotstone.variants.AlphaStone.WinAfter4Rounds;
 import hotstone.variants.DeltaStone.DishDeck;
 import hotstone.variants.DeltaStone.SetManaTo7;
-import hotstone.variants.GammaStone.HeroAdvancedPower;
-import hotstone.variants.GammaStone.TypeChefs;
+import hotstone.variants.GammaStone.HeroPowerThaiDanish;
+import hotstone.variants.GammaStone.DanishThaiChefs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +24,7 @@ public class TestDeltaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new TypeChefs(), new HeroAdvancedPower(), new DishDeck());
+        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new DishDeck());
     }
 
 

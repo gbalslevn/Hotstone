@@ -1,17 +1,14 @@
 package hotstone.variants.GammaStone;
 
-import hotstone.framework.Card;
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.PowerStrategy;
-import hotstone.framework.Utility;
 import hotstone.standard.CardImpl;
 import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 
 import java.util.ArrayList;
 
-public class HeroAdvancedPower implements PowerStrategy {
+public class HeroPowerThaiDanish implements PowerStrategy {
     @Override
     public void useHeroPower(StandardHotStoneGame game) {
         // Findus plays ThaiChef which has an attack of 2 damage

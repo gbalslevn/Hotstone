@@ -1,13 +1,12 @@
 package hotstone.variants.AlphaStone;
 
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.PowerStrategy;
 import hotstone.framework.Utility;
 import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 
-public class HeroPower implements PowerStrategy {
+public class HeroPowerBaby implements PowerStrategy {
     @Override
     public void useHeroPower(StandardHotStoneGame game) {
         Player playerInTurn = game.getPlayerInTurn();

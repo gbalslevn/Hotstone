@@ -8,15 +8,9 @@ import hotstone.standard.HeroImpl;
 
 public class TypeBaby implements TypeStrategy {
 
-    public void chooseType(Game game) {
-        HeroImpl findusHero = (HeroImpl) game.getHero(Player.FINDUS);
-        HeroImpl peddersenHero = (HeroImpl) game.getHero(Player.PEDDERSEN);
-        chooseSettings(GameConstants.BABY_HERO_TYPE,"Cute",0,findusHero);
-        chooseSettings(GameConstants.BABY_HERO_TYPE,"Cute",0,peddersenHero);
+    public HeroImpl chooseType(Player who) {
+        return new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
+                who, "Baby", "Cute");
     }
-    public void chooseSettings(String type, String description, int damage, HeroImpl hero){
-        hero.setType(type);
-        hero.setDescription(description);
-        hero.setDamage(damage);
-    }
+
 }

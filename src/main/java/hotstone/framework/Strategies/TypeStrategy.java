@@ -2,10 +2,11 @@ package hotstone.framework.Strategies;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.standard.HeroImpl;
 
 public interface TypeStrategy {
 
 
-    void chooseType(Game game);
+    HeroImpl chooseType(Player who);
 
 }

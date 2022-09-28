@@ -2,12 +2,11 @@ package hotstone.variants;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.Strategies.PowerStrategy;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AlphaStone.SpanishDeck;
-import hotstone.variants.GammaStone.HeroAdvancedPower;
-import hotstone.variants.GammaStone.TypeChefs;
+import hotstone.variants.GammaStone.HeroPowerThaiDanish;
+import hotstone.variants.GammaStone.DanishThaiChefs;
 import hotstone.variants.AlphaStone.SetMana3;
 import hotstone.variants.AlphaStone.WinAfter4Rounds;
 import static org.hamcrest.CoreMatchers.*;
@@ -25,7 +24,7 @@ public class TestGammaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new TypeChefs(), new HeroAdvancedPower(), new SpanishDeck());
+        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new SpanishDeck());
     }
 
     @Test

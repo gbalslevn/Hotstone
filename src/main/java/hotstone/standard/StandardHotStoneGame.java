@@ -60,7 +60,6 @@ public class StandardHotStoneGame implements Game {
         // Initialise mana for the given version
         hero.get(Player.FINDUS).setMana(manaStrategy.calculateMana(this));
         hero.get(Player.PEDDERSEN).setMana(manaStrategy.calculateMana(this));
-        typeStrategy.chooseType(this);
         deckStrategy.createDeck(this);
         dealsInitial3Cards();
     }
@@ -81,10 +80,8 @@ public class StandardHotStoneGame implements Game {
 
         //Creates two heroes
         hero = new HashMap<>();
-        hero.put(Player.FINDUS, new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
-                Player.FINDUS, "Baby", "Cute"));
-        hero.put(Player.PEDDERSEN, new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
-                Player.PEDDERSEN, "Baby", "Cute"));
+        hero.put(Player.FINDUS,typeStrategy.chooseType(Player.FINDUS));
+        hero.put(Player.PEDDERSEN,typeStrategy.chooseType(Player.PEDDERSEN));
     }
 
     private void dealsInitial3Cards() {
@@ -104,7 +101,6 @@ public class StandardHotStoneGame implements Game {
     public Hero getHero(Player who) {
         return hero.get(who);
     }
-
 
     @Override
     public Player getWinner() {
