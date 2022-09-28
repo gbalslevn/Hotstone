@@ -27,14 +27,9 @@ public class StandardHotStoneGame implements Game {
 
     private ArrayList<CardImpl>[] field;
     private ArrayList<CardImpl>[] hand;
-    private HashMap<Player, ArrayList<CardImpl>> deck = new HashMap<>();
+    private HashMap<Player, ArrayList<CardImpl>> deck;
+    private HashMap<Player, HeroImpl> hero;
 
-
-    //Creates heros for findus and pedderson
-    HeroImpl heroFindus = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
-            Player.FINDUS, "Baby", "Cute");
-    HeroImpl heroPedderson = new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
-            Player.PEDDERSEN, "Baby", "Cute");
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -63,8 +58,8 @@ public class StandardHotStoneGame implements Game {
 
     private void setGameState(ManaStrategy manaStrategy, TypeStrategy typeStrategy, DeckStrategy deckStrategy) {
         // Initialise mana for the given version
-        heroFindus.setMana(manaStrategy.calculateMana(this));
-        heroPedderson.setMana(manaStrategy.calculateMana(this));
+        hero.get(Player.FINDUS).setMana(manaStrategy.calculateMana(this));
+        hero.get(Player.PEDDERSEN).setMana(manaStrategy.calculateMana(this));
         typeStrategy.chooseType(this);
         deckStrategy.createDeck(this);
         dealsInitial3Cards();
@@ -80,8 +75,16 @@ public class StandardHotStoneGame implements Game {
         hand[0] = new ArrayList<>();
         hand[1] = new ArrayList<>();
         //Creates two decks
+        deck = new HashMap<>();
         deck.put(Player.FINDUS, new ArrayList<>());
         deck.put(Player.PEDDERSEN, new ArrayList<>());
+
+        //Creates two heroes
+        hero = new HashMap<>();
+        hero.put(Player.FINDUS, new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
+                Player.FINDUS, "Baby", "Cute"));
+        hero.put(Player.PEDDERSEN, new HeroImpl(0, 3, GameConstants.HERO_MAX_HEALTH, true,
+                Player.PEDDERSEN, "Baby", "Cute"));
     }
 
     private void dealsInitial3Cards() {
@@ -99,7 +102,7 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Hero getHero(Player who) {
-        return who == Player.FINDUS ? heroFindus : heroPedderson;
+        return hero.get(who);
     }
 
 
@@ -159,7 +162,9 @@ public class StandardHotStoneGame implements Game {
         // makes the hero and cards active again
         hero.setActiveTrue();
         setCardsOnFieldActive();
+
         turnNumber++;
+
         setHeroMana(hero);
     }
 
@@ -305,7 +310,6 @@ public class StandardHotStoneGame implements Game {
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
     }
-
 }
 
 
