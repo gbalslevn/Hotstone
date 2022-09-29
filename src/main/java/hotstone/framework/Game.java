@@ -173,4 +173,4 @@ public interface Game {
    */
   Status usePower(Player who);
 
-}
+  }

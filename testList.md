@@ -8,11 +8,11 @@ AlphaStone Test
 - **OK** When Peddersen plays Dos, Then the mana available is two less
 - **OK** When Findus plays a card, Then Peddersen still has 3 cards in his hand
 - etc.
-- **OK** Findus should have four cards when drawing 1 cards. 
-- **OK** Turn number should increase after the end of each turn 
-- **OK** When Findus plays Dos, Then the mana available is two less. 
-- **OK** Cards are removed when drawn 
-- **OK** Card in hand works for both Findus and Pedderson 
+- **OK** Findus should have four cards when drawing 1 cards.
+- **OK** Turn number should increase after the end of each turn
+- **OK** When Findus plays Dos, Then the mana available is two less.
+- **OK** Cards are removed when drawn
+- **OK** Card in hand works for both Findus and Pedderson
 - **OK** After each turn 3 mana is added
 - **OK** when power is used 2 mana is used
 - **OK** Only able to use Power once a round - Gusatv
@@ -37,40 +37,47 @@ AlphaStone Test
 - **OK** Minion cannot attack when it's not active
 - **OK** Minion cannot attack when it is not its turn
 - **OK** when new round starts mana is set to 3
-- **OK** attacker loses life when attacking. 
+- **OK** attacker loses life when attacking.
 - **OK** not able to attack with opponents card
 - **OK** gethand() should return uno dos tres in the begining
-- **OK** Minion is only able to attack once per round 
+- **OK** Minion is only able to attack once per round
 - **OK** GetField() should return an iterable of findus field
 - **OK** GetHand().hasNext metoden should return true if there is cards in the hand false otherwise
 - **OK** player should lose 2 health if there is no cards to pick from
 - **OK** Player fnidus should be of type "BABY"
 
 BetaStone Tests
-- **OK** In round 2 the mana should be 2 
+
+- **OK** In round 2 the mana should be 2
 - **OK** in round 10 the mana amount in the beginning of the round is 7
 - **OK** If Player Findus hero health is 0 he looses
 
 GammaStone Tests
+
 - **OK** Findus type has the name ThaiChef
 - **OK** ThaiChef uses chilli power and Pedersens heros health decreases by 2
 - **OK** When hero power sovs is used there is a minion on the field with (attack, health) = (1,1).
 
-
 DeltaStone Tests
+
 - **OK** Each turn your mana is set to 7
 - **OK** The decksize is 21 after dealing 3 cards
 - **OK** the first card needs to cost a maximum of 1 mana
 - **OK** the second card needs to cost a maximum of 2 mana
 - **OK** the Third card needs to cost a maximum of 4 mana
 
-
 EpsilonStone Tests
+
 - **OK** Findus heroType is french chef
 - **OK** When redwine power is used a minion looses 2 health
-- **OK** When pasta is used a random minion on Peddersens field increases attack by 2. 
+- **OK** When pasta is used a random minion on Peddersens field increases attack by 2.
+- **OK** Findus wins after dealing 7 damage from minion to minion
 
 
 
-Jeff 
+
+Lav increment damage bedre... 
+
+Jeff
+
 - Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion). 

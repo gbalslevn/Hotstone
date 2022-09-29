@@ -30,6 +30,10 @@ public class StandardHotStoneGame implements Game {
     private HashMap<Player, ArrayList<CardImpl>> deck;
     private HashMap<Player, HeroImpl> hero;
 
+    private ArrayList<Integer> damageOutput;
+    private int findusDamageOutput;
+    private int pedersonDamageOutput;
+
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -82,6 +86,9 @@ public class StandardHotStoneGame implements Game {
         hero = new HashMap<>();
         hero.put(Player.FINDUS,typeStrategy.chooseType(Player.FINDUS));
         hero.put(Player.PEDDERSEN,typeStrategy.chooseType(Player.PEDDERSEN));
+
+        findusDamageOutput = 0;
+        pedersonDamageOutput = 0;
     }
 
     private void dealsInitial3Cards() {
@@ -224,6 +231,17 @@ public class StandardHotStoneGame implements Game {
 
         //Sets minion to inactive after attacking
         attackingCard.setActiveFalse();
+
+        incrementDamageOutput(attackingCard);
+    }
+
+    // Keeps track of total damage output
+    private void incrementDamageOutput(CardImpl attackingCard) {
+        if (attackingCard.getOwner() == Player.FINDUS){
+            findusDamageOutput += attackingCard.getAttack();
+        }else {
+            pedersonDamageOutput += attackingCard.getAttack();
+        }
     }
 
     // If minions health is 0 its removed
@@ -305,6 +323,9 @@ public class StandardHotStoneGame implements Game {
         hand[card.getOwner().ordinal()].add(0, card);
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
+    }
+    public int getDamageOutput(Player who){
+        return who == Player.FINDUS ? findusDamageOutput: pedersonDamageOutput;
     }
 }
 

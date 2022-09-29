@@ -25,7 +25,11 @@ public class TestBetaStone {
     /* increaseManaUntil7 is default for BetaStone*/
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new IncreaseManaUntil7(), new WinWhenHealthIs0(), new TypeBaby(), new HeroPowerBaby(),new SpanishDeck());
+        game = new StandardHotStoneGame(new IncreaseManaUntil7(),
+                new WinWhenHealthIs0(),
+                new TypeBaby(),
+                new HeroPowerBaby(),
+                new SpanishDeck());
     }
     @Test
     public void shouldManaBe2InRound2() {
