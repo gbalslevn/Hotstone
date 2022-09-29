@@ -91,7 +91,6 @@ public class TestEpsilonStone {
         game.attackCard(Player.FINDUS,card2,card3);
         game.attackCard(Player.FINDUS,card4,card5);
         game.attackCard(Player.FINDUS,card6,card7);
-        TestHelper.printGameState(game1);
         assertThat(game.getWinner(),is(Player.FINDUS));
     }
 

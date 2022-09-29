@@ -69,8 +69,10 @@ DeltaStone Tests
 EpsilonStone Tests
 
 - **OK** Findus heroType is french chef
-- **OK** When redwine power is used a minion looses 2 health
+- **OK** When redwine power is used a minion looses 2 health 
+- **OK** When redwine power is used minion on index 1 looses 2 health
 - **OK** When pasta is used a random minion on Peddersens field increases attack by 2.
+- When pasta is used minion on Peddersens field on index 1 increases attack by 2
 - **OK** Findus wins after dealing 7 damage from minion to minion
 
 
@@ -80,4 +82,5 @@ Lav increment damage bedre...
 
 Jeff
 
-- Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion). 
+- Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion).
+- Hvordan forstås 7 attack output
