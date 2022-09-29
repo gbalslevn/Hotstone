@@ -72,11 +72,14 @@ EpsilonStone Tests
 - **OK** When redwine power is used a minion looses 2 health 
 - **OK** When redwine power is used minion on index 1 looses 2 health
 - **OK** When pasta is used a random minion on Peddersens field increases attack by 2.
-- When pasta is used minion on Peddersens field on index 1 increases attack by 2
+- **OK** When pasta is used minion on Peddersens field on index 1 increases attack by 2
 - **OK** Findus wins after dealing 7 damage from minion to minion
 
-
-
+ZetaStone Test
+- **OK** Deck consist of 7 cinco cards
+- **OK** Findus should win if peddersons hero has 0 health in round 3
+- **OK** Findus should win with an attack output of seven in round 10
+- Does not win if attackoutput is 7 put round is 5
 
 Lav increment damage bedre... 
 

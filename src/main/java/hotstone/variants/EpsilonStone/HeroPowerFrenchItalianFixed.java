@@ -10,7 +10,6 @@ import java.util.Random;
 public class HeroPowerFrenchItalianFixed implements PowerStrategy {
     @Override
     public void useHeroPower(StandardHotStoneGame game) {
-        Random random = new Random();
         // Findus plays FrenchChef which has an attack of 2 damage
         if(game.getPlayerInTurn() == Player.FINDUS){
             // gets a minion on the field index 1 and decreases health by 2.

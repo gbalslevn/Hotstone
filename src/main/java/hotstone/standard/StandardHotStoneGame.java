@@ -327,6 +327,12 @@ public class StandardHotStoneGame implements Game {
     public int getDamageOutput(Player who){
         return who == Player.FINDUS ? findusDamageOutput: pedersonDamageOutput;
     }
+    public void setDamageOutput(Player who, int damage){
+        if (who == Player.FINDUS) findusDamageOutput = damage;
+        else
+            pedersonDamageOutput = damage;
+    }
+
 }
 
 
