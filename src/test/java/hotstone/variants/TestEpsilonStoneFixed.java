@@ -21,7 +21,7 @@ public class TestEpsilonStoneFixed {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerFrenchItalianFixed(), new SpanishDeck());
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerFrenchItalianFixed(), new SpanishDeck(), new NoEffect());
     }
 
     @Test

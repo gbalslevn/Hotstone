@@ -41,19 +41,22 @@ public class StandardHotStoneGame implements Game {
     private TypeStrategy typeStrategy;
     private PowerStrategy powerStrategy;
     private DeckStrategy deckStrategy;
+    private EffectStrategy effectStrategy;
 
 
     public StandardHotStoneGame(ManaStrategy manaStrategy,
                                 WinnerStategy winnerStategy,
                                 TypeStrategy typeStrategy,
                                 PowerStrategy powerStrategy,
-                                DeckStrategy deckStrategy) {
+                                DeckStrategy deckStrategy,
+                                EffectStrategy effectStrategy) {
 
         this.winnerStategy = winnerStategy;
         this.manaStrategy = manaStrategy;
         this.typeStrategy = typeStrategy;
         this.powerStrategy = powerStrategy;
         this.deckStrategy = deckStrategy;
+        this.effectStrategy = effectStrategy;
 
         initializeFieldVaraiables();
 
@@ -194,6 +197,9 @@ public class StandardHotStoneGame implements Game {
         //Adds Card to field and remove from hand
         field[card.getOwner().ordinal()].add((CardImpl) card);
         hand[card.getOwner().ordinal()].remove((CardImpl) card);
+
+        // Card effect is used
+        effectStrategy.useEffect(this, card);
 
         // Hero uses mana when playing the card
         ((HeroImpl) getHero(who)).changeMana(-card.getManaCost());

@@ -81,6 +81,14 @@ ZetaStone Test
 - **OK** Findus should win with an attack output of seven in round 10
 - Does not win if attackoutput is 7 put round is 5
 
+EtaStone Test
+- **OK** When Brown Rice card is used, 1 damage is dealt to the opponents hero
+- When Tomato Salad is used it adds a +1 attack to own random minion - Duede ikke
+- Tomato salad effect does nothing if no minion is on the field
+- When poke bowl card is used, 2 health is added to own hero
+
+
+Skal vi teste EtaStone random med test double?
 Lav increment damage bedre... 
 
 Jeff

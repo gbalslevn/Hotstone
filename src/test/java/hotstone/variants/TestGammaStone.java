@@ -4,6 +4,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AlphaStone.NoEffect;
 import hotstone.variants.AlphaStone.SpanishDeck;
 import hotstone.variants.GammaStone.HeroPowerThaiDanish;
 import hotstone.variants.GammaStone.DanishThaiChefs;
@@ -24,7 +25,7 @@ public class TestGammaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new SpanishDeck());
+        game = new StandardHotStoneGame(new SetMana3(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new SpanishDeck(), new NoEffect());
     }
 
     @Test

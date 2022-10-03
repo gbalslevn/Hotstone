@@ -28,7 +28,7 @@ public class TestEpsilonStone {
      */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter7DamageOutput(), new FrenchItalianChefs(), new HeroPowerFrenchItalian(), new SpanishDeck());
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter7DamageOutput(), new FrenchItalianChefs(), new HeroPowerFrenchItalian(), new SpanishDeck(), new NoEffect());
     }
 
     @Test

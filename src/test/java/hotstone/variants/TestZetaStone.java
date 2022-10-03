@@ -3,13 +3,13 @@ package hotstone.variants;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.Utility;
 import hotstone.standard.GameConstants;
 import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AlphaStone.*;
 import hotstone.variants.BetaStone.WinWhenHealthIs0;
 import hotstone.variants.EpsilonStone.WinAfter7DamageOutput;
+import hotstone.variants.EtaStone.Effect;
 import hotstone.variants.ZetatStone.AlternatingWinner;
 import hotstone.variants.ZetatStone.CincoDeck;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ public class TestZetaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new AlternatingWinner(new WinWhenHealthIs0(), new WinAfter7DamageOutput()), new TypeBaby(), new HeroPowerBaby(), new CincoDeck());
+        game = new StandardHotStoneGame(new SetMana3(), new AlternatingWinner(new WinWhenHealthIs0(), new WinAfter7DamageOutput()), new TypeBaby(), new HeroPowerBaby(), new CincoDeck(), new Effect());
     }
 
     @Test
