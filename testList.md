@@ -88,6 +88,16 @@ EtaStone Test
 - When poke bowl card is used, 2 health is added to own hero
 
 
+Ting vi mangler til iteration 5
+- Lav winner - refaktoreret attackoutput til et andet sted end game
+- Zeta, lav test færdig
+- card attributes skal ændres i EtaStone
+- card description skal tilføjes
+- card effects skal laves
+
+- 
+
+
 Skal vi teste EtaStone random med test double?
 Lav increment damage bedre... 
 

@@ -1,5 +1,6 @@
 package hotstone.variants;
 
+import hotstone.Stub.RandomFixed;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
@@ -27,7 +28,7 @@ public class TestZetaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new AlternatingWinner(new WinWhenHealthIs0(), new WinAfter7DamageOutput()), new TypeBaby(), new HeroPowerBaby(), new CincoDeck(), new Effect());
+        game = new StandardHotStoneGame(new SetMana3(), new AlternatingWinner(new WinWhenHealthIs0(), new WinAfter7DamageOutput()), new TypeBaby(), new HeroPowerBaby(), new CincoDeck(), new NoEffect());
     }
 
     @Test

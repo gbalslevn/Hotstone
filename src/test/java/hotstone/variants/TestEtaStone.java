@@ -1,5 +1,6 @@
 package hotstone.variants;
 
+import hotstone.Stub.RandomFixed;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
@@ -29,7 +30,7 @@ public class TestEtaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new DishDeck(), new Effect());
+        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new DishDeck(), new Effect(new RandomFixed()));
     }
 
     @Test
