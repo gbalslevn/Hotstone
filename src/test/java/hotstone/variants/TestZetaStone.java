@@ -47,7 +47,12 @@ public class TestZetaStone {
 
     @Test
     public void findusShouldWinWith7DamageOutputInRound10() {
-
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
         System.out.println("Turn number " + game.getTurnNumber());
         Card card = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS,card);

@@ -18,10 +18,11 @@ public class Effect implements EffectStrategy {
             HeroImpl opponentHero = (HeroImpl) game.getHero(Utility.computeOpponent(card.getOwner()));
             opponentHero.changeHealth(-1);
         }
-        //if(card.getName() == GameConstants.TOMATO_SALAD_CARD){
-            //CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), random.nextInt(game.getFieldSize(game.getPlayerInTurn())));
-            //choosenCard.changeAttack(1);
-        //}
+        if(card.getName() == GameConstants.TOMATO_SALAD_CARD){
+            // - 1 because we dont want the card to increase its own attack, this card will always be in last index
+            CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), random.nextInt(game.getFieldSize(game.getPlayerInTurn()) -1));
+            choosenCard.changeAttack(1);
+        }
 
     }
 }

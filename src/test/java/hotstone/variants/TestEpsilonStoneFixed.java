@@ -1,11 +1,12 @@
 package hotstone.variants;
 
+import hotstone.Stub.RandomFixed;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AlphaStone.*;
-import hotstone.variants.EpsilonStone.HeroPowerFrenchItalianFixed;
+import hotstone.variants.EpsilonStone.HeroPowerFrenchItalian;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class TestEpsilonStoneFixed {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerFrenchItalianFixed(), new SpanishDeck(), new NoEffect());
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerFrenchItalian(new RandomFixed()), new SpanishDeck(), new NoEffect());
     }
 
     @Test

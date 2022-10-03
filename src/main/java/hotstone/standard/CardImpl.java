@@ -10,7 +10,7 @@ public class CardImpl implements Card {
     private Player owner;
 
 
-    public CardImpl(String name, int manaCost, int health, int attack, boolean activeStatus, Player owner) {
+    public CardImpl(String name, int manaCost, int attack, int health, boolean activeStatus, Player owner) {
         this.name = name;
         this.manaCost = manaCost;
         this.health = health;
