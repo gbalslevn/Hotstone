@@ -57,11 +57,13 @@ public class CardEffect implements CardEffectStrategy {
     }
 
     private void tomatoSalat(Game game) {
-        int randomInt = randomStrategy.getRandom(game.getFieldSize(game.getPlayerInTurn()));
         // - 1 because we dont want the card to increase its own attack, this card will always be in last index
-        if (game.getFieldSize(game.getPlayerInTurn()) != 1) {
-            CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), randomInt - 1);
+        boolean onlyTomatoCardOnField = game.getFieldSize(game.getPlayerInTurn()) == 1;
+        if (!onlyTomatoCardOnField) {
+            int randomInt = randomStrategy.getRandom(game.getFieldSize(game.getPlayerInTurn())-1);
+            CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), randomInt);
             choosenCard.changeAttack(1);
+
         }
     }
 
@@ -77,16 +79,16 @@ public class CardEffect implements CardEffectStrategy {
 
     private void chickenCurry(Game game) {
         Player opponent = Utility.computeOpponent(game.getPlayerInTurn());
-        int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
         if (game.getFieldSize(opponent) != 0) {
+            int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
             ((ArrayList) game.getField(opponent)).remove(randomInt);
         }
     }
 
     private void beefBurger(Game game) {
         Player opponent = Utility.computeOpponent(game.getPlayerInTurn());
-        int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
         if (game.getFieldSize(opponent) != 0) {
+            int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
             ((CardImpl) game.getCardInField(opponent, randomInt)).changeAttack(2);
         }
     }
