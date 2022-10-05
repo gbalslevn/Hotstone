@@ -53,7 +53,7 @@ public class TestAlphaStone {
     /* setMana3 is default for AlphaStone */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerBaby(), new SpanishDeck(), new NoEffect());
+        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerBaby(), new SpanishDeck(), new NoCardEffect());
     }
 
     public void testPlayCard(Player who, int index) {

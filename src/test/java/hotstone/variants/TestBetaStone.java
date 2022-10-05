@@ -3,7 +3,7 @@ package hotstone.variants;
 import hotstone.framework.*;
 import hotstone.standard.HeroImpl;
 import hotstone.variants.AlphaStone.HeroPowerBaby;
-import hotstone.variants.AlphaStone.NoEffect;
+import hotstone.variants.AlphaStone.NoCardEffect;
 import hotstone.variants.AlphaStone.SpanishDeck;
 import hotstone.variants.AlphaStone.TypeBaby;
 import hotstone.variants.BetaStone.IncreaseManaUntil7;
@@ -31,7 +31,7 @@ public class TestBetaStone {
                 new TypeBaby(),
                 new HeroPowerBaby(),
                 new SpanishDeck(),
-                new NoEffect());
+                new NoCardEffect());
     }
     @Test
     public void shouldManaBe2InRound2() {

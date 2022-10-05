@@ -25,7 +25,7 @@ public class TestEpsilonStoneFixed {
         game = new StandardHotStoneGame(
                 new SetMana3(), new WinAfter4Rounds(),
                 new TypeBaby(), new HeroPowerFrenchItalian(new RandomFixed()),
-                new SpanishDeck(), new NoEffect());
+                new SpanishDeck(), new NoCardEffect());
     }
 
     @Test

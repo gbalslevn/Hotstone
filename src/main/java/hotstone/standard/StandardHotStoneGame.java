@@ -36,7 +36,7 @@ public class StandardHotStoneGame implements Game {
     private TypeStrategy typeStrategy;
     private PowerStrategy powerStrategy;
     private DeckStrategy deckStrategy;
-    private EffectStrategy effectStrategy;
+    private CardEffectStrategy cardEffectStrategy;
 
 
     public StandardHotStoneGame(ManaStrategy manaStrategy,
@@ -44,14 +44,14 @@ public class StandardHotStoneGame implements Game {
                                 TypeStrategy typeStrategy,
                                 PowerStrategy powerStrategy,
                                 DeckStrategy deckStrategy,
-                                EffectStrategy effectStrategy) {
+                                CardEffectStrategy cardEffectStrategy) {
 
         this.winnerStategy = winnerStategy;
         this.manaStrategy = manaStrategy;
         this.typeStrategy = typeStrategy;
         this.powerStrategy = powerStrategy;
         this.deckStrategy = deckStrategy;
-        this.effectStrategy = effectStrategy;
+        this.cardEffectStrategy = cardEffectStrategy;
 
         initializeFieldVaraiables();
 
@@ -191,7 +191,7 @@ public class StandardHotStoneGame implements Game {
         hand[card.getOwner().ordinal()].remove((CardImpl) card);
 
         // Card effect is used
-        effectStrategy.useEffect(this, card);
+        cardEffectStrategy.useEffect(this, card);
 
         // Hero uses mana when playing the card
         ((HeroImpl) getHero(who)).changeMana(-card.getManaCost());
@@ -292,14 +292,14 @@ public class StandardHotStoneGame implements Game {
 
     //Mana is used and hero is set to false, and hero power is executed
     private void executePower(HeroImpl hero) {
-        hero.changeMana(-2);
+        hero.changeMana(-GameConstants.HERO_POWER_COST);
         hero.setActiveFalse();
         powerStrategy.useHeroPower(this);
     }
 
     // Draws card, If the deck is 0 no card is drawn and hero loses 2 health
     public void drawCard(Player who) {
-        if (deck.get(who).size() == 0) ((HeroImpl) getHero(who)).changeHealth(-2);
+        if (deck.get(who).size() == 0) ((HeroImpl) getHero(who)).changeHealth(-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
         else {
             addCardToHandAndRemoveFromDeck(who);
         }

@@ -83,25 +83,17 @@ ZetaStone Test
 
 EtaStone Test
 - **OK** When Brown Rice card is used, 1 damage is dealt to the opponents hero
-- When Tomato Salad is used it adds a +1 attack to own random minion - Duede ikke
-- Tomato salad effect does nothing if no minion is on the field
-- When poke bowl card is used, 2 health is added to own hero
-
+- **OK** When Tomato Salad is used it adds a +1 attack to own random minion 
+- **OK** Tomato salad effect does nothing if no minion is on the field
+- **OK** When poke bowl card is used, 2 health is added to own hero
+- **OK** when noodleSoup is used, a card is drawn
+- **OK** When Chicken curry is used a random opponent minion is killed
+- **OK** When Beef Burger is played Add +2 attack to random opponent minion; 
 
 Ting vi mangler til iteration 5
-- Lav winner - refaktoreret attackoutput til et andet sted end game
-- Zeta, lav test færdig
-- card attributes skal ændres i EtaStone
-- card description skal tilføjes
 - card effects skal laves
-
-- 
 
 
 Skal vi teste EtaStone random med test double?
-Lav increment damage bedre... 
 
 Jeff
-
-- Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion).
-- Skal man tilføje desription 
