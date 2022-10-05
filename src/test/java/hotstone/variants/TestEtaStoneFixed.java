@@ -31,11 +31,11 @@ public class TestEtaStoneFixed {
         game = new StandardHotStoneGame(
                 new SetManaTo7(), new WinAfter4Rounds(),
                 new DanishThaiChefs(), new HeroPowerThaiDanish(),
-                new EtaStoneDishDeck(), new CardEffect(new RandomFixed()));
+                new EtaStoneDishDeck(), new CardEffect(new RandomFixed(0)));
     }
 
     @Test
-    public void shouldAdd1AttackToIndex1(){
+    public void shouldAdd1AttackToIndex0(){
         Card card1 = new CardImpl(GameConstants.BROWN_RICE_CARD, 1, 1, 1, false, Player.FINDUS);
         game.playCard(Player.FINDUS, card1);
         game.endTurn();

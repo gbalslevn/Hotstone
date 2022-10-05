@@ -4,13 +4,17 @@ import hotstone.framework.Strategies.RandomStrategy;
 import hotstone.standard.StandardHotStoneGame;
 
 public class RandomFixed implements RandomStrategy {
-    private int number;
+    private int index;
+
+    public RandomFixed (int index){
+        this.index = index;
+    }
     @Override
-    public int getRandom(int number) {
-        return number - 1 ;
+    public int getRandom(int number1) {
+        return index;
     }
 
-    public void setRandom(int newNumber) {
-        number = newNumber;
+    public void setRandom(int newIndex) {
+        index = newIndex;
     }
 }
