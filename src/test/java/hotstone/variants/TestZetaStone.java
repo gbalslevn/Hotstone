@@ -54,50 +54,36 @@ public class TestZetaStone {
     }
 
     @Test
-    public void findusShouldWinWith7DamageOutputInRound10() {
-        Stats s = new Stats();
-        System.out.println("Turn number " + game.getTurnNumber());
-        Card card = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, card);
-        game.endTurn();
-        Card card1 = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN, card1);
-        game.endTurn();
-        Card card2 = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, card2);
-        game.endTurn();
-        Card card3 = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN, card3);
-        game.endTurn();
-        Card card4 = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, card4);
-        game.endTurn();
-        Card card5 = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN, card5);
-        game.endTurn();
-        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
-        game1.drawCard(Player.FINDUS);
-        Card card6 = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, card6);
-        game.endTurn();
-        game1.drawCard(Player.PEDDERSEN);
-        Card card7 = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN, card7);
-        game.endTurn();
-        System.out.println("Turn number after " + game.getTurnNumber());
-        game.attackCard(Player.FINDUS, card, card1);
-        game.attackCard(Player.FINDUS, card2, card3);
-        TestHelper.printGameState(game);
+    public void findusShouldWinWith20DamageOutputInRound10() {
+        // resets the damageOutput
+        Stats.setDamageOutput(Player.FINDUS, -Stats.getDamageOutput(Player.FINDUS));
+        // end turn a couple of times to make it round 10 - 4 + 2*6 endturns
         game.endTurn();
         game.endTurn();
-        game.attackCard(Player.FINDUS, card, card1);
-        game.attackCard(Player.FINDUS, card2, card3);
-        System.out.println("Turn number after " + game.getTurnNumber());
         game.endTurn();
         game.endTurn();
-        System.out.println("Turn number after " + game.getTurnNumber());
-        System.out.println(s.getDamageOutput(Player.FINDUS));
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        Stats.setDamageOutput(Player.FINDUS, 20);
+        assertThat(Stats.getDamageOutput(Player.FINDUS), is(20));
         assertThat(game.getWinner(), is(Player.FINDUS));
     }
 
+    @Test
+    public void shouldNotWinIfAttackOutputIs20ButRoundIs5(){
+        // resets the damageOutput
+        Stats.setDamageOutput(Player.FINDUS, -Stats.getDamageOutput(Player.FINDUS));
+        game.endTurn();
+        game.endTurn();
+        Stats.setDamageOutput(Player.FINDUS, 20);
+        assertThat(Stats.getDamageOutput(Player.FINDUS), is(20));
+        assertThat(game.getWinner(), not(Player.FINDUS));
+        assertThat(game.getWinner(), not(Player.PEDDERSEN));
+    }
 }

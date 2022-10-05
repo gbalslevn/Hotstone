@@ -29,7 +29,6 @@ public class StandardHotStoneGame implements Game {
     private ArrayList<CardImpl>[] hand;
     private HashMap<Player, ArrayList<CardImpl>> deck;
     private HashMap<Player, HeroImpl> hero;
-    private Stats stats;
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -85,8 +84,6 @@ public class StandardHotStoneGame implements Game {
         hero = new HashMap<>();
         hero.put(Player.FINDUS,typeStrategy.chooseType(Player.FINDUS));
         hero.put(Player.PEDDERSEN,typeStrategy.chooseType(Player.PEDDERSEN));
-
-        stats = new Stats();
     }
 
     private void dealsInitial3Cards() {
@@ -217,6 +214,7 @@ public class StandardHotStoneGame implements Game {
         if (status != Status.OK) return status;
 
         executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
+        Stats.setDamageOutput(attackingCard.getOwner(), attackingCard.getAttack());
 
         return Status.OK;
     }
@@ -233,7 +231,6 @@ public class StandardHotStoneGame implements Game {
         //Sets minion to inactive after attacking
         attackingCard.setActiveFalse();
 
-        stats.setDamageOutput(attackingCard.getOwner(), attackingCard.getAttack());
     }
 
     // If minions health is 0 its removed

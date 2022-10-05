@@ -21,9 +21,6 @@ public class Effect implements EffectStrategy {
 
     @Override
     public void useEffect(Game game, Card card) {
-
-
-
         int randomInt = randomStrategy.getRandom(game.getFieldSize(game.getPlayerInTurn()));
         if(card.getName() == GameConstants.BROWN_RICE_CARD){
             HeroImpl opponentHero = (HeroImpl) game.getHero(Utility.computeOpponent(card.getOwner()));
@@ -34,9 +31,5 @@ public class Effect implements EffectStrategy {
             CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), randomInt -1);
             choosenCard.changeAttack(1);
         }
-
-
-
-
     }
 }

@@ -78,8 +78,8 @@ EpsilonStone Tests
 ZetaStone Test
 - **OK** Deck consist of 7 cinco cards
 - **OK** Findus should win if peddersons hero has 0 health in round 3
-- **OK** Findus should win with an attack output of seven in round 10
-- Does not win if attackoutput is 7 put round is 5
+- **OK** Findus should win with an attack output of 20 in round 10
+- **OK** Does not win if attackoutput is 20 but round is 5
 
 EtaStone Test
 - **OK** When Brown Rice card is used, 1 damage is dealt to the opponents hero
@@ -104,4 +104,4 @@ Lav increment damage bedre...
 Jeff
 
 - Skal man tjekke om der er et kort på ens field før pasta heroPower bruges? (Attack stiger med 2 for random minion).
-- Hvordan forstås 7 attack output
+- Skal man tilføje desription 
