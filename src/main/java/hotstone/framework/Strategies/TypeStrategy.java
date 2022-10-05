@@ -8,5 +8,4 @@ public interface TypeStrategy {
 
 
     HeroImpl chooseType(Player who);
-
 }
