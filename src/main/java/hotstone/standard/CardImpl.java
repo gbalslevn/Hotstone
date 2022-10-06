@@ -1,8 +1,8 @@
 package hotstone.standard;
 
 import hotstone.framework.Card;
+import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
-import hotstone.framework.Strategies.CardEffectStrategy;
 
 public class CardImpl implements Card {
     private String name;
@@ -62,18 +62,22 @@ public class CardImpl implements Card {
     }
 
 
+    @Override
     public void setActiveFalse() {
         activeStatus = false;
     }
 
+    @Override
     public void setActiveTrue() {
         activeStatus = true;
     }
 
+    @Override
     public void changeHealth(int healthChange) {
         health += healthChange;
     }
 
+    @Override
     public void changeAttack(int attackChange) {
         attack += attackChange;
     }

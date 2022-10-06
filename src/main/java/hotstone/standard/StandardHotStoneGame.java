@@ -25,9 +25,9 @@ import java.util.HashMap;
 public class StandardHotStoneGame implements Game {
     private int turnNumber = 1; //Keeps track of how many turns has passed
 
-    private ArrayList<CardImpl>[] field;
-    private ArrayList<CardImpl>[] hand;
-    private HashMap<Player, ArrayList<CardImpl>> deck;
+    private ArrayList<Card>[] field;
+    private ArrayList<Card>[] hand;
+    private HashMap<Player, ArrayList<Card>> deck;
     private HashMap<Player, HeroImpl> hero;
 
     // creates the manaStategy
@@ -176,8 +176,7 @@ public class StandardHotStoneGame implements Game {
     //Sets all the cards on the field to active
     private void setCardsOnFieldActive() {
         for (Card c : getField(getPlayerInTurn())) {
-            CardImpl cCast = (CardImpl) c;
-            cCast.setActiveTrue();
+            c.setActiveTrue();
         }
     }
 
@@ -187,8 +186,8 @@ public class StandardHotStoneGame implements Game {
         if (status != Status.OK) return status;
 
         //Adds Card to field and remove from hand
-        field[card.getOwner().ordinal()].add((CardImpl) card);
-        hand[card.getOwner().ordinal()].remove((CardImpl) card);
+        field[card.getOwner().ordinal()].add(card);
+        hand[card.getOwner().ordinal()].remove(card);
 
         // Card effect is used
         cardEffectStrategy.useEffect(this, card);
@@ -213,14 +212,14 @@ public class StandardHotStoneGame implements Game {
         Status status = isPossibleToAttack(playerAttacking, attackingCard, defendingCard);
         if (status != Status.OK) return status;
 
-        executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
+        executeAttack(attackingCard, defendingCard);
         Stats.changeDamageOutput(attackingCard.getOwner(), attackingCard.getAttack(), getTurnNumber());
 
         return Status.OK;
     }
 
     //Damage minions and makes attacker inactive then removes minion if dead
-    private void executeAttack(CardImpl attackingCard, CardImpl defendingCard) {
+    private void executeAttack(Card attackingCard, Card defendingCard) {
         // Subtract health from defending and attacking cards
         defendingCard.changeHealth(-attackingCard.getAttack());
         attackingCard.changeHealth(-defendingCard.getAttack());
@@ -307,7 +306,7 @@ public class StandardHotStoneGame implements Game {
 
     //Adds card to hand and removes from deck
     private void addCardToHandAndRemoveFromDeck(Player who) {
-        CardImpl card = deck.get(who).get(0);
+        Card card = deck.get(who).get(0);
         //Cards drawn always added to index 0
         hand[card.getOwner().ordinal()].add(0, card);
         //Cards is removed from deck at index 0
