@@ -3,10 +3,7 @@ package hotstone.variants.ZetatStone;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.WinnerStategy;
-import hotstone.standard.StandardHotStoneGame;
 import hotstone.standard.Stats;
-import hotstone.variants.BetaStone.WinWhenHealthIs0;
-import hotstone.variants.EpsilonStone.WinAfter7DamageOutput;
 
 public class AlternatingWinner implements WinnerStategy {
 
@@ -19,15 +16,10 @@ public class AlternatingWinner implements WinnerStategy {
     }
 
     @Override
-
     public Player calculateWinner(Game game) {
         if (game.getTurnNumber() <= 12) {
             currentstate = betaVersion;
         } else if (game.getTurnNumber() >= 13) {
-            if (game.getTurnNumber() == 13) {
-                Stats.setDamageOutput(Player.FINDUS, 0);
-                Stats.setDamageOutput(Player.PEDDERSEN, 0);
-            }
                 currentstate = epsilonVersion;
         }
         return currentstate.calculateWinner(game);

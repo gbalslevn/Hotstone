@@ -214,7 +214,7 @@ public class StandardHotStoneGame implements Game {
         if (status != Status.OK) return status;
 
         executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
-        Stats.setDamageOutput(attackingCard.getOwner(), attackingCard.getAttack());
+        Stats.changeDamageOutput(attackingCard.getOwner(), attackingCard.getAttack(), getTurnNumber());
 
         return Status.OK;
     }

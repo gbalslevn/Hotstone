@@ -11,8 +11,7 @@ import javax.xml.crypto.dsig.keyinfo.PGPData;
 public class WinAfter7DamageOutput implements WinnerStategy {
     @Override
     public Player calculateWinner(Game game) {
-        Stats stats = new Stats();
-        if (stats.getDamageOutput(game.getPlayerInTurn()) >= 7){
+        if (Stats.getDamageOutput(game.getPlayerInTurn(), game.getTurnNumber()) >= 7){
             return game.getPlayerInTurn();
         }
         return null;

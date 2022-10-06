@@ -53,8 +53,8 @@ public class TestZetaStone {
     @Test
     public void findusShouldWinWith20DamageOutputInRound10() {
         // resets the damageOutput
-        Stats.setDamageOutput(Player.FINDUS, -Stats.getDamageOutput(Player.FINDUS));
-        // end turn a couple of times to make it round 10 - 4 + 2*6 endturns
+        Stats.setDamageOutput(Player.FINDUS, 0, game.getTurnNumber());
+        Stats.changeDamageOutput(Player.FINDUS, 5, game.getTurnNumber());
         game.endTurn();
         game.endTurn();
         game.endTurn();
@@ -67,19 +67,36 @@ public class TestZetaStone {
         game.endTurn();
         game.endTurn();
         game.endTurn();
-        Stats.setDamageOutput(Player.FINDUS, 20);
-        assertThat(Stats.getDamageOutput(Player.FINDUS), is(20));
+        game.getWinner();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+
+        Stats.changeDamageOutput(Player.FINDUS, 20, game.getTurnNumber());
+        System.out.println(game.getTurnNumber());
+        assertThat(Stats.getDamageOutput(Player.FINDUS, game.getTurnNumber()), is(20));
         assertThat(game.getWinner(), is(Player.FINDUS));
     }
 
     @Test
     public void shouldNotWinIfAttackOutputIs20ButRoundIs5(){
         // resets the damageOutput
-        Stats.setDamageOutput(Player.FINDUS, -Stats.getDamageOutput(Player.FINDUS));
+        Stats.setDamageOutput(Player.FINDUS, 0, game.getTurnNumber());
         game.endTurn();
         game.endTurn();
-        Stats.setDamageOutput(Player.FINDUS, 20);
-        assertThat(Stats.getDamageOutput(Player.FINDUS), is(20));
+        Stats.changeDamageOutput(Player.FINDUS, 20, game.getTurnNumber());
+        assertThat(Stats.getDamageOutput(Player.FINDUS, game.getTurnNumber()), is(20));
         assertThat(game.getWinner(), not(Player.FINDUS));
         assertThat(game.getWinner(), not(Player.PEDDERSEN));
     }
