@@ -21,7 +21,6 @@ public class EtaStoneDishDeck implements DeckStrategy {
 
         buildAndShuffleDeck(findusDeck, Player.FINDUS);
         buildAndShuffleDeck(peddersonsDeck, Player.PEDDERSEN);
-
     }
 
     //Handles the card shuffle and sorting

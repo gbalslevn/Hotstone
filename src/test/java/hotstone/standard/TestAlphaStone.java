@@ -233,9 +233,8 @@ public class TestAlphaStone {
     public void shouldFirstCardBeQuatroInRoundTwo() {
         // ends turn to  make it round two
         game.endTurn();
-        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
         // Pedersen draws a card
-        game1.drawCard(Player.PEDDERSEN);
+        game.drawCard(Player.PEDDERSEN);
         // The card at index 0 should be quatro
         assertThat(game.getCardInHand(Player.PEDDERSEN, 0).getName(), is("Cuatro"));
     }
@@ -479,15 +478,14 @@ public class TestAlphaStone {
 
     @Test
     public void shouldDamageHeroIfDeckIsEmpty(){
-        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
-        int healthInTheBeginning = game1.getHero(Player.FINDUS).getHealth();
+        int healthInTheBeginning = game.getHero(Player.FINDUS).getHealth();
         // draws 5 cards from deck. The fifth card makes the hero lose two health because it doesnt exist
-        game1.drawCard(Player.FINDUS);
-        game1.drawCard(Player.FINDUS);
-        game1.drawCard(Player.FINDUS);
-        game1.drawCard(Player.FINDUS);
-        game1.drawCard(Player.FINDUS);
-        assertThat(game1.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
+        game.drawCard(Player.FINDUS);
+        game.drawCard(Player.FINDUS);
+        game.drawCard(Player.FINDUS);
+        game.drawCard(Player.FINDUS);
+        game.drawCard(Player.FINDUS);
+        assertThat(game.getHero(Player.FINDUS).getHealth(), is(healthInTheBeginning-2));
     }
 
     @Test

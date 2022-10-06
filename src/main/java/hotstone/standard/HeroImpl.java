@@ -46,39 +46,36 @@ public class HeroImpl implements Hero {
     }
 
     @Override
-    public String getEffectDescription() { return description; }
+    public String getEffectDescription() {
+        return description;
+    }
 
-    public void setMana(int newMana){
+    @Override
+    public void setMana(int newMana) {
         mana = newMana;
     }
 
-
-    public void changeMana(int manaChange){
+    @Override
+    public void changeMana(int manaChange) {
         mana += manaChange;
     }
 
+    @Override
     public int getDamage() {
         return damage;
     }
 
-    public void setActiveFalse(){
+    @Override
+    public void setActiveFalse() {
         isActive = false;
     }
-    public void setActiveTrue(){
+
+    @Override
+    public void setActiveTrue() {
         isActive = true;
     }
-
-    public void changeHealth(int healthChange){
+    @Override
+    public void changeHealth(int healthChange) {
         health += healthChange;
-    }
-
-    public void setType(String type){
-        getType = type;
-    }
-
-    public void setDescription(String newDescription) {description = newDescription; }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 }

@@ -28,7 +28,7 @@ public class StandardHotStoneGame implements Game {
     private ArrayList<Card>[] field;
     private ArrayList<Card>[] hand;
     private HashMap<Player, ArrayList<Card>> deck;
-    private HashMap<Player, HeroImpl> hero;
+    private HashMap<Player, Hero> hero;
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -156,7 +156,7 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public void endTurn() {
-        HeroImpl hero = (HeroImpl) getHero(getPlayerInTurn());
+        Hero hero = getHero(getPlayerInTurn());
         // makes the hero and cards active again
         hero.setActiveTrue();
         setCardsOnFieldActive();
@@ -167,7 +167,7 @@ public class StandardHotStoneGame implements Game {
     }
 
     //Calculate and set the mana of the hero
-    private void setHeroMana(HeroImpl hero) {
+    private void setHeroMana(Hero hero) {
         // Finds out how much mana needs to be given to the Hero
         int newMana = manaStrategy.calculateMana(this);
         hero.setMana(newMana);
@@ -193,7 +193,7 @@ public class StandardHotStoneGame implements Game {
         cardEffectStrategy.useEffect(this, card);
 
         // Hero uses mana when playing the card
-        ((HeroImpl) getHero(who)).changeMana(-card.getManaCost());
+        getHero(who).changeMana(-card.getManaCost());
         return Status.OK;
     }
 
@@ -201,7 +201,7 @@ public class StandardHotStoneGame implements Game {
     private Status isPossibleToPlayCard(Player who, Card card) {
         Status status = isOwningAndInTurn(who, card);
         if (status != Status.OK) return status;
-        HeroImpl hero = (HeroImpl) getHero(who);
+        Hero hero = getHero(who);
         boolean isEnoughMana = hero.getMana() >= card.getManaCost();
         if (!isEnoughMana) return Status.NOT_ENOUGH_MANA;
         return Status.OK;
@@ -266,7 +266,7 @@ public class StandardHotStoneGame implements Game {
         // attacks the hero with the card damage
         int cardDamage = attackingCard.getAttack();
         //Damage the opponents hero
-        HeroImpl heroDamaged = (HeroImpl) getHero(Utility.computeOpponent(playerAttacking));
+        Hero heroDamaged = getHero(Utility.computeOpponent(playerAttacking));
         heroDamaged.changeHealth(-cardDamage);
         return Status.OK;
     }
@@ -282,7 +282,7 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Status usePower(Player who) {
-        HeroImpl hero = (HeroImpl) getHero(who);
+        Hero hero = getHero(who);
         Boolean isHeroActive = hero.isActive();
         if (!isHeroActive) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         executePower(hero);
@@ -290,15 +290,16 @@ public class StandardHotStoneGame implements Game {
     }
 
     //Mana is used and hero is set to false, and hero power is executed
-    private void executePower(HeroImpl hero) {
+    private void executePower(Hero hero) {
         hero.changeMana(-GameConstants.HERO_POWER_COST);
         hero.setActiveFalse();
         powerStrategy.useHeroPower(this);
     }
 
+    @Override
     // Draws card, If the deck is 0 no card is drawn and hero loses 2 health
     public void drawCard(Player who) {
-        if (deck.get(who).size() == 0) ((HeroImpl) getHero(who)).changeHealth(-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
+        if (deck.get(who).size() == 0) getHero(who).changeHealth(-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
         else {
             addCardToHandAndRemoveFromDeck(who);
         }
