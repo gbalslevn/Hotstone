@@ -9,14 +9,14 @@ import hotstone.variants.EpsilonStone.RandomReal;
 import hotstone.variants.EtaStone.CardEffect;
 import hotstone.variants.EtaStone.EtaStoneDishDeck;
 import hotstone.variants.GammaStone.HeroPowerThaiDanish;
+import hotstone.variants.RandomFixed;
 import hotstone.variants.SemiStone.AlternatingHeroPower;
 import hotstone.variants.SemiStone.RandomHeroType;
 
-public class SemiStoneFactory implements StoneFactory {
-    @Override
-    public ManaStrategy createManaStrategy() {
-        return new IncreaseManaUntil7();
-    }
+public class SemiStoneFactoryFixed implements StoneFactory {@Override
+public ManaStrategy createManaStrategy() {
+    return new IncreaseManaUntil7();
+}
 
     @Override
     public WinnerStategy createWinnerStrategy() {
@@ -25,12 +25,12 @@ public class SemiStoneFactory implements StoneFactory {
 
     @Override
     public PowerStrategy createPowerStrategy() {
-        return new AlternatingHeroPower(new HeroPowerThaiDanish(),new HeroPowerFrenchItalian(new RandomReal()));
+        return new AlternatingHeroPower(new HeroPowerThaiDanish(),new HeroPowerFrenchItalian(new RandomFixed(1)));
     }
 
     @Override
     public TypeStrategy createTypeStrategy() {
-        return new RandomHeroType(new RandomReal());
+        return new RandomHeroType(new RandomFixed(1));
     }
 
     @Override
@@ -40,7 +40,6 @@ public class SemiStoneFactory implements StoneFactory {
 
     @Override
     public CardEffectStrategy createEffectStrategy() {
-        return new CardEffect(new RandomReal());
+        return new CardEffect(new RandomFixed(1));
     }
-
 }

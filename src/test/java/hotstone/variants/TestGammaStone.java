@@ -5,12 +5,6 @@ import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AbstractFactory.GammaStoneFactory;
-import hotstone.variants.AlphaStone.NoCardEffect;
-import hotstone.variants.AlphaStone.SpanishDeck;
-import hotstone.variants.GammaStone.HeroPowerThaiDanish;
-import hotstone.variants.GammaStone.DanishThaiChefs;
-import hotstone.variants.AlphaStone.SetMana3;
-import hotstone.variants.AlphaStone.WinAfter4Rounds;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 

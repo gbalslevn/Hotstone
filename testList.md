@@ -91,6 +91,11 @@ EtaStone Test
 - **OK** When Beef Burger is played Add +2 attack to random opponent minion; 
 
 
+SemiStone Test
+- Pedderson Can get thaiChef as hero type (Test stub). 
+- if Pedderson have thaiChef, his power is accordingly(Test stub). 
+
+
 Fjern Cast i executeAttack?
 også i setCardsOnFieldActive
 
