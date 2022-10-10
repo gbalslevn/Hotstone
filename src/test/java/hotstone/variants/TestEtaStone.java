@@ -1,20 +1,12 @@
 package hotstone.variants;
 
-import hotstone.Stub.RandomFixed;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.utility.TestHelper;
-import hotstone.variants.AlphaStone.WinAfter4Rounds;
-import hotstone.variants.DeltaStone.SetManaTo7;
-import hotstone.variants.EpsilonStone.RandomReal;
-import hotstone.variants.EtaStone.CardEffect;
-import hotstone.variants.EtaStone.EtaStoneDishDeck;
-import hotstone.variants.GammaStone.DanishThaiChefs;
-import hotstone.variants.GammaStone.HeroPowerThaiDanish;
+import hotstone.variants.AbstractFactory.EtaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +22,7 @@ public class TestEtaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new EtaStoneDishDeck(), new CardEffect(new RandomReal()));
+        game = new StandardHotStoneGame(new EtaStoneFactory());
     }
 
     @Test

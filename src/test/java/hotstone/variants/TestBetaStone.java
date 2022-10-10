@@ -2,6 +2,7 @@ package hotstone.variants;
 
 import hotstone.framework.*;
 import hotstone.standard.HeroImpl;
+import hotstone.variants.AbstractFactory.BetaStoneFactory;
 import hotstone.variants.AlphaStone.HeroPowerBaby;
 import hotstone.variants.AlphaStone.NoCardEffect;
 import hotstone.variants.AlphaStone.SpanishDeck;
@@ -26,12 +27,7 @@ public class TestBetaStone {
     /* increaseManaUntil7 is default for BetaStone*/
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new IncreaseManaUntil7(),
-                new WinWhenHealthIs0(),
-                new TypeBaby(),
-                new HeroPowerBaby(),
-                new SpanishDeck(),
-                new NoCardEffect());
+        game = new StandardHotStoneGame(new BetaStoneFactory());
     }
     @Test
     public void shouldManaBe2InRound2() {

@@ -39,19 +39,14 @@ public class StandardHotStoneGame implements Game {
     private CardEffectStrategy cardEffectStrategy;
 
 
-    public StandardHotStoneGame(ManaStrategy manaStrategy,
-                                WinnerStategy winnerStategy,
-                                TypeStrategy typeStrategy,
-                                PowerStrategy powerStrategy,
-                                DeckStrategy deckStrategy,
-                                CardEffectStrategy cardEffectStrategy) {
+    public StandardHotStoneGame(StoneFactory stoneFactory) {
 
-        this.winnerStategy = winnerStategy;
-        this.manaStrategy = manaStrategy;
-        this.typeStrategy = typeStrategy;
-        this.powerStrategy = powerStrategy;
-        this.deckStrategy = deckStrategy;
-        this.cardEffectStrategy = cardEffectStrategy;
+        deckStrategy = stoneFactory.createDeckStrategy();
+        typeStrategy = stoneFactory.createTypeStrategy();
+        manaStrategy = stoneFactory.createManaStrategy();
+        powerStrategy = stoneFactory.createPowerStrategy();
+        winnerStategy = stoneFactory.createWinnerStrategy();
+        cardEffectStrategy = stoneFactory.createEffectStrategy();
 
         initializeFieldVaraiables();
 

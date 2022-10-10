@@ -31,6 +31,7 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 import hotstone.variants.AlphaStone.*;
 import org.junit.jupiter.api.*;
 
@@ -46,6 +47,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TestAlphaStone {
     private Game game;
+    private StoneFactory stoneFactory;
 
     /**
      * Fixture for AlphaStone testing.
@@ -53,7 +55,7 @@ public class TestAlphaStone {
     /* setMana3 is default for AlphaStone */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),new WinAfter4Rounds(), new TypeBaby(), new HeroPowerBaby(), new SpanishDeck(), new NoCardEffect());
+        game = new StandardHotStoneGame(new AlphaStoneFactory());
     }
 
     public void testPlayCard(Player who, int index) {

@@ -7,6 +7,7 @@ import hotstone.standard.GameConstants;
 import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.standard.Stats;
+import hotstone.variants.AbstractFactory.ZetaStoneFactory;
 import hotstone.variants.AlphaStone.*;
 import hotstone.variants.BetaStone.WinWhenHealthIs0;
 import hotstone.variants.EpsilonStone.WinAfter7DamageOutput;
@@ -27,12 +28,7 @@ public class TestZetaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(),
-                new AlternatingWinner(new WinWhenHealthIs0(), new WinAfter7DamageOutput()),
-                new TypeBaby(),
-                new HeroPowerBaby(),
-                new CincoDeck(),
-                new NoCardEffect());
+        game = new StandardHotStoneGame(new ZetaStoneFactory());
     }
 
     @Test
@@ -82,9 +78,7 @@ public class TestZetaStone {
         game.endTurn();
         game.endTurn();
         game.endTurn();
-
         Stats.changeDamageOutput(Player.FINDUS, 20, game.getTurnNumber());
-        System.out.println(game.getTurnNumber());
         assertThat(Stats.getDamageOutput(Player.FINDUS, game.getTurnNumber()), is(20));
         assertThat(game.getWinner(), is(Player.FINDUS));
     }

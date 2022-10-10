@@ -4,6 +4,7 @@ import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.DeltaStoneFactory;
 import hotstone.variants.AlphaStone.NoCardEffect;
 import hotstone.variants.AlphaStone.WinAfter4Rounds;
 import hotstone.variants.DeltaStone.DishDeck;
@@ -25,7 +26,7 @@ public class TestDeltaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetManaTo7(), new WinAfter4Rounds(), new DanishThaiChefs(), new HeroPowerThaiDanish(), new DishDeck(), new NoCardEffect());
+        game = new StandardHotStoneGame(new DeltaStoneFactory());
     }
 
 

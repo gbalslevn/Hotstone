@@ -5,6 +5,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.EpsilonStoneFactory;
 import hotstone.variants.AlphaStone.*;
 import hotstone.variants.EpsilonStone.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,7 @@ public class TestEpsilonStone {
      */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new SetMana3(), new WinAfter7DamageOutput(), new FrenchItalianChefs(), new HeroPowerFrenchItalian(new RandomReal()), new SpanishDeck(), new NoCardEffect());
+        game = new StandardHotStoneGame(new EpsilonStoneFactory());
     }
 
     @Test

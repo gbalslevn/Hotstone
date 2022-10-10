@@ -1,4 +1,4 @@
-package hotstone.Stub;
+package hotstone.variants;
 
 import hotstone.framework.Strategies.RandomStrategy;
 import hotstone.standard.StandardHotStoneGame;
