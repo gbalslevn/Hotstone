@@ -4,13 +4,12 @@ import hotstone.framework.Card;
 import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
 
-public class CardImpl implements Card {
+public class CardImpl implements Card, MutableCard {
     private String name;
     private int manaCost, health, attack;
     private boolean activeStatus;
     private Player owner;
     private String description;
-
 
 
     public CardImpl(String name, int manaCost, int attack, int health, boolean activeStatus, Player owner) {

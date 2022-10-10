@@ -1,6 +1,6 @@
 package hotstone.framework;
 
-public interface MutableHero {
+public interface MutableHero extends Hero {
     void setMana(int newMana);
 
     void changeMana(int manaChange);

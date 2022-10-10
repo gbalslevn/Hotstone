@@ -1,5 +1,5 @@
 package hotstone.framework;
 
-public interface MutableGame {
+public interface MutableGame extends Game {
     void drawCard(Player who);
 }

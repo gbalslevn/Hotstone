@@ -90,10 +90,8 @@ EtaStone Test
 - **OK** When Chicken curry is used a random opponent minion is killed
 - **OK** When Beef Burger is played Add +2 attack to random opponent minion; 
 
-Ting vi mangler til iteration 5
-- card effects skal laves
 
-
-Skal vi teste EtaStone random med test double?
+Fjern Cast i executeAttack?
+også i setCardsOnFieldActive
 
 Jeff

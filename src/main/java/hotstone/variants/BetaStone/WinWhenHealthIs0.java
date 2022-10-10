@@ -10,8 +10,6 @@ public class WinWhenHealthIs0 implements WinnerStategy {
     public Player calculateWinner(Game game) {
         Player playerInTurn = game.getPlayerInTurn();
         //Your own hero can only die when it's not your turn
-        if (game.getHero(Utility.computeOpponent(playerInTurn)).getHealth() <= 0){
-        return playerInTurn;
-        } return null;
+        return game.getHero(Utility.computeOpponent(playerInTurn)).getHealth() <= 0 ? playerInTurn : null;
     }
 }

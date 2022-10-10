@@ -46,7 +46,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * requirements for the alpha stone game.
  */
 public class TestAlphaStone {
-    private Game game;
+    private MutableGame game;
     private StoneFactory stoneFactory;
 
     /**

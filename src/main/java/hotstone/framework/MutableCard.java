@@ -1,7 +1,7 @@
 package hotstone.framework;
 
 // Interface for mutable methods
-public interface MutableCard {
+public interface MutableCard extends Card {
 
     void setActiveFalse();
 

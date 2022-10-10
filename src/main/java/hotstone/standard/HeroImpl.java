@@ -1,9 +1,10 @@
 package hotstone.standard;
 
 import hotstone.framework.Hero;
+import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 
-public class HeroImpl implements Hero {
+public class HeroImpl implements Hero, MutableHero {
     private int damage, mana, health;
     private boolean isActive;
     private Player owner;
