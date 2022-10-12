@@ -28,7 +28,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private ArrayList<Card>[] field;
     private ArrayList<Card>[] hand;
     private HashMap<Player, ArrayList<Card>> deck;
-    private HashMap<Player, HeroImpl> hero;
+    private HashMap<Player, MutableHero> hero;
 
     // creates the manaStategy
     private ManaStrategy manaStrategy;
@@ -151,7 +151,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public void endTurn() {
-        HeroImpl inTurnHero = hero.get(getPlayerInTurn());
+        MutableHero inTurnHero = hero.get(getPlayerInTurn());
         // makes the hero and cards active again
         inTurnHero.setActiveTrue();
         setCardsOnFieldActive();
@@ -162,7 +162,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     //Calculate and set the mana of the hero
-    private void setHeroMana(HeroImpl hero) {
+    private void setHeroMana(MutableHero hero) {
         // Finds out how much mana needs to be given to the Hero
         int newMana = manaStrategy.calculateMana(this);
         hero.setMana(newMana);
@@ -171,7 +171,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     //Sets all the cards on the field to active
     private void setCardsOnFieldActive() {
         for (Card c : getField(getPlayerInTurn())) {
-            ((CardImpl)c).setActiveTrue();
+            ((MutableCard)c).setActiveTrue();
         }
     }
 
@@ -207,14 +207,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
         Status status = isPossibleToAttack(playerAttacking, attackingCard, defendingCard);
         if (status != Status.OK) return status;
 
-        executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
+        executeAttack((MutableCard) attackingCard, (MutableCard) defendingCard);
         Stats.changeDamageOutput(attackingCard.getOwner(), attackingCard.getAttack(), getTurnNumber());
 
         return Status.OK;
     }
 
     //Damage minions and makes attacker inactive then removes minion if dead
-    private void executeAttack(CardImpl attackingCard, CardImpl defendingCard) {
+    private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
         // Subtract health from defending and attacking cards
         defendingCard.changeHealth(-attackingCard.getAttack());
         attackingCard.changeHealth(-defendingCard.getAttack());
@@ -233,8 +233,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
             field[card.getOwner().ordinal()].remove(card);
         }
     }
-
-    //Checks that the minion is active and its not attacking own minion
+        //Checks that the minion is active and its not attacking own minion
     private Status isPossibleToAttack(Player playerAttacking, Card attackingCard, Card defendingCard) {
         Status status = isOwningAndInTurn(playerAttacking, attackingCard);
         if (status != Status.OK) return status;
@@ -261,7 +260,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         // attacks the hero with the card damage
         int cardDamage = attackingCard.getAttack();
         //Damage the opponents hero
-        HeroImpl heroDamaged = hero.get(Utility.computeOpponent(playerAttacking));
+        MutableHero heroDamaged = hero.get(Utility.computeOpponent(playerAttacking));
         heroDamaged.changeHealth(-cardDamage);
         return Status.OK;
     }
@@ -277,7 +276,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public Status usePower(Player who) {
-        HeroImpl heroInTurn = hero.get(who);
+        MutableHero heroInTurn = hero.get(who);
         Boolean isHeroActive = heroInTurn.isActive();
         if (!isHeroActive) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         executePower(heroInTurn);
@@ -285,7 +284,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     //Mana is used and hero is set to false, and hero power is executed
-    private void executePower(HeroImpl hero) {
+    private void executePower(MutableHero hero) {
         hero.changeMana(-GameConstants.HERO_POWER_COST);
         hero.setActiveFalse();
         powerStrategy.useHeroPower(this);
@@ -308,6 +307,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
     }
+
 }
 
 

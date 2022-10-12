@@ -92,11 +92,9 @@ EtaStone Test
 
 
 SemiStone Test
-- Pedderson Can get thaiChef as hero type (Test stub). 
-- if Pedderson have thaiChef, his power is accordingly(Test stub). 
+- **OK** Pedderson Can get thaiChef as hero type (Test stub). 
+- **OK** if Pedderson have thaiChef, his power is accordingly(Test stub). 
 
 
-Fjern Cast i executeAttack?
-også i setCardsOnFieldActive
 
 Jeff
