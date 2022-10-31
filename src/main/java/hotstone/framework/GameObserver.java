@@ -15,7 +15,7 @@
  *
  */
 
-package hotstone.Observer;
+package hotstone.framework;
 
 import hotstone.framework.Card;
 import hotstone.framework.Player;

@@ -1,4 +1,4 @@
-package hotstone.Observer;
+package hotstone.framework;
 
 public class ObserverHandlerFixed  {
     public String notifyPlayCard(){

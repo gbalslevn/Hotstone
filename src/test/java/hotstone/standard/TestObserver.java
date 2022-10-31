@@ -1,7 +1,6 @@
 package hotstone.standard;
 
-import hotstone.Observer.ObserverHandler;
-import hotstone.Observer.ObserverHandlerFixed;
+import hotstone.framework.ObserverHandlerFixed;
 import hotstone.framework.MutableGame;
 
 import hotstone.framework.StoneFactory;

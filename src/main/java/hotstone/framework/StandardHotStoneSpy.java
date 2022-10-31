@@ -1,7 +1,6 @@
 package hotstone.framework;
 
-import hotstone.Observer.GameObserver;
-
+/*
 public class StandardHotStoneSpy implements Game {
     private String lastMethodCalled;
 
@@ -90,3 +89,4 @@ public class StandardHotStoneSpy implements Game {
 
     }
 }
+ */

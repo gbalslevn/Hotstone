@@ -15,11 +15,7 @@
  *
  */
 
-package hotstone.Observer;
-
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.Player;
+package hotstone.framework;
 
 import java.util.ArrayList;
 import java.util.List;

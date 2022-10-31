@@ -17,8 +17,6 @@
 
 package hotstone.framework;
 
-import hotstone.Observer.Observable;
-
 /** The role of a single HotStone game, allowing clients to access and
  * modify the state of a game.
  */

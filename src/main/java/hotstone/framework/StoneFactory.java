@@ -1,6 +1,5 @@
 package hotstone.framework;
 
-import hotstone.Observer.GameObserver;
 import hotstone.framework.Strategies.*;
 
 public interface StoneFactory {

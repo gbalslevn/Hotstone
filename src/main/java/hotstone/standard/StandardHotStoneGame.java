@@ -308,6 +308,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
     }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+    }
 }
 
 
