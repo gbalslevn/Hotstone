@@ -26,6 +26,4 @@ public class SpanishDeck implements DeckStrategy {
         deck.add(5, new CardImpl(GameConstants.SEIS_CARD, 2, 1, 3, false, who));
         deck.add(6, new CardImpl(GameConstants.SIETE_CARD, 3, 2, 4, false, who));
     }
-
-
 }

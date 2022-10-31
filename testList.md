@@ -98,5 +98,7 @@ SemiStone Test
 
 Fjern Cast i executeAttack?
 også i setCardsOnFieldActive
+Skal 
+
 
 Jeff
