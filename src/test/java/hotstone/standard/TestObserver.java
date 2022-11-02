@@ -82,7 +82,6 @@ public class TestObserver {
     public void shouldOutputusePower(){
         game.usePower(Player.PEDDERSEN);
         assertThat(observer.lastMethodCalled(), is("onUsePower"));
-        assertThat(game.getFieldSize(Player.FINDUS),is(1));
     }
 }
 
