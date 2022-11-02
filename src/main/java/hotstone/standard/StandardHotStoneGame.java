@@ -317,6 +317,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private void executePower(HeroImpl hero) {
         hero.changeMana(-GameConstants.HERO_POWER_COST);
         hero.setActiveFalse();
+        observerHandler.notifyHeroUpdate(hero.getOwner());
         powerStrategy.useHeroPower(this);
     }
 

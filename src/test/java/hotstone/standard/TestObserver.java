@@ -76,10 +76,27 @@ public class TestObserver {
         game.endTurn();
         System.out.println(hero.getHealth());
         assertThat(observer.lastMethodCalled(), is("onGameWon"));
+    }
 
-
+    @Test
+    public void shouldOutputusePower(){
+        game.usePower(Player.PEDDERSEN);
+        assertThat(observer.lastMethodCalled(), is("onUsePower"));
+        assertThat(game.getFieldSize(Player.FINDUS),is(1));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * Copyright (C) 2022. Henrik Bærbak Christensen, Aarhus University.

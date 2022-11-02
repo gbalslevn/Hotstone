@@ -30,7 +30,7 @@ public class TestDecorator {
 
 
     @Test
-    public void shouldDisplayAllActions(){
+    public void shouldDisplayActions(){
         Game original = game;
         game = new LoggingStandartHotstoneGame(game);
         // Findus plays first card
@@ -42,9 +42,9 @@ public class TestDecorator {
         game.playCard(Player.PEDDERSEN, card1);
         game.endTurn();
 
-        game.attackCard(Player.FINDUS,card,card1);
-        game.endTurn();
-        game.usePower(Player.PEDDERSEN);
+        original.attackCard(Player.FINDUS,card,card1);
+        original.endTurn();
+        original.usePower(Player.PEDDERSEN);
 
     }
 }
