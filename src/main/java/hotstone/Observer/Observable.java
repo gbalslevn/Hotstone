@@ -15,9 +15,11 @@
  *
  */
 
-package hotstone.framework;
+package hotstone.Observer;
 
 // import hotstone.observer.GameObserver;
+
+import hotstone.Observer.GameObserver;
 
 /** The role of being the subject for observers
  *

@@ -16,6 +16,7 @@
  */
 package hotstone.standard;
 
+import hotstone.Observer.GameObserver;
 import hotstone.framework.*;
 import hotstone.framework.Strategies.*;
 
@@ -311,6 +312,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public void addObserver(GameObserver observer) {
+        
     }
 }
 
