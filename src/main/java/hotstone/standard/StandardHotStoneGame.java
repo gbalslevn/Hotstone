@@ -17,6 +17,7 @@
 package hotstone.standard;
 
 import hotstone.Observer.GameObserver;
+import hotstone.Observer.ObserverHandler;
 import hotstone.framework.*;
 import hotstone.framework.Strategies.*;
 
@@ -39,6 +40,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private DeckStrategy deckStrategy;
     private CardEffectStrategy cardEffectStrategy;
 
+    private ObserverHandler observerHandler;
+
 
     public StandardHotStoneGame(StoneFactory stoneFactory) {
 
@@ -52,6 +55,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
         initializeFieldVaraiables();
 
         setGameState(manaStrategy, typeStrategy, deckStrategy);
+        observerHandler = new ObserverHandler();
+    }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+        observerHandler.addObserver(observer);
     }
 
     private void setGameState(ManaStrategy manaStrategy, TypeStrategy typeStrategy, DeckStrategy deckStrategy) {
@@ -160,6 +169,15 @@ public class StandardHotStoneGame implements Game, MutableGame {
         turnNumber++;
 
         setHeroMana(inTurnHero);
+
+        observerHandler.notifyTurnChangeTo(getPlayerInTurn());
+
+        Player winner = getWinner();
+
+        if (winner != null){
+            observerHandler.notifyGameWon(winner);
+        }
+
     }
 
     //Calculate and set the mana of the hero
@@ -190,6 +208,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
         // Hero uses mana when playing the card
         hero.get(who).changeMana(-card.getManaCost());
+        // Notifies observer
+        observerHandler.notifyPlayCard(who, card);
         return Status.OK;
     }
 
@@ -211,6 +231,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         executeAttack((CardImpl) attackingCard, (CardImpl) defendingCard);
         Stats.changeDamageOutput(attackingCard.getOwner(), attackingCard.getAttack(), getTurnNumber());
 
+        observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
         return Status.OK;
     }
 
@@ -226,12 +247,16 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Sets minion to inactive after attacking
         attackingCard.setActiveFalse();
 
+        observerHandler.notifyCardUpdate(attackingCard);
+        observerHandler.notifyCardUpdate(defendingCard);
+
     }
 
     // If minions health is 0 its removed
     private void removeCardIfDead(Card card) {
         if (card.getHealth() <= 0) {
             field[card.getOwner().ordinal()].remove(card);
+            observerHandler.notifyCardRemove(card.getOwner(), card);
         }
     }
 
@@ -264,6 +289,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Damage the opponents hero
         HeroImpl heroDamaged = hero.get(Utility.computeOpponent(playerAttacking));
         heroDamaged.changeHealth(-cardDamage);
+        observerHandler.notifyAttackHero(playerAttacking, attackingCard);
+        observerHandler.notifyHeroUpdate(Utility.computeOpponent(playerAttacking));
         return Status.OK;
     }
 
@@ -282,6 +309,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         Boolean isHeroActive = heroInTurn.isActive();
         if (!isHeroActive) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         executePower(heroInTurn);
+        observerHandler.notifyUsePower(who);
         return Status.OK;
     }
 
@@ -308,11 +336,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         hand[card.getOwner().ordinal()].add(0, card);
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
-    }
-
-    @Override
-    public void addObserver(GameObserver observer) {
-        
+        observerHandler.notifyCardDraw(who, card);
     }
 }
 
