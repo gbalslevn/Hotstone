@@ -25,7 +25,7 @@ public class SemiStoneFactory implements StoneFactory {
 
     @Override
     public PowerStrategy createPowerStrategy() {
-        return new AlternatingHeroPower(new HeroPowerThaiDanish(),new HeroPowerFrenchItalian(new RandomReal()));
+        return new AlternatingHeroPower(new HeroPowerThaiDanish(), new HeroPowerFrenchItalian(new RandomReal()));
     }
 
     @Override
@@ -42,5 +42,4 @@ public class SemiStoneFactory implements StoneFactory {
     public CardEffectStrategy createEffectStrategy() {
         return new CardEffect(new RandomReal());
     }
-
 }

@@ -52,10 +52,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
         winnerStategy = stoneFactory.createWinnerStrategy();
         cardEffectStrategy = stoneFactory.createEffectStrategy();
 
+        observerHandler = new ObserverHandler();
         initializeFieldVaraiables();
 
         setGameState(manaStrategy, typeStrategy, deckStrategy);
-        observerHandler = new ObserverHandler();
     }
 
     @Override
@@ -325,6 +325,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     public void drawCard(Player who) {
         if (deck.get(who).size() == 0) hero.get(who).changeHealth(-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
         else {
+            observerHandler.notifyCardDraw(who, deck.get(who).get(0));
             addCardToHandAndRemoveFromDeck(who);
         }
     }
@@ -336,7 +337,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
         hand[card.getOwner().ordinal()].add(0, card);
         //Cards is removed from deck at index 0
         deck.get(who).remove(card);
-        observerHandler.notifyCardDraw(who, card);
     }
 }
 
