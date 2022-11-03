@@ -18,7 +18,7 @@ public class HeroPowerThaiDanish implements PowerStrategy {
         // Findus plays ThaiChef which has an attack of 2 damage
         if(currentHero == GameConstants.THAI_CHEF_HERO_TYPE){
             // decreases opponent hero health by 2
-            ((HeroImpl) game.getHero(opponent)).changeHealth(-2);
+            game.changeHealthHero(((HeroImpl)game.getHero(opponent)),-2);
         } else if (currentHero == GameConstants.DANISH_CHEF_HERO_TYPE){
             //DanishChef spawns a minion with Attack/Damage = 1/1. It adds it to the field.
             ((ArrayList) game.getField(game.getPlayerInTurn())).add(0, new CardImpl

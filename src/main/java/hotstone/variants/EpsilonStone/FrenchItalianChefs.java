@@ -1,6 +1,5 @@
 package hotstone.variants.EpsilonStone;
 
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.TypeStrategy;
 import hotstone.standard.GameConstants;

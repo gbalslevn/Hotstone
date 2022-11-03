@@ -42,13 +42,13 @@ public class TestEpsilonStoneFixed {
     }
 
     @Test
-    public void shouldGain2AttackOnIndex1(){
+    public void shouldGain2AttackOnInde3(){
         game.endTurn();
         Card card = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card);
         game.endTurn();
         game.endTurn();
-        Card card1 = game.getCardInHand(Player.PEDDERSEN, 1);
+        Card card1 = game.getCardInHand(Player.PEDDERSEN, 3);
         int attackBefore = card1.getAttack();
         game.playCard(Player.PEDDERSEN, card1);
         game.usePower(Player.PEDDERSEN);

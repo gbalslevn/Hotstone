@@ -65,8 +65,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     private void setGameState(ManaStrategy manaStrategy, TypeStrategy typeStrategy, DeckStrategy deckStrategy) {
         // Initialise mana for the given version
-        hero.get(Player.FINDUS).setMana(manaStrategy.calculateMana(this));
-        hero.get(Player.PEDDERSEN).setMana(manaStrategy.calculateMana(this));
+        setManaHero(hero.get(Player.PEDDERSEN),manaStrategy.calculateMana(this));
+        setManaHero(hero.get(Player.FINDUS),manaStrategy.calculateMana(this));
         deckStrategy.createDeck(this);
         dealsInitial3Cards();
     }
@@ -163,17 +163,17 @@ public class StandardHotStoneGame implements Game, MutableGame {
     public void endTurn() {
         MutableHero inTurnHero = hero.get(getPlayerInTurn());
         // makes the hero and cards active again
-        inTurnHero.setActiveTrue();
+        setActiveTrueHero(inTurnHero);
         setCardsOnFieldActive();
 
         turnNumber++;
 
+        drawCard(getPlayerInTurn());
         setHeroMana(inTurnHero);
 
         observerHandler.notifyTurnChangeTo(getPlayerInTurn());
 
         Player winner = getWinner();
-
         if (winner != null){
             observerHandler.notifyGameWon(winner);
         }
@@ -184,13 +184,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private void setHeroMana(MutableHero hero) {
         // Finds out how much mana needs to be given to the Hero
         int newMana = manaStrategy.calculateMana(this);
-        hero.setMana(newMana);
+        setManaHero(hero,newMana);
     }
 
     //Sets all the cards on the field to active
     private void setCardsOnFieldActive() {
         for (Card c : getField(getPlayerInTurn())) {
-            ((MutableCard)c).setActiveTrue();
+            setActiveTrueCard((MutableCard) c);
         }
     }
 
@@ -207,7 +207,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         cardEffectStrategy.useEffect(this, card);
 
         // Hero uses mana when playing the card
-        hero.get(who).changeMana(-card.getManaCost());
+        changeManaHero(hero.get(who),-card.getManaCost());
         // Notifies observer
         observerHandler.notifyPlayCard(who, card);
         return Status.OK;
@@ -238,14 +238,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
     //Damage minions and makes attacker inactive then removes minion if dead
     private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
         // Subtract health from defending and attacking cards
-        defendingCard.changeHealth(-attackingCard.getAttack());
-        attackingCard.changeHealth(-defendingCard.getAttack());
+        changeHealthCard(defendingCard,-attackingCard.getAttack());
+        changeHealthCard(attackingCard,-defendingCard.getAttack());
 
         removeCardIfDead(attackingCard);
         removeCardIfDead(defendingCard);
 
         //Sets minion to inactive after attacking
-        attackingCard.setActiveFalse();
+        setActiveFalseCard(attackingCard);
 
         observerHandler.notifyCardUpdate(attackingCard);
         observerHandler.notifyCardUpdate(defendingCard);
@@ -287,7 +287,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         int cardDamage = attackingCard.getAttack();
         //Damage the opponents hero
         MutableHero heroDamaged = hero.get(Utility.computeOpponent(playerAttacking));
-        heroDamaged.changeHealth(-cardDamage);
+        changeHealthHero(heroDamaged,-cardDamage);
         observerHandler.notifyAttackHero(playerAttacking, attackingCard);
         observerHandler.notifyHeroUpdate(Utility.computeOpponent(playerAttacking));
         return Status.OK;
@@ -314,8 +314,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     //Mana is used and hero is set to false, and hero power is executed
     private void executePower(MutableHero hero) {
-        hero.changeMana(-GameConstants.HERO_POWER_COST);
-        hero.setActiveFalse();
+        changeManaHero(hero,-GameConstants.HERO_POWER_COST);
+        setActiveFalseHero(hero);
         observerHandler.notifyHeroUpdate(hero.getOwner());
         powerStrategy.useHeroPower(this);
     }
@@ -323,7 +323,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     @Override
     // Draws card, If the deck is 0 no card is drawn and hero loses 2 health
     public void drawCard(Player who) {
-        if (deck.get(who).size() == 0) hero.get(who).changeHealth(-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
+        if (deck.get(who).size() == 0) changeHealthHero(hero.get(who),-GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
         else {
             observerHandler.notifyCardDraw(who, deck.get(who).get(0));
             addCardToHandAndRemoveFromDeck(who);
@@ -339,6 +339,49 @@ public class StandardHotStoneGame implements Game, MutableGame {
         deck.get(who).remove(card);
     }
 
+    public void setActiveFalseCard(MutableCard card) {
+            card.setActiveFalse();
+            observerHandler.notifyCardUpdate(card);
+    }
+
+    public void setActiveTrueCard(MutableCard card) {
+        card.setActiveTrue();
+        observerHandler.notifyCardUpdate(card);
+    }
+
+
+    public void changeHealthCard(MutableCard card, int healthChange) {
+        card.changeHealth(healthChange);
+        observerHandler.notifyCardUpdate(card);
+    }
+    public void changeAttackCard(MutableCard card, int attackChange) {
+        card.changeAttack(attackChange);
+        observerHandler.notifyCardUpdate(card);
+    }
+
+    public void setManaHero(MutableHero hero, int newMana) {
+        hero.setMana(newMana);
+        observerHandler.notifyHeroUpdate(hero.getOwner());
+    }
+
+    public void changeManaHero(MutableHero hero, int manaChange) {
+        hero.changeMana(manaChange);
+        observerHandler.notifyHeroUpdate(hero.getOwner());
+    }
+
+    public void setActiveFalseHero(MutableHero hero) {
+        hero.setActiveFalse();
+        observerHandler.notifyHeroUpdate(hero.getOwner());
+    }
+
+    public void setActiveTrueHero(MutableHero hero) {
+        hero.setActiveTrue();
+        observerHandler.notifyHeroUpdate(hero.getOwner());
+    }
+    public void changeHealthHero(MutableHero hero, int healthChange) {
+        hero.changeHealth(healthChange);
+        observerHandler.notifyHeroUpdate(hero.getOwner());
+    }
 }
 
 

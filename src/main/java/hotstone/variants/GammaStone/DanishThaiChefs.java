@@ -1,9 +1,7 @@
 package hotstone.variants.GammaStone;
 
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.TypeStrategy;
-import hotstone.framework.Utility;
 import hotstone.standard.GameConstants;
 import hotstone.standard.HeroImpl;
 

@@ -1,6 +1,5 @@
 package hotstone.framework.Strategies;
 
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.HeroImpl;
 

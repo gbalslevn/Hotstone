@@ -1,9 +1,7 @@
 package hotstone.variants.EtaStone;
 
 import hotstone.framework.Card;
-import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.Strategies.CardEffectStrategy;
 import hotstone.framework.Strategies.DeckStrategy;
 import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;

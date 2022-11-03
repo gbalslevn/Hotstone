@@ -8,7 +8,6 @@ import hotstone.variants.CustomDeckStategy.CustomeDeck;
 import hotstone.variants.EpsilonStone.HeroPowerFrenchItalian;
 import hotstone.variants.EpsilonStone.RandomReal;
 import hotstone.variants.EtaStone.CardEffect;
-import hotstone.variants.EtaStone.EtaStoneDishDeck;
 import hotstone.variants.GammaStone.HeroPowerThaiDanish;
 import hotstone.variants.SemiStone.AlternatingHeroPower;
 import hotstone.variants.SemiStone.RandomHeroType;

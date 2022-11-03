@@ -1,7 +1,6 @@
 package hotstone.variants;
 
 import hotstone.framework.Strategies.RandomStrategy;
-import hotstone.standard.StandardHotStoneGame;
 
 public class RandomFixed implements RandomStrategy {
     private int index;

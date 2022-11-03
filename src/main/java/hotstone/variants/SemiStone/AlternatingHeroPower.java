@@ -1,11 +1,7 @@
 package hotstone.variants.SemiStone;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.Player;
 import hotstone.framework.Strategies.PowerStrategy;
 import hotstone.standard.GameConstants;
-import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 
 public class AlternatingHeroPower implements PowerStrategy {

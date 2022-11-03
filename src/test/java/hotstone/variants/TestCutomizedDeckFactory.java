@@ -1,24 +1,15 @@
 package hotstone.variants;
 
-import hotstone.framework.*;
-import hotstone.standard.CardImpl;
-import hotstone.standard.HeroImpl;
-import hotstone.variants.AbstractFactory.BetaStoneFactory;
-import hotstone.variants.AbstractFactory.CutomizedDeckFactory;
-import hotstone.variants.AlphaStone.HeroPowerBaby;
-import hotstone.variants.AlphaStone.NoCardEffect;
-import hotstone.variants.AlphaStone.SpanishDeck;
-import hotstone.variants.AlphaStone.TypeBaby;
-import hotstone.variants.BetaStone.IncreaseManaUntil7;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import hotstone.framework.Card;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.variants.BetaStone.WinWhenHealthIs0;
+import hotstone.variants.AbstractFactory.CutomizedDeckFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 

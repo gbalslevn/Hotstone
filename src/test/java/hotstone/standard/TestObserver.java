@@ -1,24 +1,15 @@
 package hotstone.standard;
 
-import hotstone.Observer.GameObserver;
 import hotstone.Observer.GameObserverSpy;
-import hotstone.Observer.Observable;
+import hotstone.framework.Card;
 import hotstone.framework.MutableGame;
+import hotstone.framework.Player;
 import hotstone.framework.StoneFactory;
-import hotstone.utility.TestHelper;
-import hotstone.variants.AbstractFactory.*;
+import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-
-
-import hotstone.framework.*;
-import hotstone.variants.AbstractFactory.AlphaStoneFactory;
-import hotstone.variants.AlphaStone.*;
-import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
-
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -74,7 +65,6 @@ public class TestObserver {
         HeroImpl hero = (HeroImpl) game.getHero(Player.FINDUS);
         hero.changeHealth(-21);
         game.endTurn();
-        System.out.println(hero.getHealth());
         assertThat(observer.lastMethodCalled(), is("onGameWon"));
     }
 

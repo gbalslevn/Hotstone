@@ -2,7 +2,6 @@ package hotstone.variants;
 
 import hotstone.Observer.GameObserver;
 import hotstone.framework.*;
-import hotstone.standard.StandardHotStoneGame;
 
 public class LoggingStandartHotstoneGame implements Game {
 
@@ -74,7 +73,7 @@ public class LoggingStandartHotstoneGame implements Game {
     @Override
     public void endTurn() {
         System.out.println(decoratee.getPlayerInTurn() + " has ended his turn!");
-        System.out.println("someone has drawn a card!");
+        System.out.println(Utility.computeOpponent(decoratee.getPlayerInTurn()) + " drew a card!");
         decoratee.endTurn();
     }
 

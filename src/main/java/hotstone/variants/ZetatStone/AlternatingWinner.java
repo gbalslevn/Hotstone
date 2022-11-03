@@ -3,7 +3,6 @@ package hotstone.variants.ZetatStone;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.WinnerStategy;
-import hotstone.standard.Stats;
 
 public class AlternatingWinner implements WinnerStategy {
 

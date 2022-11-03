@@ -1,7 +1,5 @@
 package hotstone.variants.EpsilonStone;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.PowerStrategy;
 import hotstone.framework.Strategies.RandomStrategy;
@@ -9,8 +7,6 @@ import hotstone.framework.Utility;
 import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
-
-import java.util.Random;
 
 
 public class HeroPowerFrenchItalian implements PowerStrategy {
@@ -31,13 +27,13 @@ public class HeroPowerFrenchItalian implements PowerStrategy {
             if (game.getFieldSize(opponent) <= 0) return;
             int opponentRandom = randomStrategy.getRandom(game.getFieldSize(opponent));
             CardImpl choosenCard = (CardImpl) game.getCardInField(opponent, opponentRandom);
-            choosenCard.changeHealth(-2);
+            game.changeHealthCard(choosenCard,-2);
         } else if (currentHero == GameConstants.ITALIAN_CHEF_HERO_TYPE){
             // ItalianChef increases attack by 2 on random minion on own field
             if (game.getFieldSize(game.getPlayerInTurn()) <= 0) return;
             int ownRandom = randomStrategy.getRandom(game.getFieldSize(game.getPlayerInTurn()));
             CardImpl choosenCard = (CardImpl) game.getCardInField(game.getPlayerInTurn(), ownRandom);
-            choosenCard.changeAttack(2);
+            game.changeAttackCard(choosenCard,2);
         }
     }
 }

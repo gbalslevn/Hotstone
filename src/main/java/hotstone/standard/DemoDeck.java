@@ -29,6 +29,7 @@ package hotstone.standard ;
 
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.DeckStrategy;
+
 import thirdparty.*;
 
 import java.util.ArrayList;

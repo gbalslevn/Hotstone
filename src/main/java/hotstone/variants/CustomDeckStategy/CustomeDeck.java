@@ -3,7 +3,6 @@ package hotstone.variants.CustomDeckStategy;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.DeckStrategy;
 import hotstone.standard.CardImpl;
-import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import thirdparty.CardPODO;
 import thirdparty.PersonalDeckReader;

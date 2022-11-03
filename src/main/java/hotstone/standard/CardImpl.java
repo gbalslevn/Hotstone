@@ -79,7 +79,6 @@ public class CardImpl implements Card, MutableCard {
     @Override
     public void changeAttack(int attackChange) {
         attack += attackChange;
-
     }
 }
 

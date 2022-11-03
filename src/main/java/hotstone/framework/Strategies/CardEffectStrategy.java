@@ -1,8 +1,8 @@
 package hotstone.framework.Strategies;
 
 import hotstone.framework.Card;
-import hotstone.framework.Game;
+import hotstone.standard.StandardHotStoneGame;
 
 public interface CardEffectStrategy {
-    void useEffect(Game game, Card card);
+    void useEffect(StandardHotStoneGame game, Card card);
 }

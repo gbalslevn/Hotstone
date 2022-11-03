@@ -32,12 +32,12 @@ package hotstone.standard;
 
 import hotstone.framework.*;
 import hotstone.variants.AbstractFactory.AlphaStoneFactory;
-import hotstone.variants.AlphaStone.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -235,8 +235,6 @@ public class TestAlphaStone {
     public void shouldFirstCardBeQuatroInRoundTwo() {
         // ends turn to  make it round two
         game.endTurn();
-        // Pedersen draws a card
-        game.drawCard(Player.PEDDERSEN);
         // The card at index 0 should be quatro
         assertThat(game.getCardInHand(Player.PEDDERSEN, 0).getName(), is("Cuatro"));
     }
@@ -404,7 +402,7 @@ public class TestAlphaStone {
     @Test
     public void shouldMinionLooseHealthWhenAttacking() {
         //Set up game with 1 card each
-        testPlayOneCardEach(0,0);
+        testPlayOneCardEach(0,1);
         game.endTurn();
         Card cardFindus = game.getCardInField(Player.FINDUS,0);
         Card cardPeddersen = game.getCardInField(Player.PEDDERSEN,0);
@@ -467,12 +465,10 @@ public class TestAlphaStone {
     public void shouldBeSomethingInTheHand() {
         //There is always 3 cards in the hand in the beginning of the game
         assertThat(game.getHand(Player.FINDUS).iterator().hasNext(), is(true));
+        StandardHotStoneGame game1 = (StandardHotStoneGame) game;
+        game1.setManaHero((MutableHero) game1.getHero(Player.FINDUS),100);
         testPlayCard(Player.FINDUS, 2);
-        game.endTurn();
-        game.endTurn();
         testPlayCard(Player.FINDUS, 1);
-        game.endTurn();
-        game.endTurn();
         testPlayCard(Player.FINDUS, 0);
         //There is 0 cards in the hand
         assertThat(game.getHand(Player.FINDUS).iterator().hasNext(), is(false));

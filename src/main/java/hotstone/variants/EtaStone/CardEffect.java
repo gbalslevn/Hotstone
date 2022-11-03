@@ -3,9 +3,7 @@ package hotstone.variants.EtaStone;
 import hotstone.framework.*;
 import hotstone.framework.Strategies.CardEffectStrategy;
 import hotstone.framework.Strategies.RandomStrategy;
-import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;
-import hotstone.standard.HeroImpl;
 import hotstone.standard.StandardHotStoneGame;
 
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class CardEffect implements CardEffectStrategy {
     }
 
     @Override
-    public void useEffect(Game game, Card card) {
+    public void useEffect(StandardHotStoneGame game, Card card) {
 
         switch (card.getName()) {
             case GameConstants.BROWN_RICE_CARD:
@@ -37,44 +35,40 @@ public class CardEffect implements CardEffectStrategy {
                 break;
             case GameConstants.CHICKEN_CURRY_CARD:
                 chickenCurry(game);
-                ;
             case GameConstants.BEEF_BURGER_CARD:
                 beefBurger(game);
-                ;
                 break;
         }
-
-
     }
 
 
-    private void brownRiceEffect(Game game) {
+    private void brownRiceEffect(StandardHotStoneGame game) {
         MutableHero opponentHero = (MutableHero) game.getHero(Utility.computeOpponent(game.getPlayerInTurn()));
-        opponentHero.changeHealth(-1);
+        game.changeHealthHero(opponentHero,-1);
     }
 
-    private void tomatoSalat(Game game) {
+    private void tomatoSalat(StandardHotStoneGame game) {
         // - 1 because we dont want the card to increase its own attack, this card will always be in last index
         boolean onlyTomatoCardOnField = game.getFieldSize(game.getPlayerInTurn()) == 1;
         if (!onlyTomatoCardOnField) {
             int randomInt = randomStrategy.getRandom(game.getFieldSize(game.getPlayerInTurn())-1);
             MutableCard choosenCard = (MutableCard) game.getCardInField(game.getPlayerInTurn(), randomInt);
-            choosenCard.changeAttack(1);
-
+            game.changeAttackCard(choosenCard,1);
         }
     }
 
-    private void pokeBall(Game game) {
+    private void pokeBall(StandardHotStoneGame game) {
         MutableHero hero = (MutableHero) game.getHero(game.getPlayerInTurn());
-        hero.changeHealth(2);
+        game.changeHealthHero(hero,2);
+
     }
 
-    private void noodleSoup(Game game) {
+    private void noodleSoup(StandardHotStoneGame game) {
         MutableGame game1 = (MutableGame) game;
         game1.drawCard(game1.getPlayerInTurn());
     }
 
-    private void chickenCurry(Game game) {
+    private void chickenCurry(StandardHotStoneGame game) {
         Player opponent = Utility.computeOpponent(game.getPlayerInTurn());
         if (game.getFieldSize(opponent) != 0) {
             int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
@@ -82,13 +76,12 @@ public class CardEffect implements CardEffectStrategy {
         }
     }
 
-    private void beefBurger(Game game) {
+    private void beefBurger(StandardHotStoneGame game) {
         Player opponent = Utility.computeOpponent(game.getPlayerInTurn());
         if (game.getFieldSize(opponent) != 0) {
             int randomInt = randomStrategy.getRandom(game.getFieldSize(opponent));
-            ((MutableCard) game.getCardInField(opponent, randomInt)).changeAttack(2);
+            game.changeAttackCard(((MutableCard) game.getCardInField(opponent, randomInt)),2);
+
         }
     }
-
-
 }

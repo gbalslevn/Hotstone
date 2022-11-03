@@ -1,7 +1,6 @@
 package hotstone.variants.DeltaStone;
 
 import hotstone.framework.Card;
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.DeckStrategy;
 import hotstone.standard.CardImpl;

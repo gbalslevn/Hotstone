@@ -1,6 +1,5 @@
 package hotstone.variants.AlphaStone;
 
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Strategies.DeckStrategy;
 import hotstone.standard.CardImpl;
