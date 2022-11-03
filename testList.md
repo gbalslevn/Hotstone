@@ -91,10 +91,28 @@ EtaStone Test
 - **OK** When Beef Burger is played Add +2 attack to random opponent minion; 
 
 
+<<<<<<< HEAD
 SemiStone Test
+=======
+SemiStoneFixed Test
+>>>>>>> iteration_7
 - **OK** Pedderson Can get thaiChef as hero type (Test stub). 
 - **OK** if Pedderson have thaiChef, his power is accordingly(Test stub). 
 
 
+<<<<<<< HEAD
+=======
+Observer Test
+- When card is played the observer should store it
+- When turn changes the observer should store it
+- When card is attacking the observer should store it
+- When a player wins the observer should store it
+
+
+Backlog
+- Semistone er ikke testet ordentligt. Den virker ikke med gameObserver
+- merge virker ikke
+
+>>>>>>> iteration_7
 
 Jeff

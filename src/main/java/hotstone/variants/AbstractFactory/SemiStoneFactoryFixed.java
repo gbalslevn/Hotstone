@@ -30,7 +30,7 @@ public ManaStrategy createManaStrategy() {
 
     @Override
     public TypeStrategy createTypeStrategy() {
-        return new RandomHeroType(new RandomFixed(1));
+        return new RandomHeroType(new RandomFixed(0));
     }
 
     @Override

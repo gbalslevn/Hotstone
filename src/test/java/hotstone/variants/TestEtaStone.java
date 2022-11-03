@@ -2,6 +2,7 @@ package hotstone.variants;
 
 import hotstone.framework.Card;
 import hotstone.framework.Game;
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;

@@ -4,6 +4,7 @@ import hotstone.framework.StoneFactory;
 import hotstone.framework.Strategies.*;
 import hotstone.variants.BetaStone.IncreaseManaUntil7;
 import hotstone.variants.BetaStone.WinWhenHealthIs0;
+import hotstone.variants.CustomDeckStategy.CustomeDeck;
 import hotstone.variants.EpsilonStone.HeroPowerFrenchItalian;
 import hotstone.variants.EpsilonStone.RandomReal;
 import hotstone.variants.EtaStone.CardEffect;
@@ -12,7 +13,7 @@ import hotstone.variants.GammaStone.HeroPowerThaiDanish;
 import hotstone.variants.SemiStone.AlternatingHeroPower;
 import hotstone.variants.SemiStone.RandomHeroType;
 
-public class SemiStoneFactory implements StoneFactory {
+public class CutomizedDeckFactory implements StoneFactory {
     @Override
     public ManaStrategy createManaStrategy() {
         return new IncreaseManaUntil7();
@@ -35,7 +36,7 @@ public class SemiStoneFactory implements StoneFactory {
 
     @Override
     public DeckStrategy createDeckStrategy() {
-        return new EtaStoneDishDeck();
+        return new CustomeDeck();
     }
 
     @Override

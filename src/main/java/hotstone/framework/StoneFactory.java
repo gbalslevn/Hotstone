@@ -9,5 +9,6 @@ public interface StoneFactory {
     TypeStrategy createTypeStrategy();
     DeckStrategy createDeckStrategy();
     CardEffectStrategy createEffectStrategy();
+    // GameObserver createObserverStrategy();
 
 }

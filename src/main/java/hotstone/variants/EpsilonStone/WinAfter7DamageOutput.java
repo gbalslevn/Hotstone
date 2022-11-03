@@ -8,7 +8,7 @@ import hotstone.standard.Stats;
 
 import javax.xml.crypto.dsig.keyinfo.PGPData;
 
-public class WinAfter7DamageOutput implements WinnerStategy {
+public class    WinAfter7DamageOutput implements WinnerStategy {
     @Override
     public Player calculateWinner(Game game) {
         return Stats.getDamageOutput(game.getPlayerInTurn(), game.getTurnNumber()) >= 7 ? game.getPlayerInTurn() : null;
