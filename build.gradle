@@ -189,5 +189,5 @@ task hotseat(type: JavaExec) {
 
     mainClass = 'hotstone.main.HotSeatStone'
     classpath = sourceSets.main.runtimeClasspath
-    args variant
+    //args variant
 }
