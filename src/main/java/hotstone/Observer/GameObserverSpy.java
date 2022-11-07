@@ -1,62 +1,60 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package hotstone.Observer;
 
 import hotstone.framework.Card;
 import hotstone.framework.Player;
 
 public class GameObserverSpy implements GameObserver {
-
     private String lastMethodCalled = "none";
-    @Override
+
+    public GameObserverSpy() {
+    }
+
     public void onCardPlay(Player who, Card card) {
-        lastMethodCalled = "onCardPlay";
+        this.lastMethodCalled = "onCardPlay";
     }
 
-    @Override
     public void onTurnChangeTo(Player playerBecomingActive) {
-        lastMethodCalled = "onTurnChangeTo";
+        this.lastMethodCalled = "onTurnChangeTo";
     }
 
-    @Override
     public void onAttackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
-        lastMethodCalled = "onAttackCard";
+        this.lastMethodCalled = "onAttackCard";
     }
 
-    @Override
     public void onAttackHero(Player playerAttacking, Card attackingCard) {
-        lastMethodCalled = "onAttackHero";
+        this.lastMethodCalled = "onAttackHero";
     }
 
-    @Override
     public void onUsePower(Player who) {
-        lastMethodCalled = "onUsePower";
+        this.lastMethodCalled = "onUsePower";
     }
 
-    @Override
     public void onCardDraw(Player who, Card drawnCard) {
-        lastMethodCalled = "onCardDraw";
+        this.lastMethodCalled = "onCardDraw";
     }
 
-    @Override
     public void onCardUpdate(Card card) {
-        lastMethodCalled = "onCardUpdate";
+        this.lastMethodCalled = "onCardUpdate";
     }
 
-    @Override
     public void onCardRemove(Player who, Card card) {
-        lastMethodCalled = "onCardRemove";
+        this.lastMethodCalled = "onCardRemove";
     }
 
-    @Override
     public void onHeroUpdate(Player who) {
-        lastMethodCalled = "onHeroUpdate";
+        this.lastMethodCalled = "onHeroUpdate";
     }
 
-    @Override
     public void onGameWon(Player playerWinning) {
-        lastMethodCalled = "onGameWon";
+        this.lastMethodCalled = "onGameWon";
     }
 
     public String lastMethodCalled() {
-        return lastMethodCalled;
+        return this.lastMethodCalled;
     }
 }

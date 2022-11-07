@@ -10,10 +10,6 @@ public class LoggingStandartHotstoneGame implements Game {
         this.decoratee = game;
     }
 
-    @Override
-    public void addObserver(GameObserver observer) {
-
-    }
 
     @Override
     public Player getPlayerInTurn() {
@@ -101,4 +97,8 @@ public class LoggingStandartHotstoneGame implements Game {
         return decoratee.usePower(who);
     }
 
+    @Override
+    public void addObserver(GameObserver var1) {
+
+    }
 }

@@ -382,6 +382,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
         hero.changeHealth(healthChange);
         observerHandler.notifyHeroUpdate(hero.getOwner());
     }
+
+
 }
 
 
