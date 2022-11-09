@@ -307,6 +307,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         MutableHero heroInTurn = hero.get(who);
         Boolean isHeroActive = heroInTurn.isActive();
         if (!isHeroActive) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
+        if(heroInTurn.getMana() <= GameConstants.HERO_POWER_COST) return Status.NOT_ENOUGH_MANA;
         executePower(heroInTurn);
         observerHandler.notifyUsePower(who);
         return Status.OK;

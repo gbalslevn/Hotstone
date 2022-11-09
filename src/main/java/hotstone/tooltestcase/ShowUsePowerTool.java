@@ -23,6 +23,7 @@ import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.UsePowerTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
 import minidraw.standard.SelectionTool;
@@ -38,6 +39,6 @@ public class ShowUsePowerTool {
                             HotStoneDrawingType.HOTSEAT_MODE));
     editor.open();
     // TODO: Solve exercise by developing a UsePowerTool
-    editor.setTool(new SelectionTool(editor));
+    editor.setTool(new UsePowerTool(editor, game, Player.FINDUS));
   }
 }
