@@ -17,9 +17,10 @@
 
 package hotstone.tooltestcase;
 
-import hotstone.figuretestcase.doubles.FakeObjectGame;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
 import minidraw.framework.DrawingEditor;
@@ -29,7 +30,7 @@ import minidraw.standard.SelectionTool;
 /** Visual test program to develop use power tool */
 public class ShowUsePowerTool {
   public static void main(String[] args) {
-    Game game = new FakeObjectGame();
+    Game game = new StandardHotStoneGame(new SemiStoneFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication("Click Hero to use power...",

@@ -80,9 +80,8 @@ public class CardPlayTool extends NullTool {
 
     if (isDraggingAnActor && isHittingField) {
       Card associatedCard = draggedActor.getAssociatedCard();
+      Status status = game.playCard(whoAmIPlaying,associatedCard);
       // TODO: Do the actual call instead of this fake code
-      System.out.println("TODO: Do the actual call to the domain code...");
-      Status status = Status.NOT_ENOUGH_MANA;
       if (status == Status.OK) {
         moveCardBack = false;
       }

@@ -17,9 +17,10 @@
 
 package hotstone.tooltestcase;
 
-import hotstone.figuretestcase.doubles.FakeObjectGame;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
 import hotstone.view.tool.CardPlayTool;
@@ -29,7 +30,7 @@ import minidraw.standard.MiniDrawApplication;
 /** Visual test program to develop the CardPlay Tool */
 public class ShowPlayCardTool {
   public static void main(String[] args) {
-    Game game = new FakeObjectGame();
+    Game game = new StandardHotStoneGame(new SemiStoneFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication( "Drag Cards from the hand to the field...",

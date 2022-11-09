@@ -80,5 +80,9 @@ public class CardImpl implements Card, MutableCard {
     public void changeAttack(int attackChange) {
         attack += attackChange;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }
 
