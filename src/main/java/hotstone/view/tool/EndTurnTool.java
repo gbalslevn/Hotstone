@@ -27,35 +27,38 @@ import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
 
-/** MiniDraw Tool to 'end the turn' */
+/**
+ * MiniDraw Tool to 'end the turn'
+ */
 public class EndTurnTool extends NullTool {
-  protected final HotStoneDrawing model;
-  private Game game;
+    protected final HotStoneDrawing model;
+    private Game game;
 
-  public EndTurnTool(DrawingEditor editor, Game game) {
-    // Note - we need access to the specialized 'hotseat'
-    // behaviour, to swap UI in the model, alas a hard
-    // coupling, made by casting...
-    model = (HotStoneDrawing) editor.drawing();
-    this.game = game;
-  }
-
-  @Override
-  public void mouseDown(MouseEvent e, int x, int y) {}
-
-  @Override
-  public void mouseUp(MouseEvent e, int x, int y) {
-    // Find the button below
-    Figure figureAtPosition = model.findFigure(e.getX(), e.getY());
-    if (figureAtPosition instanceof HotStoneFigure) {
-      HotStoneFigure hsf = (HotStoneFigure) figureAtPosition;
-      if (hsf.getType() == HotStoneFigureType.TURN_BUTTON) {
-        game.endTurn();
-        // The Drawing will receive the end of turn event and
-        // initiate the display with the hot seat swap button
-      } else if (hsf.getType() == HotStoneFigureType.SWAP_BUTTON) {
-        model.endHotSeatState();
-      }
+    public EndTurnTool(DrawingEditor editor, Game game) {
+        // Note - we need access to the specialized 'hotseat'
+        // behaviour, to swap UI in the model, alas a hard
+        // coupling, made by casting...
+        model = (HotStoneDrawing) editor.drawing();
+        this.game = game;
     }
-  }
+
+    @Override
+    public void mouseDown(MouseEvent e, int x, int y) {
+    }
+
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y) {
+        // Find the button below
+        Figure figureAtPosition = model.findFigure(e.getX(), e.getY());
+        if (figureAtPosition instanceof HotStoneFigure) {
+            HotStoneFigure hsf = (HotStoneFigure) figureAtPosition;
+            if (hsf.getType() == HotStoneFigureType.TURN_BUTTON) {
+                game.endTurn();
+                // The Drawing will receive the end of turn event and
+                // initiate the display with the hot seat swap button
+            } else if (hsf.getType() == HotStoneFigureType.SWAP_BUTTON) {
+                model.endHotSeatState();
+            }
+        }
+    }
 }

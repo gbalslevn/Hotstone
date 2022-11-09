@@ -220,6 +220,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         Hero hero = getHero(who);
         boolean isEnoughMana = hero.getMana() >= card.getManaCost();
         if (!isEnoughMana) return Status.NOT_ENOUGH_MANA;
+
         return Status.OK;
     }
 
@@ -288,6 +289,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Damage the opponents hero
         MutableHero heroDamaged = hero.get(Utility.computeOpponent(playerAttacking));
         changeHealthHero(heroDamaged,-cardDamage);
+        setActiveFalseCard((MutableCard) attackingCard);
         observerHandler.notifyAttackHero(playerAttacking, attackingCard);
         observerHandler.notifyHeroUpdate(Utility.computeOpponent(playerAttacking));
         return Status.OK;

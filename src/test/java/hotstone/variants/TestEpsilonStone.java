@@ -2,6 +2,7 @@ package hotstone.variants;
 
 import hotstone.framework.Card;
 import hotstone.framework.Game;
+import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
@@ -43,6 +44,8 @@ public class TestEpsilonStone {
 
     @Test
     public void shouldIncrease2AttackWhenPastaPowerIsUsed() {
+        StandardHotStoneGame g = (StandardHotStoneGame) game;
+        g.setManaHero((MutableHero) g.getHero(Player.PEDDERSEN), 100);
         game.endTurn();
         Card card = game.getCardInHand(Player.PEDDERSEN, 0);
         int attackBefore = card.getAttack();

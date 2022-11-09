@@ -400,7 +400,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onAttackHero(Player playerAttacking, Card attackingCard) {
-    addMessage("Player " + playerAttacking + " uses " + attackingCard + " to attack "
+    addMessage("Player " + playerAttacking + " uses " + attackingCard.getName() + " to attack "
             + game.getHero(Utility.computeOpponent(playerAttacking)).getType());
   }
 

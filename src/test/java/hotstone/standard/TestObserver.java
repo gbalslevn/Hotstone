@@ -1,10 +1,7 @@
 package hotstone.standard;
 
 import hotstone.Observer.GameObserverSpy;
-import hotstone.framework.Card;
-import hotstone.framework.MutableGame;
-import hotstone.framework.Player;
-import hotstone.framework.StoneFactory;
+import hotstone.framework.*;
 import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +67,9 @@ public class TestObserver {
 
     @Test
     public void shouldOutputusePower(){
-        game.usePower(Player.PEDDERSEN);
+        StandardHotStoneGame g = (StandardHotStoneGame) game;
+        g.setManaHero((MutableHero) g.getHero(Player.FINDUS), 100);
+        game.usePower(Player.FINDUS);
         assertThat(observer.lastMethodCalled(), is("onUsePower"));
     }
 }

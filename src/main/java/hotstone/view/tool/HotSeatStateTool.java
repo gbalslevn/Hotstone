@@ -62,9 +62,9 @@ public class HotSeatStateTool extends NullTool {
               hsf.getType() == HotStoneFigureType.SWAP_BUTTON) {
         state = new EndTurnTool(editor, game);
       } else if (hsf.getType() == HotStoneFigureType.MINION_FIGURE) {
-        state = theNullTool;
+        state = new MinionAttackTool(editor,game,game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
-        state = theNullTool;
+        state = new UsePowerTool(editor,game,game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.WIN_BUTTON) {
         state = theNullTool; // Have to kill the window to restart.
       }

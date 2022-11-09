@@ -1,13 +1,15 @@
 package hotstone.view.tool;
 
-import hotstone.framework.*;
+import hotstone.framework.Game;
+import hotstone.framework.MutableHero;
+import hotstone.framework.Player;
+import hotstone.framework.Status;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.view.GfxConstants;
 import hotstone.view.core.HotStoneDrawing;
-import hotstone.view.figure.HotStoneActorFigure;
 import hotstone.view.figure.HotStoneFigure;
 import hotstone.view.figure.HotStoneFigureType;
-import minidraw.framework.*;
+import minidraw.framework.DrawingEditor;
+import minidraw.framework.Figure;
 import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
@@ -49,7 +51,6 @@ public class UsePowerTool extends NullTool {
             HotStoneFigure hsf = (HotStoneFigure) figureAtPosition;
                 Status status = game.usePower(whoAmIPlaying);
             if (hsf.getType() == HotStoneFigureType.HERO_FIGURE && status == Status.OK) {
-
                     editor.showStatus("Hero uses power. Result =" + status);
             }
         }

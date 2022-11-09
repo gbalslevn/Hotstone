@@ -18,24 +18,34 @@
 package hotstone.tooltestcase;
 
 import hotstone.framework.Game;
+import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AbstractFactory.SemiStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.MinionAttackTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
-import minidraw.standard.SelectionTool;
 
 /** Visual test program to develop minion attack tool */
 public class ShowMinionAttackTool {
   public static void main(String[] args) {
     Game game = new StandardHotStoneGame(new SemiStoneFactory());
 
-    // To enable any testing, we need to field a Card for
-    // Findus.
+    StandardHotStoneGame g = (StandardHotStoneGame) game;
+    g.setManaHero((MutableHero) g.getHero(Player.FINDUS),100);
+
     game.playCard(Player.FINDUS,
             game.getCardInHand(Player.FINDUS, 0));
+
+    game.endTurn();
+
+    g.setManaHero((MutableHero) g.getHero(Player.PEDDERSEN),100);
+    game.playCard(Player.PEDDERSEN,
+            game.getCardInHand(Player.PEDDERSEN, 0));
+
+    game.endTurn();
 
     DrawingEditor editor =
             new MiniDrawApplication("Drag Minions to perform attacks...",
@@ -43,6 +53,6 @@ public class ShowMinionAttackTool {
                             HotStoneDrawingType.HOTSEAT_MODE));
     editor.open();
     // TODO: Solve exercise by developing a MinionAttackTool
-    editor.setTool(new SelectionTool(editor));
+    editor.setTool(new MinionAttackTool(editor,game,Player.FINDUS));
   }
 }

@@ -1,6 +1,7 @@
 package hotstone.variants;
 
 import hotstone.framework.Game;
+import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
@@ -27,6 +28,8 @@ public class TestSemiStoneFixed {
     }
     @Test
     public void shouldPeddersonDamageOpponentHero2(){
+        StandardHotStoneGame g = (StandardHotStoneGame) game;
+        g.setManaHero((MutableHero) g.getHero(Player.PEDDERSEN), 100);
         game.endTurn();
         int healthBefore = game.getHero(Player.FINDUS).getHealth();
         game.usePower(Player.PEDDERSEN);
