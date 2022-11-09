@@ -17,12 +17,9 @@
 
 package hotstone.visualtestcase;
 
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.MutableHero;
-import hotstone.framework.Player;
+import hotstone.framework.*;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.variants.AbstractFactory.SemiStoneFactory;
+import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
 import minidraw.framework.DrawingEditor;
@@ -31,94 +28,87 @@ import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
 
-/** Visual tests of the ability of HotStoneDrawing to respond to
+/**
+ * Visual tests of the ability of HotStoneDrawing to respond to
  * observer events notified by the Game instance - i.e. the Domain
  * to the UI flow of events.
  */
 public class ShowUpdate {
-  public static void main(String[] args) {
-    Game game = new StandardHotStoneGame(new SemiStoneFactory());
+    public static void main(String[] args) {
+        Game game = new StandardHotStoneGame(new AlphaStoneFactory());
 
-    DrawingEditor editor =
-      new MiniDrawApplication( "Click anywhere to progress in an update sequence...",
-                               new HotStoneFactory(game, Player.FINDUS,
-                                       HotStoneDrawingType.OPPONENT_MODE));
-    editor.open();
-    editor.setTool( new TriggerGameUpdateTool(editor, game) );
-  }
+        DrawingEditor editor =
+                new MiniDrawApplication("Click anywhere to progress in an update sequence...",
+                        new HotStoneFactory(game, Player.FINDUS,
+                                HotStoneDrawingType.OPPONENT_MODE));
+        editor.open();
+        editor.setTool(new TriggerGameUpdateTool(editor, game));
+    }
 }
 
 class TriggerGameUpdateTool extends NullTool {
-  private DrawingEditor editor;
-  private Game game;
-  private int count;
+    private DrawingEditor editor;
+    private Game game;
+    private int count;
 
-  public TriggerGameUpdateTool(DrawingEditor editor, Game game) {
-    this.editor = editor;
-    this.game = game;
-    count = 0;
-  }
-
-  @Override
-  public void mouseUp(MouseEvent e, int x, int y) {
-    switch (count) {
-      case 0: {
-        StandardHotStoneGame g = (StandardHotStoneGame) game;
-        g.changeManaHero((MutableHero) g.getHero(Player.FINDUS),100);
-        editor.showStatus("Playing Findus Card # 0");
-        Card c = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, c);
-        break;
-      }
-      case 1: {
-        editor.showStatus("Playing Findus Card # 1");
-        Card c = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, c);
-        break;
-      }
-      case 2: {
-        editor.showStatus("Playing Findus Card # 2");
-        Card c = game.getCardInHand(Player.FINDUS, 0);
-        game.playCard(Player.FINDUS, c);
-        break;
-      }
-      case 3: {
-        StandardHotStoneGame g = (StandardHotStoneGame) game;
-        g.drawCard(Player.FINDUS);
-        editor.showStatus("Playing Findus draws a card");
-        break;
-      }
-      case 4: {
-        game.usePower(Player.FINDUS);
-        editor.showStatus("Playing Findus uses hero power");
-        break;
-      }
-      case 5:{
-        game.endTurn();
-        Card card = game.getCardInHand(Player.PEDDERSEN, 0);
-        game.playCard(Player.PEDDERSEN,card);
-        editor.showStatus("Playing Pedderson Card # 0");
-        game.endTurn();
-        break;
-      }
-      case 6: {
-        Card attacker = game.getCardInField(Player.FINDUS, 2);
-        Card defender = game.getCardInField(Player.PEDDERSEN, 0);
-        editor.showStatus("Attack/Findus with " + attacker.getName() + " on " + defender.getName()
-                + "; Findus Card REMOVED; Peddersen's card Health reduced.");
-        game.attackCard(Player.FINDUS, attacker, defender);
-        break;
-      }
-      case 7: {
-        // TODO: keep adding to this 'list' until all game mutator calls
-        // have been tested and verified that the UI responds correctly.
-        editor.showStatus("TODO: ADD SOME MORE game.doSomething() and develop UI behaviour");
-        break;
-      }
-      default: {
-        editor.showStatus("No more events in the list...");
-      }
+    public TriggerGameUpdateTool(DrawingEditor editor, Game game) {
+        this.editor = editor;
+        this.game = game;
+        count = 0;
     }
-    count++;
-  }
+
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y) {
+        switch (count) {
+            case 0: {
+                StandardHotStoneGame g = (StandardHotStoneGame) game;
+                g.changeManaHero((MutableHero) g.getHero(Player.FINDUS), 100);
+                g.changeManaHero((MutableHero) g.getHero(Player.PEDDERSEN), 100);
+                editor.showStatus("Playing Findus Card # 0");
+                Card c = game.getCardInHand(Player.FINDUS, 0);
+                game.playCard(Player.FINDUS, c);
+                break;
+            }
+            case 1: {
+                editor.showStatus("Playing Findus Card # 1");
+                Card c = game.getCardInHand(Player.FINDUS, 0);
+                game.playCard(Player.FINDUS, c);
+                break;
+            }
+            case 2: {
+                editor.showStatus("Pedderson Findus Card # 0");
+                game.endTurn();
+                Card c = game.getCardInHand(Player.PEDDERSEN, 0);
+                game.playCard(Player.PEDDERSEN, c);
+                game.endTurn();
+                break;
+            }
+            case 3: {
+                game.usePower(Player.FINDUS);
+                editor.showStatus("Playing Findus uses hero power");
+                break;
+            }
+            case 4: {
+                Card attacker = game.getCardInField(Player.FINDUS, 0);
+                Card defender = game.getCardInField(Player.PEDDERSEN, 0);
+                editor.showStatus("Attack/Findus with " + attacker.getName() + " on " + defender.getName()
+                        + "; Findus Card REMOVED; Peddersen's card REMOVED.");
+                game.attackCard(Player.FINDUS, attacker, defender);
+                break;
+            }
+            case 5: {
+                game.endTurn();
+                game.endTurn();
+                game.endTurn();
+                game.endTurn();
+                game.endTurn();
+                editor.showStatus("Findus wins after 4 rounds(8 rounds)");
+                break;
+            }
+            default: {
+                editor.showStatus("No more events in the list...");
+            }
+        }
+        count++;
+    }
 }

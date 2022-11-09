@@ -415,14 +415,11 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // refresh the hand; otherwise just update the summary
     // of the opponent player
     if (who == playerShown) {
-
-      // TODO: update opponent's summary
-      //createActorAndUpdateMapping(drawnCard, HotStoneFigureType.CARD_FIGURE);
+      createActorAndUpdateMapping(drawnCard, HotStoneFigureType.CARD_FIGURE);
       refreshHand(who);
-      requestUpdate();
     } else {
-
-      // TODO: update opponent's summary
+      opponentSummary.setText(computeHeroSummary(
+              Utility.computeOpponent(playerShown)));
     }
     addMessage(who + " draws a card.");
   }
@@ -442,7 +439,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   public void onCardRemove(Player who, Card card) {
     removeActorAndUpdateMapping(card);
     refreshField(who);
-    requestUpdate();
     // NOTE: be SURE to use the
     // right internal data structure manipulation method
     // so both the figure collection AND the actorMap

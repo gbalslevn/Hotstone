@@ -54,7 +54,6 @@ public class UsePowerTool extends NullTool {
                     editor.showStatus("Hero uses power. Result =" + status);
             }
         }
-        // TODO: Do the actual call instead of this fake code
     }
 }
 

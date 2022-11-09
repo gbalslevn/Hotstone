@@ -81,7 +81,6 @@ public class MinionAttackTool extends NullTool {
     public void mouseUp(MouseEvent e, int x, int y) {
         Drawing model = editor.drawing();
         model.zOrder(draggedActor, ZOrder.TO_BOTTOM);
-
         // Invoke related facade method, if figure is a card
         boolean isDraggingAnActor = draggedActor != null;
         //find defending card
@@ -96,10 +95,7 @@ public class MinionAttackTool extends NullTool {
                     Card defendingCard = defendingActor.getAssociatedCard();
                     //attack card
                     Status status = game.attackCard(whoAmIPlaying, attackingCard, defendingCard);
-
                     editor.showStatus("Attacking minion. Result = " + status);
-
-
                 } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
                     //attack hero
                     Status statusHeroAttack = game.attackHero(whoAmIPlaying, attackingCard);
