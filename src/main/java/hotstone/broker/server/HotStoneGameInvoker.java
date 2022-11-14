@@ -26,6 +26,7 @@ public class HotStoneGameInvoker implements Invoker {
 
   @Override
   public String handleRequest(String request) {
+
     return null;
   }
 }

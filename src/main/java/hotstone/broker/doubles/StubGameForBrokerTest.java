@@ -24,7 +24,6 @@ public class StubGameForBrokerTest {
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(crh);
         game = new GameClientProxy(requestor);
-
     }
     @Test
     public void ShouldHaveTurnNumber312(){
