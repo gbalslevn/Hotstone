@@ -33,6 +33,8 @@ dependencies {
     // Depend on the MiniDraw library
     implementation group: 'com.baerbak.maven',
             name: 'minidraw', version: '3.0'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
     // Use JUnit Jupiter Engine for testing.
@@ -43,6 +45,14 @@ dependencies {
             name: 'hamcrest-library', version: '2.2'
              
     implementation 'com.baerbak.maven:hotstone-deck:1.0-SNAPSHOT'
+    // The FRDS.Broker lib
+    implementation group: 'com.baerbak.maven',
+            name: 'broker', version: '3.0.1'
+
+    // Bind SLF4J it to the Log4J logging framework
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12',
+            version: '1.7.36'
+
 }
 
 test {
@@ -64,6 +74,24 @@ jacoco {
 // === Execution tasks - for running visual tests for
 //      manual test-driving the MiniDraw framework customization.
 
+// === Distributed HotStone - executing targets
+
+task hotstoneServer(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run HotStone server'
+
+    mainClass = 'hotstone.broker.main.HotStoneServer'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task hotstoneStorytest(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run a HotStone Story as a MANUAL TEST client '
+
+    mainClass = 'hotstone.broker.main.HotStoneStoryTest'
+    classpath = sourceSets.main.runtimeClasspath
+    args host
+}
 
 // Visual test cases for basic HotStone related 'Figure' types
 
