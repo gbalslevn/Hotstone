@@ -37,7 +37,7 @@ public class HotStoneGameInvoker implements Invoker {
 
     private Hero fakeItHero = new StubHero();
 
-    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS);
+    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS,1,"");
 
     public HotStoneGameInvoker(Game servant) {
         game = servant;
@@ -151,7 +151,26 @@ public class HotStoneGameInvoker implements Invoker {
                 String name = cardServant.getName();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(name));
             }
-
+            if (requestObject.getOperationName().equals(OperationNames.CARD_GET_MANA_COST)){
+                int manaCost = cardServant.getManaCost();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(manaCost));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.CARD_GET_ATTACK)){
+                int attack = cardServant.getAttack();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(attack));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.CARD_GET_HEALTH)){
+                int health = cardServant.getHealth();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(health));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.CARD_IS_ACTIVE)){
+                boolean isActive = cardServant.isActive();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(isActive));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.CARD_GET_OWNER)){
+                Player owner = cardServant.getOwner();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(owner));
+            }
 
         } catch (Exception e) {
             reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());

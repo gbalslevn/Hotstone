@@ -10,6 +10,7 @@ import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.broker.client.CardClientProxy;
+import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,5 +34,26 @@ public class StubCardForBrokerTest {
     @Test
     public void shouldHaveNameNoodleSoup(){
         assertThat(card.getName(),is(GameConstants.NOODLE_SOUP_CARD));
+    }
+    @Test
+    public void shouldHave1Mana(){
+        assertThat(card.getManaCost(),is(1));
+    }
+    @Test
+    public void shouldHave1Attack(){
+        assertThat(card.getAttack(),is(1));
+    }
+
+    @Test
+    public void shouldHave1health(){
+        assertThat(card.getHealth(),is(1));
+    }
+    @Test
+    public void shouldBeActive(){
+        assertThat(card.isActive(),is(false));
+    }
+    @Test
+    public void shouldBeFindusOwner(){
+        assertThat(card.getOwner(),is(Player.FINDUS));
     }
 }

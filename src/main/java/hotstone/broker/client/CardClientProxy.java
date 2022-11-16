@@ -23,26 +23,31 @@ public class CardClientProxy implements Card, ClientProxy {
 
     @Override
     public int getManaCost() {
-        return 0;
+        int mana = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_MANA_COST, Integer.class);
+        return mana;
     }
 
     @Override
     public int getAttack() {
-        return 0;
+        int attack = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_ATTACK, Integer.class);
+        return attack;
     }
 
     @Override
     public int getHealth() {
-        return 0;
+        int health = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_HEALTH, Integer.class);
+        return health;
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        boolean isActive = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_IS_ACTIVE, Boolean.class);
+        return isActive;
     }
 
     @Override
     public Player getOwner() {
-        return null;
+        Player owner = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID,OperationNames.CARD_GET_OWNER,Player.class);
+        return owner;
     }
 }
