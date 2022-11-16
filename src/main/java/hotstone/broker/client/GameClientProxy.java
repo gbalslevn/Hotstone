@@ -17,14 +17,11 @@
 
 package hotstone.broker.client;
 
-import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.Observer.GameObserver;
 import hotstone.broker.common.OperationNames;
 import hotstone.framework.*;
-
-import java.lang.reflect.Type;
 
 /** Template/starter code for your ClientProxy of Game.
  */
@@ -44,7 +41,8 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Player getPlayerInTurn() {
-    return null;
+    Player playerInTurn = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_PLAYER_IN_TURN, Player.class);
+    return playerInTurn;
   }
 
   @Override
@@ -54,12 +52,14 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Player getWinner() {
-    return null;
+    Player winner = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_WINNER, Player.class);
+    return winner;
   }
 
   @Override
   public int getDeckSize(Player who) {
-    return 0;
+    int deckSize = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_DECK_SIZE, Integer.class, who);
+    return deckSize;
   }
 
   @Override
@@ -90,7 +90,8 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public int getFieldSize(Player who) {
-    return 0;
+    int fieldSize = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_FIELD_SIZE, Integer.class, who);
+    return fieldSize;
   }
 
   @Override
@@ -100,12 +101,15 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Status playCard(Player who, Card card) {
-    return null;
+    Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_PLAY_CARD, Status.class, who, card);
+    return status;
   }
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
-    return null;
+    Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_ATTACK_CARD, Status.class,
+            playerAttacking, attackingCard, defendingCard);
+    return status;
   }
 
   @Override
