@@ -7,6 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,4 +30,11 @@ public class StubGameForBrokerTest {
     public void ShouldHaveTurnNumber312(){
         assertThat(game.getTurnNumber(),is(312));
     }
+
+    @Test
+    public void shouldHaveHandsize3(){
+        assertThat(game.getHandSize(Player.FINDUS), is(3));
+    }
+
+
 }

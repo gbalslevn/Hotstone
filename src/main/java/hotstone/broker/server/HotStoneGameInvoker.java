@@ -25,6 +25,7 @@ import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +42,8 @@ public class HotStoneGameInvoker implements Invoker {
     // Do the demarshalling
     RequestObject requestObject = gson.fromJson(request, RequestObject.class);
     // used for when there is a parameter
-    //JsonArray array = JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
+    JsonArray array = JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
+
 
 
     ReplyObject reply = null;
@@ -51,6 +53,11 @@ public class HotStoneGameInvoker implements Invoker {
         //Game go = gson.fromJson(array.get(0), Game.class);
         int turnNumber = game.getTurnNumber();
         reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(turnNumber));
+      }
+      if(requestObject.getOperationName().equals(OperationNames.GAME_GET_HAND_SIZE)){
+        Player playerInTurn = gson.fromJson(array.get(0), Player.class);
+        int handSize = game.getHandSize(playerInTurn);
+        reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(handSize));
       }
     } catch (Exception e) {
       reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());

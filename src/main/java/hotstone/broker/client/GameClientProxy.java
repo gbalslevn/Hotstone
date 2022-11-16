@@ -30,7 +30,6 @@ import java.lang.reflect.Type;
  */
 public class GameClientProxy implements Game, ClientProxy {
   public static final String GAME_OPBJECTID = "singleton";
-  Type intType = new TypeToken<Integer>(){}.getType();
 
   private final Requestor requestor;
   public GameClientProxy(Requestor requestor) {
@@ -75,7 +74,8 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public int getHandSize(Player who) {
-    return 0;
+    int handsize = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_HAND_SIZE, Integer.class, who);
+    return handsize;
   }
 
   @Override
