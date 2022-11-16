@@ -17,16 +17,44 @@
 
 package hotstone.broker.server;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import frds.broker.Invoker;
+import frds.broker.ReplyObject;
+import frds.broker.RequestObject;
+import hotstone.broker.common.OperationNames;
 import hotstone.framework.Game;
 
+import javax.servlet.http.HttpServletResponse;
+
 public class HotStoneGameInvoker implements Invoker {
+  private final Game game;
+  private final Gson gson;
   public HotStoneGameInvoker(Game servant) {
+    game = servant;
+    gson = new Gson();
   }
 
   @Override
   public String handleRequest(String request) {
+    // Do the demarshalling
+    RequestObject requestObject = gson.fromJson(request, RequestObject.class);
+    // used for when there is a parameter
+    //JsonArray array = JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
-    return null;
+
+    ReplyObject reply = null;
+
+    try{
+      if(requestObject.getOperationName().equals(OperationNames.GAME_GET_TURN_NUMBER)){
+        //Game go = gson.fromJson(array.get(0), Game.class);
+        int turnNumber = game.getTurnNumber();
+        reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(turnNumber));
+      }
+    } catch (Exception e) {
+      reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+    return gson.toJson(reply);
   }
 }

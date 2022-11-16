@@ -29,5 +29,4 @@ public class StubGameForBrokerTest {
     public void ShouldHaveTurnNumber312(){
         assertThat(game.getTurnNumber(),is(312));
     }
-
 }

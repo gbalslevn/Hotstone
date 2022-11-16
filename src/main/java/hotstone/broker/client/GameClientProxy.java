@@ -17,15 +17,20 @@
 
 package hotstone.broker.client;
 
+import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.Observer.GameObserver;
+import hotstone.broker.common.OperationNames;
 import hotstone.framework.*;
+
+import java.lang.reflect.Type;
 
 /** Template/starter code for your ClientProxy of Game.
  */
 public class GameClientProxy implements Game, ClientProxy {
   public static final String GAME_OPBJECTID = "singleton";
+  Type intType = new TypeToken<Integer>(){}.getType();
 
   private final Requestor requestor;
   public GameClientProxy(Requestor requestor) {
@@ -34,7 +39,8 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public int getTurnNumber() {
-    return 312;
+    int number = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_TURN_NUMBER, Integer.class);
+    return number;
   }
 
   @Override
