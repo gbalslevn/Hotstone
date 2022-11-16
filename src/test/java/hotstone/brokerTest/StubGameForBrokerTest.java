@@ -1,10 +1,12 @@
-package hotstone.broker.doubles;
+package hotstone.brokerTest;
 
 import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
+import hotstone.broker.doubles.LocalMethodClientRequestHandler;
+import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.Card;
 import hotstone.framework.Game;

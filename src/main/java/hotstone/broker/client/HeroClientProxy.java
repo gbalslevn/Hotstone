@@ -25,22 +25,26 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public int getHealth() {
-        return 0;
+        int health = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.HERO_GET_HEALTH, Integer.class);
+        return health;
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        boolean activeStatus = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.HERO_IS_ACTIVE, Boolean.class);
+        return activeStatus;
     }
 
     @Override
     public String getType() {
-        return null;
+        String type = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.HERO_GET_TYPE, String.class);
+        return type;
     }
 
     @Override
     public Player getOwner() {
-        return null;
+        Player player = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.HERO_GET_OWNER, Player.class);
+        return player;
     }
 
     @Override

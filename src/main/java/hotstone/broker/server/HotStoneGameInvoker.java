@@ -120,6 +120,26 @@ public class HotStoneGameInvoker implements Invoker {
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((mana)));
             }
 
+            if(requestObject.getOperationName().equals((OperationNames.HERO_GET_HEALTH))){
+                int health = servant.getHealth();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((health)));
+            }
+
+            if(requestObject.getOperationName().equals((OperationNames.HERO_IS_ACTIVE))){
+                Boolean activeStatus = servant.isActive();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((activeStatus)));
+            }
+
+            if(requestObject.getOperationName().equals((OperationNames.HERO_GET_TYPE))){
+                String type = servant.getType();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((type)));
+            }
+
+            if(requestObject.getOperationName().equals((OperationNames.HERO_GET_OWNER))){
+                Player player = servant.getOwner();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((player)));
+            }
+
 
         } catch (Exception e) {
             reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());

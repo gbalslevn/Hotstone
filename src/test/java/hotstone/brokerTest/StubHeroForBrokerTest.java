@@ -1,4 +1,4 @@
-package hotstone.broker.doubles;
+package hotstone.brokerTest;
 
 import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
@@ -6,8 +6,11 @@ import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.client.HeroClientProxy;
+import hotstone.broker.doubles.LocalMethodClientRequestHandler;
+import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.*;
+import hotstone.standard.GameConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,5 +33,25 @@ public class StubHeroForBrokerTest {
     @Test
     public void shouldHaveMana1(){
         assertThat(hero.getMana(), is(1));
+    }
+
+    @Test
+    public void shouldHave7Health(){
+        assertThat(hero.getHealth(), is(7));
+    }
+
+    @Test
+    public void shouldHeroBeActive(){
+        assertThat(hero.isActive(), is(false));
+    }
+
+    @Test
+    public void shouldBeTypeBaby(){
+        assertThat(hero.getType(), is(GameConstants.BABY_HERO_TYPE));
+    }
+
+    @Test
+    public void shouldBeOwnerFindus(){
+        assertThat(hero.getOwner(), is(Player.FINDUS));
     }
 }
