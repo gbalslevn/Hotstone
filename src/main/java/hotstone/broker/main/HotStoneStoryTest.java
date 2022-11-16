@@ -23,6 +23,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.common.BrokerConstants;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 
 public class HotStoneStoryTest {
   public static void main(String[] args)  {
@@ -47,7 +48,14 @@ public class HotStoneStoryTest {
     System.out.println("=== Testing pass-by-value methods of Game ===");
     System.out.println(" --> Game turnNumber     " + game.getTurnNumber());
     System.out.println(" --> Game winner         " + game.getWinner());
-    // TODO - add calls to the rest of the implemented methods
+    System.out.println(" --> Game handsize         " + game.getHandSize(game.getPlayerInTurn()));
+    System.out.println(" --> Game fieldsize         " + game.getFieldSize(game.getPlayerInTurn()));
+    System.out.println(" --> Game decksize         " + game.getDeckSize(game.getPlayerInTurn()));
+    System.out.println(" --> Game player in turn         " + game.getPlayerInTurn());
+    System.out.println(" --> Game play card         " + game.playCard(Player.FINDUS,game.getCardInHand(Player.FINDUS,0)));
+    System.out.println(" --> Game attack card         " + game.attackCard(Player.FINDUS,game.getCardInHand(Player.FINDUS,0),game.getCardInHand(Player.PEDDERSEN,0) ));
+    System.out.println(" --> Game attack hero         " + game.attackHero(Player.FINDUS,game.getCardInHand(Player.FINDUS,0)));
+    System.out.println(" --> Game use power         " + game.usePower(Player.FINDUS));
     System.out.println("=== End ===");
   }
 }

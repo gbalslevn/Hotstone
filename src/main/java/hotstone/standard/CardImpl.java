@@ -56,9 +56,7 @@ public class CardImpl implements Card, MutableCard {
     }
 
     @Override
-    public Player getOwner() {
-        return owner;
-    }
+    public Player getOwner() {return owner;}
 
 
     @Override
