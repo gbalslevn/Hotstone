@@ -24,16 +24,19 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.Player;
-import hotstone.framework.Status;
+import hotstone.figuretestcase.doubles.StubCard;
+import hotstone.figuretestcase.doubles.StubHero;
+import hotstone.framework.*;
 
 import javax.servlet.http.HttpServletResponse;
 
 public class HotStoneGameInvoker implements Invoker {
     private final Game game;
     private final Gson gson;
+
+    private Hero fakeItHero = new StubHero();
+
+    //private Hero fakeItCard = new StubCard();
 
     public HotStoneGameInvoker(Game servant) {
         game = servant;
@@ -47,9 +50,13 @@ public class HotStoneGameInvoker implements Invoker {
         // used for when there is a parameter
         JsonArray array = JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
+        String heroId = requestObject.getObjectId();
+
+
         ReplyObject reply = null;
 
         try {
+            // **************** Hero Invoker ********************
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_TURN_NUMBER)) {
                 //Game go = gson.fromJson(array.get(0), Game.class);
                 int turnNumber = game.getTurnNumber();
@@ -85,15 +92,42 @@ public class HotStoneGameInvoker implements Invoker {
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
             }
             if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_CARD)) {
-                Player playerInTurn = gson.fromJson(array.get(0), Player.class);
+                Player playerAttacking = gson.fromJson(array.get(0), Player.class);
                 Card attackingCard = gson.fromJson(array.get(1), Card.class);
                 Card defendingCard = gson.fromJson(array.get(2), Card.class);
-                Status status = game.attackCard(playerInTurn, attackingCard, defendingCard);
+                Status status = game.attackCard(playerAttacking, attackingCard, defendingCard);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
             }
+
+            if(requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_HERO)){
+                Player playerAttacking = gson.fromJson(array.get(0), Player.class);
+                Card attackingCard = gson.fromJson(array.get(1), Card.class);
+                Status status = game.attackHero(playerAttacking, attackingCard);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
+            }
+
+            if(requestObject.getOperationName().equals(OperationNames.GAME_USE_POWER)){
+                Player playerWho = gson.fromJson(array.get(0), Player.class);
+                Status status = game.usePower(playerWho);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
+            }
+
+            // **************** Hero Invoker ********************
+            Hero servant = lookupHero(heroId);
+
+            if(requestObject.getOperationName().equals(OperationNames.HERO_GET_MANA)){
+                int mana = servant.getMana();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((mana)));
+            }
+
+
         } catch (Exception e) {
             reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
         return gson.toJson(reply);
+    }
+
+    private Hero lookupHero(String heroId) {
+        return fakeItHero;
     }
 }

@@ -114,12 +114,16 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-    return null;
+    Status status = requestor.sendRequestAndAwaitReply(
+            GAME_OPBJECTID, OperationNames.GAME_ATTACK_HERO,
+            Status.class, playerAttacking, attackingCard);
+    return status;
   }
 
   @Override
   public Status usePower(Player who) {
-    return null;
+    Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_USE_POWER, Status.class, who);
+    return status;
   }
 
   @Override

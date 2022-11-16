@@ -68,4 +68,16 @@ public class StubGameForBrokerTest {
         Card peddersonCard = game.getCardInField(Player.PEDDERSEN,0);
         assertThat(game.attackCard(Player.FINDUS,findusCard, peddersonCard), is(Status.OK));
     }
+
+    @Test
+    public void shouldBeStatusOkToAttackHero(){
+        game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS,0));
+        Card findusCard = game.getCardInField(Player.FINDUS, 0);
+        assertThat(game.attackHero(Player.FINDUS, findusCard), is(Status.OK));
+    }
+
+    @Test
+    public void shouldBeStatusOkToUsePower(){
+        assertThat(game.usePower(Player.FINDUS), is(Status.OK));
+    }
 }
