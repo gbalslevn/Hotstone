@@ -27,6 +27,7 @@ import hotstone.broker.common.OperationNames;
 import hotstone.figuretestcase.doubles.StubCard;
 import hotstone.figuretestcase.doubles.StubHero;
 import hotstone.framework.*;
+import hotstone.standard.GameConstants;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +37,7 @@ public class HotStoneGameInvoker implements Invoker {
 
     private Hero fakeItHero = new StubHero();
 
-    //private Hero fakeItCard = new StubCard();
+    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS);
 
     public HotStoneGameInvoker(Game servant) {
         game = servant;
@@ -51,6 +52,8 @@ public class HotStoneGameInvoker implements Invoker {
         JsonArray array = JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
         String heroId = requestObject.getObjectId();
+
+        String cardId = requestObject.getObjectId();
 
 
         ReplyObject reply = null;
@@ -140,6 +143,15 @@ public class HotStoneGameInvoker implements Invoker {
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((player)));
             }
 
+            // **************** Card Invoker ********************
+
+            Card cardServant = lookupCard(cardId);
+
+            if (requestObject.getOperationName().equals(OperationNames.CARD_GET_NAME)){
+                String name = cardServant.getName();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(name));
+            }
+
 
         } catch (Exception e) {
             reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
@@ -149,5 +161,9 @@ public class HotStoneGameInvoker implements Invoker {
 
     private Hero lookupHero(String heroId) {
         return fakeItHero;
+    }
+
+    private Card lookupCard(String cardId) {
+        return fakeItCard;
     }
 }
