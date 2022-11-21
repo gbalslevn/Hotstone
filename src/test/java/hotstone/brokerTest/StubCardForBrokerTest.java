@@ -4,22 +4,24 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
+import hotstone.broker.client.CardClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
-import hotstone.broker.client.CardClientProxy;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.hamcrest.MatcherAssert.assertThat;
+
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class StubCardForBrokerTest {
     private Card card;
+    private String objectId = "pending";
 
     @BeforeEach
     public void setUp(){
@@ -28,7 +30,7 @@ public class StubCardForBrokerTest {
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(crh);
-        card = new CardClientProxy(requestor);
+        card = new CardClientProxy(requestor, objectId);
     }
 
     @Test

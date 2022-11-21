@@ -7,47 +7,49 @@ import hotstone.framework.Card;
 import hotstone.framework.Player;
 
 public class CardClientProxy implements Card, ClientProxy {
-    public static final String CARD_OPBJECTID = "pending";
-
+    private final String objectId;
     private final Requestor requestor;
-    public CardClientProxy(Requestor requestor) {
+    public CardClientProxy(Requestor requestor, String objectId) {
         this.requestor = requestor;
-
+        this.objectId = objectId;
+    }
+    public String getObjectId() {
+        return objectId;
     }
 
     @Override
     public String getName() {
-        String name = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_NAME, String.class);
+        String name = requestor.sendRequestAndAwaitReply(objectId, OperationNames.CARD_GET_NAME, String.class);
         return name;
     }
 
     @Override
     public int getManaCost() {
-        int mana = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_MANA_COST, Integer.class);
+        int mana = requestor.sendRequestAndAwaitReply(objectId, OperationNames.CARD_GET_MANA_COST, Integer.class);
         return mana;
     }
 
     @Override
     public int getAttack() {
-        int attack = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_ATTACK, Integer.class);
+        int attack = requestor.sendRequestAndAwaitReply(objectId, OperationNames.CARD_GET_ATTACK, Integer.class);
         return attack;
     }
 
     @Override
     public int getHealth() {
-        int health = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_GET_HEALTH, Integer.class);
+        int health = requestor.sendRequestAndAwaitReply(objectId, OperationNames.CARD_GET_HEALTH, Integer.class);
         return health;
     }
 
     @Override
     public boolean isActive() {
-        boolean isActive = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID, OperationNames.CARD_IS_ACTIVE, Boolean.class);
+        boolean isActive = requestor.sendRequestAndAwaitReply(objectId, OperationNames.CARD_IS_ACTIVE, Boolean.class);
         return isActive;
     }
 
     @Override
     public Player getOwner() {
-        Player owner = requestor.sendRequestAndAwaitReply(CARD_OPBJECTID,OperationNames.CARD_GET_OWNER,Player.class);
+        Player owner = requestor.sendRequestAndAwaitReply(objectId,OperationNames.CARD_GET_OWNER,Player.class);
         return owner;
     }
 }
