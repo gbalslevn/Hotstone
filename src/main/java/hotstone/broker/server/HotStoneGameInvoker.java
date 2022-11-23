@@ -90,12 +90,6 @@ public class HotStoneGameInvoker implements Invoker {
                 Player winner = game.getWinner();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((winner)));
             }
-            if (requestObject.getOperationName().equals(OperationNames.GAME_PLAY_CARD)) {
-                Player playerInTurn = gson.fromJson(array.get(0), Player.class);
-                Card card = gson.fromJson(array.get(1), Card.class);
-                Status status = game.playCard(playerInTurn, card);
-                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
-            }
             if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_CARD)) {
                 Player playerAttacking = gson.fromJson(array.get(0), Player.class);
                 Card attackingCard = gson.fromJson(array.get(1), Card.class);
@@ -116,8 +110,6 @@ public class HotStoneGameInvoker implements Invoker {
                 Status status = game.usePower(playerWho);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
             }
-
-//            System.out.println(requestObject.getOperationName() + "   operation name");
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_HAND)){
                 Player playerWho = gson.fromJson(array.get(0), Player.class);
                 int index = gson.fromJson(array.get(1), Integer.class);
@@ -129,7 +121,6 @@ public class HotStoneGameInvoker implements Invoker {
                 nameService.putCard(id, card);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((id)));
             }
-
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_HAND)){
                 Player playerWho = gson.fromJson(array.get(0), Player.class);
                 List <String> cardIdList = new ArrayList<>();
@@ -138,6 +129,51 @@ public class HotStoneGameInvoker implements Invoker {
                     cardIdList.add(card.getId());
                 }
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(cardIdList));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.GAME_GET_FIELD)){
+                Player playerWho = gson.fromJson(array.get(0), Player.class);
+                List <String> cardIdList = new ArrayList<>();
+                for (Card card : game.getField(playerWho)){
+                    nameService.putCard(card.getId(), card);
+                    cardIdList.add(card.getId());
+                }
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(cardIdList));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.GAME_PLAY_CARD)) {
+                Player playerInTurn = gson.fromJson(array.get(0), Player.class);
+                String id = gson.fromJson(array.get(1), String.class);
+                Card card = nameService.getCard(id);
+                Status status = game.playCard(playerInTurn, card);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_CARD)) {
+                Player playerAttacking = gson.fromJson(array.get(0), Player.class);
+                String attackingCardID = gson.fromJson(array.get(1), String.class);
+                String defendingCardID = gson.fromJson(array.get(2), String.class);
+                Card cardAttacking = nameService.getCard(attackingCardID);
+                Card cardDefending = nameService.getCard(defendingCardID);
+                Status status = game.attackCard(playerAttacking, cardAttacking, cardDefending);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_CARD)) {
+                Player playerAttacking = gson.fromJson(array.get(0), Player.class);
+                Hero hero = game.getHero(playerAttacking);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((hero)));
+
+            }
+
+
+                if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_FIELD)){
+                Player playerInTurn = gson.fromJson(array.get(0), Player.class);
+                int indexOfCard = gson.fromJson(array.get(1),Integer.class);
+                Card card = game.getCardInField(playerInTurn,indexOfCard);
+                String id = card.getId();
+                nameService.putCard(id, card);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((id)));
+            }
+            if (requestObject.getOperationName().equals(OperationNames.GAME_END_OF_TURN)){
+                game.endTurn();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(null));
             }
 
             // **************** Hero Invoker ********************

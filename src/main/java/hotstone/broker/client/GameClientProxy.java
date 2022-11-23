@@ -52,7 +52,7 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Hero getHero(Player who) {
-    return null;
+    return new HeroClientProxy(requestor);
   }
 
   @Override
@@ -96,12 +96,23 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Card getCardInField(Player who, int indexInField) {
+    String objectId = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_CARD_IN_FIELD,String.class,who,indexInField);
+    if(objectId != null){
+      return new CardClientProxy(requestor, objectId);
+    }
     return null;
   }
 
   @Override
   public Iterable<? extends Card> getField(Player who) {
-    return null;
+    Type collectionType = new TypeToken<List<String>>(){}.getType();
+    List <String> cardID;
+    cardID = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_FIELD,collectionType,who);
+    List<Card> allCard = new LinkedList<>();
+    for(String id : cardID){
+      allCard.add(new CardClientProxy(requestor,id));
+    }
+    return allCard;
   }
 
   @Override
@@ -112,27 +123,31 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public void endTurn() {
-
+    requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_END_OF_TURN, null);
   }
 
   @Override
   public Status playCard(Player who, Card card) {
-    Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_PLAY_CARD, Status.class, who, card);
+    String cardId = card.getId();
+    Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_PLAY_CARD, Status.class, who, cardId);
     return status;
   }
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+    String attackCardId = attackingCard.getId();
+    String defendingCardId = defendingCard.getId();
     Status status = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_ATTACK_CARD, Status.class,
-            playerAttacking, attackingCard, defendingCard);
+            playerAttacking, attackCardId, defendingCardId);
     return status;
   }
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
+    String attackCardId = attackingCard.getId();
     Status status = requestor.sendRequestAndAwaitReply(
             GAME_OPBJECTID, OperationNames.GAME_ATTACK_HERO,
-            Status.class, playerAttacking, attackingCard);
+            Status.class, playerAttacking, attackCardId);
     return status;
   }
 

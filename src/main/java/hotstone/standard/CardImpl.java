@@ -1,6 +1,5 @@
 package hotstone.standard;
 
-import hotstone.broker.server.NameServiceClass;
 import hotstone.framework.Card;
 import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
