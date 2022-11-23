@@ -12,6 +12,8 @@ import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ public class StubGameForBrokerTest {
 
     @BeforeEach
     public void setUp(){
-        Game servant = new StubGameForBroker();
+        Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
         Invoker invoker = new HotStoneGameInvoker(servant);
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);

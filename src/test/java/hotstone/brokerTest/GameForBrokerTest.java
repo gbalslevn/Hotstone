@@ -27,7 +27,6 @@ public class GameForBrokerTest {
     public void setUp(){
         Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
         Invoker invoker = new HotStoneGameInvoker(servant);
-
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(crh);
         game = new GameClientProxy(requestor);
@@ -40,5 +39,4 @@ public class GameForBrokerTest {
         assertThat(card.getName(), is("Tres"));
         assertThat(card.getAttack(), is(3));
     }
-
 }

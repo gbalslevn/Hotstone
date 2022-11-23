@@ -43,6 +43,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private ObserverHandler observerHandler;
 
 
+
+
     public StandardHotStoneGame(StoneFactory stoneFactory) {
 
         deckStrategy = stoneFactory.createDeckStrategy();
@@ -336,6 +338,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     //Adds card to hand and removes from deck
     private void addCardToHandAndRemoveFromDeck(Player who) {
         Card card = deck.get(who).get(0);
+        CardImpl card1 = (CardImpl) card;
+        System.out.println("Card id is: " + card1.getId());
         //Cards drawn always added to index 0
         hand[card.getOwner().ordinal()].add(0, card);
         //Cards is removed from deck at index 0

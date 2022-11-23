@@ -14,7 +14,6 @@ public class CardImpl implements Card, MutableCard {
     private Player owner;
     private String description;
     private String id = UUID.randomUUID().toString();
-    private NameServiceClass nameServiceClass = new NameServiceClass();
 
 
     public CardImpl(String name, int manaCost, int attack, int health, boolean activeStatus, Player owner) {
@@ -24,7 +23,6 @@ public class CardImpl implements Card, MutableCard {
         this.attack = attack;
         this.owner = owner;
         this.activeStatus = activeStatus;
-        nameServiceClass.putCard(id,this);
     }
     public CardImpl(String name, int manaCost, int attack, int health, boolean activeStatus, Player owner, String description) {
         this.name = name;
@@ -34,11 +32,9 @@ public class CardImpl implements Card, MutableCard {
         this.owner = owner;
         this.activeStatus = activeStatus;
         this.description = description;
-        nameServiceClass.putCard(id,this);
     }
-    public String getId() {
-        return id;
-    }
+    @Override
+    public String getId() { return id; }
 
     @Override
     public String getName() {

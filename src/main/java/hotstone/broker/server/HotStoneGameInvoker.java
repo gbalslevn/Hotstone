@@ -29,6 +29,7 @@ import hotstone.figuretestcase.doubles.StubHero;
 import hotstone.framework.*;
 import hotstone.standard.CardImpl;
 import hotstone.standard.GameConstants;
+import hotstone.standard.StandardHotStoneGame;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,16 +37,16 @@ public class HotStoneGameInvoker implements Invoker {
     private final Game game;
     private final Gson gson;
 
+    private final NameService nameService = new NameServiceClass();
+
     private Hero fakeItHero = new StubHero();
 
     private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS,1,"");
 
-    private NameServiceClass nameService = new NameServiceClass();
 
     public HotStoneGameInvoker(Game servant) {
         game = servant;
         gson = new Gson();
-
     }
 
     @Override
@@ -58,7 +59,6 @@ public class HotStoneGameInvoker implements Invoker {
         String heroId = requestObject.getObjectId();
 
         String cardId = requestObject.getObjectId();
-
 
         ReplyObject reply = null;
 
@@ -120,12 +120,15 @@ public class HotStoneGameInvoker implements Invoker {
             }
 
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_HAND)){
-                // Player playerWho = gson.fromJson(array.get(0), Player.class);
-                // int index = gson.fromJson(array.get(1), Integer.class);
-                System.out.println(cardId);
-                Card card = nameService.getCard(cardId);
-                CardImpl c = (CardImpl) card;
-                String id = c.getId();
+                Player playerWho = gson.fromJson(array.get(0), Player.class);
+                int index = gson.fromJson(array.get(1), Integer.class);
+                Card card = game.getCardInHand(playerWho, index);
+                if(card == null){
+                    return null;
+                }
+                String id = card.getId();
+                nameService.putCard(id, card);
+                System.out.println("nameservice.getCard: " + nameService.getCard(id));
 
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((id)));
             }
@@ -198,6 +201,8 @@ public class HotStoneGameInvoker implements Invoker {
     }
 
     private Card lookupCard(String cardId) {
+        System.out.println("cardID is: " + cardId);
+        System.out.println("Lookupcard method: " + nameService.getCard(cardId));
         return nameService.getCard(cardId);
     }
 }

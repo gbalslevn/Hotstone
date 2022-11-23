@@ -13,9 +13,7 @@ public class CardClientProxy implements Card, ClientProxy {
         this.requestor = requestor;
         this.objectId = objectId;
     }
-    public String getObjectId() {
-        return objectId;
-    }
+
 
     @Override
     public String getName() {
@@ -51,5 +49,10 @@ public class CardClientProxy implements Card, ClientProxy {
     public Player getOwner() {
         Player owner = requestor.sendRequestAndAwaitReply(objectId,OperationNames.CARD_GET_OWNER,Player.class);
         return owner;
+    }
+
+    @Override
+    public String getId() {
+        return objectId;
     }
 }

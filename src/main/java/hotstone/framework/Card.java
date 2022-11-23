@@ -69,4 +69,6 @@ public interface Card {
    */
   Player getOwner();
 
+  String getId();
+
 }

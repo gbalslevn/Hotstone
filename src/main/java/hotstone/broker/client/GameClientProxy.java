@@ -66,12 +66,10 @@ public class GameClientProxy implements Game, ClientProxy {
   @Override
   public Card getCardInHand(Player who, int indexInHand) {
     String objectId = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_CARD_IN_HAND,String.class,who,indexInHand);
-    CardClientProxy proxy = new CardClientProxy(requestor, objectId);
-    String id = proxy.getObjectId();
-    NameServiceClass nameServiceClass = new NameServiceClass();
-    nameServiceClass.putCard(id, proxy);
-    return proxy;
-
+    if(objectId != null){
+      return new CardClientProxy(requestor, objectId);
+    }
+    return null;
   }
 
   @Override
