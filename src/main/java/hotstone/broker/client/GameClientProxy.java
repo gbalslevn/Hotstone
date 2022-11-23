@@ -17,12 +17,16 @@
 
 package hotstone.broker.client;
 
+import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.Observer.GameObserver;
 import hotstone.broker.common.OperationNames;
-import hotstone.broker.server.NameServiceClass;
 import hotstone.framework.*;
+
+import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
 
 /** Template/starter code for your ClientProxy of Game.
  */
@@ -74,7 +78,14 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    return null;
+    Type collectionType = new TypeToken<List<String>>(){}.getType();
+    List <String> cardID;
+    cardID = requestor.sendRequestAndAwaitReply(GAME_OPBJECTID, OperationNames.GAME_GET_HAND,collectionType,who);
+    List<Card> allCard = new LinkedList<>();
+    for(String id : cardID){
+      allCard.add(new CardClientProxy(requestor,id));
+    }
+    return allCard;
   }
 
   @Override

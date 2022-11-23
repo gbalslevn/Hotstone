@@ -2,15 +2,11 @@ package hotstone.brokerTest;
 
 import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
-import frds.broker.RequestObject;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotstone.broker.client.CardClientProxy;
+import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
-import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
-import hotstone.broker.server.NameService;
-import hotstone.broker.server.NameServiceClass;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
@@ -35,28 +31,28 @@ public class StubCardForBrokerTest {
         Invoker invoker = new HotStoneGameInvoker(servant);
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
         requestor = new StandardJSONRequestor(crh);
-        Card findusCard = servant.getCardInHand(Player.FINDUS, 0);
-        card = new CardClientProxy(requestor, findusCard.getId());
+
+        servant = new GameClientProxy(requestor);
+        card = servant.getCardInHand(Player.FINDUS, 0);
+
     }
 
     @Test
     public void shouldHaveNameNoodleSoup(){
-        Card findusCard = servant.getCardInHand(Player.FINDUS, 0);
-        card = new CardClientProxy(requestor, findusCard.getId());
-        assertThat(card.getName(),is(GameConstants.NOODLE_SOUP_CARD));
+        assertThat(card.getName(),is(GameConstants.TRES_CARD));
     }
     @Test
     public void shouldHave1Mana(){
-        assertThat(card.getManaCost(),is(1));
+        assertThat(card.getManaCost(),is(3));
     }
     @Test
     public void shouldHave1Attack(){
-        assertThat(card.getAttack(),is(1));
+        assertThat(card.getAttack(),is(3));
     }
 
     @Test
     public void shouldHave1health(){
-        assertThat(card.getHealth(),is(1));
+        assertThat(card.getHealth(),is(3));
     }
     @Test
     public void shouldBeActive(){

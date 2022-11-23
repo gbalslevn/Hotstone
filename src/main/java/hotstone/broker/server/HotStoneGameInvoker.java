@@ -24,14 +24,12 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
-import hotstone.figuretestcase.doubles.StubCard;
 import hotstone.figuretestcase.doubles.StubHero;
 import hotstone.framework.*;
-import hotstone.standard.CardImpl;
-import hotstone.standard.GameConstants;
-import hotstone.standard.StandardHotStoneGame;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HotStoneGameInvoker implements Invoker {
     private final Game game;
@@ -41,7 +39,7 @@ public class HotStoneGameInvoker implements Invoker {
 
     private Hero fakeItHero = new StubHero();
 
-    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS,1,"");
+//    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS,1,"");
 
 
     public HotStoneGameInvoker(Game servant) {
@@ -119,6 +117,7 @@ public class HotStoneGameInvoker implements Invoker {
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
             }
 
+//            System.out.println(requestObject.getOperationName() + "   operation name");
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_HAND)){
                 Player playerWho = gson.fromJson(array.get(0), Player.class);
                 int index = gson.fromJson(array.get(1), Integer.class);
@@ -128,12 +127,22 @@ public class HotStoneGameInvoker implements Invoker {
                 }
                 String id = card.getId();
                 nameService.putCard(id, card);
-                System.out.println("nameservice.getCard: " + nameService.getCard(id));
-
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((id)));
             }
 
+            if (requestObject.getOperationName().equals(OperationNames.GAME_GET_HAND)){
+                Player playerWho = gson.fromJson(array.get(0), Player.class);
+                List <String> cardIdList = new ArrayList<>();
+                for (Card card : game.getHand(playerWho)){
+                    nameService.putCard(card.getId(), card);
+                    cardIdList.add(card.getId());
+                }
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(cardIdList));
+            }
+
             // **************** Hero Invoker ********************
+            if (requestObject.getOperationName().startsWith(OperationNames.HERO_PREFIX)) {
+
             Hero servant = lookupHero(heroId);
 
             if(requestObject.getOperationName().equals(OperationNames.HERO_GET_MANA)){
@@ -160,8 +169,11 @@ public class HotStoneGameInvoker implements Invoker {
                 Player player = servant.getOwner();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((player)));
             }
+            }
 
             // **************** Card Invoker ********************
+
+            if (requestObject.getOperationName().startsWith(OperationNames.CARD_PREFIX)){
 
             Card cardServant = lookupCard(cardId);
 
@@ -189,6 +201,7 @@ public class HotStoneGameInvoker implements Invoker {
                 Player owner = cardServant.getOwner();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(owner));
             }
+            }
 
         } catch (Exception e) {
             reply = new ReplyObject(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
@@ -201,8 +214,6 @@ public class HotStoneGameInvoker implements Invoker {
     }
 
     private Card lookupCard(String cardId) {
-        System.out.println("cardID is: " + cardId);
-        System.out.println("Lookupcard method: " + nameService.getCard(cardId));
         return nameService.getCard(cardId);
     }
 }
