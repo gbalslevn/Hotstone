@@ -61,4 +61,6 @@ public interface Hero {
    * @return a description of the Hero
    */
   String getEffectDescription();
+
+  String getId();
 }

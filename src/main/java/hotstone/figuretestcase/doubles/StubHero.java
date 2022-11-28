@@ -61,6 +61,11 @@ public class StubHero implements Hero {
     return null;
   }
 
+  @Override
+  public String getId() {
+    return "Stub ID";
+  }
+
   public void deltaMana(int delta) {
     mana += delta;
   }

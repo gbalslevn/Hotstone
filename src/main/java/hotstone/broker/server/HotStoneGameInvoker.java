@@ -24,7 +24,6 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
-import hotstone.figuretestcase.doubles.StubHero;
 import hotstone.framework.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +36,7 @@ public class HotStoneGameInvoker implements Invoker {
 
     private final NameService nameService = new NameServiceClass();
 
-    private Hero fakeItHero = new StubHero();
-
-//    private Card fakeItCard = new StubCard(GameConstants.NOODLE_SOUP_CARD,Player.FINDUS,1,"");
+    private final HeroNameService heroNameService = new HeroNameServiceClass();
 
 
     public HotStoneGameInvoker(Game servant) {
@@ -61,9 +58,9 @@ public class HotStoneGameInvoker implements Invoker {
         ReplyObject reply = null;
 
         try {
-            // **************** Hero Invoker ********************
+            // **************** Game Invoker ********************
+
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_TURN_NUMBER)) {
-                //Game go = gson.fromJson(array.get(0), Game.class);
                 int turnNumber = game.getTurnNumber();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(turnNumber));
             }
@@ -123,6 +120,7 @@ public class HotStoneGameInvoker implements Invoker {
             }
             if (requestObject.getOperationName().equals(OperationNames.GAME_GET_HAND)){
                 Player playerWho = gson.fromJson(array.get(0), Player.class);
+
                 List <String> cardIdList = new ArrayList<>();
                 for (Card card : game.getHand(playerWho)){
                     nameService.putCard(card.getId(), card);
@@ -153,17 +151,16 @@ public class HotStoneGameInvoker implements Invoker {
                 Card cardAttacking = nameService.getCard(attackingCardID);
                 Card cardDefending = nameService.getCard(defendingCardID);
                 Status status = game.attackCard(playerAttacking, cardAttacking, cardDefending);
-                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((status)));
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(status));
             }
-            if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_CARD)) {
+
+            if (requestObject.getOperationName().equals(OperationNames.GAME_ATTACK_HERO)) {
                 Player playerAttacking = gson.fromJson(array.get(0), Player.class);
                 Hero hero = game.getHero(playerAttacking);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((hero)));
 
             }
-
-
-                if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_FIELD)){
+            if (requestObject.getOperationName().equals(OperationNames.GAME_GET_CARD_IN_FIELD)){
                 Player playerInTurn = gson.fromJson(array.get(0), Player.class);
                 int indexOfCard = gson.fromJson(array.get(1),Integer.class);
                 Card card = game.getCardInField(playerInTurn,indexOfCard);
@@ -175,10 +172,17 @@ public class HotStoneGameInvoker implements Invoker {
                 game.endTurn();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(null));
             }
-
+            if (requestObject.getOperationName().equals(OperationNames.GAME_GET_HERO)){
+                Player playerInTurn = gson.fromJson(array.get(0), Player.class);
+                Hero hero = game.getHero(playerInTurn);
+                String id = hero.getId();
+                System.out.println(id);
+                heroNameService.putHero(id,hero);
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(id));
+            }
             // **************** Hero Invoker ********************
-            if (requestObject.getOperationName().startsWith(OperationNames.HERO_PREFIX)) {
 
+            if (requestObject.getOperationName().startsWith(OperationNames.HERO_PREFIX)) {
             Hero servant = lookupHero(heroId);
 
             if(requestObject.getOperationName().equals(OperationNames.HERO_GET_MANA)){
@@ -246,7 +250,7 @@ public class HotStoneGameInvoker implements Invoker {
     }
 
     private Hero lookupHero(String heroId) {
-        return fakeItHero;
+       return heroNameService.getHero(heroId);
     }
 
     private Card lookupCard(String cardId) {

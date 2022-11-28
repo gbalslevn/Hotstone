@@ -5,12 +5,14 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
-import hotstone.broker.client.HeroClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
-import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
-import hotstone.framework.*;
+import hotstone.framework.Game;
+import hotstone.framework.Hero;
+import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,15 +21,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StubHeroForBrokerTest {
     private Hero hero;
+    private String objectId;
 
     @BeforeEach
     public void setUp(){
-        Game servant = new StubGameForBroker();
+        Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
         Invoker invoker = new HotStoneGameInvoker(servant);
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(crh);
-        hero = new HeroClientProxy(requestor);
+//        hero = new HeroClientProxy(requestor, objectId);
+
+        servant = new GameClientProxy(requestor);
+        hero = servant.getHero(Player.FINDUS);
+
     }
 
     @Test

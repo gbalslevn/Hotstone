@@ -12,9 +12,9 @@ public class LocalMethodClientRequestHandler implements ClientRequestHandler {
 
     @Override
     public String sendToServerAndAwaitReply(String request) {
-//        System.out.println("--> " + request);
+        System.out.println("--> " + request);
         String reply = invoker.handleRequest(request);
-//        System.out.println("<-- " + request);
+        System.out.println("<-- " + request);
         return reply;
     }
 

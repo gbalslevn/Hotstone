@@ -7,22 +7,21 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.server.HotStoneGameInvoker;
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.Player;
-import hotstone.framework.Status;
+import hotstone.framework.*;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StubGameForBrokerTest {
     private Game game;
     private Card card;
+    private Hero hero;
 
     @BeforeEach
     public void setUp(){
@@ -35,6 +34,9 @@ public class StubGameForBrokerTest {
 
         Game proxy = new GameClientProxy(requestor);
         card = proxy.getCardInHand(Player.FINDUS,0);
+
+        Game proxy1 = new GameClientProxy(requestor);
+        hero = proxy1.getHero(Player.FINDUS);
     }
     @Test
     public void ShouldHaveTurnNumber312(){
@@ -141,6 +143,10 @@ public class StubGameForBrokerTest {
         game.endTurn();
         assertThat(game.getTurnNumber(),is(2));
     }
+    @Test
+    public void shouldFindusHaveHeroBaby(){
+        assertThat(game.getHero(Player.FINDUS).getType(), is("Baby"));
+    }
 
     @Test
     public void shouldBeStatusOkToAttackCard(){
@@ -150,7 +156,7 @@ public class StubGameForBrokerTest {
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN,2));
         Card peddersonCard = game.getCardInField(Player.PEDDERSEN,0);
         game.endTurn();
-//      assertThat(game.attackCard(Player.FINDUS,findusCard, peddersonCard), is(Status.OK));
+//        assertThat(game.attackCard(Player.FINDUS,findusCard, peddersonCard), is(Status.OK));
     }
 
     @Test
@@ -164,4 +170,8 @@ public class StubGameForBrokerTest {
         game.endTurn();
 //      assertThat(game.attackHero(Player.FINDUS,findusCard), is(Status.OK));
     }
-    }
+
+
+
+
+}
