@@ -35,7 +35,7 @@ public class ShowHotSeatStateTool {
     DrawingEditor editor =
             new MiniDrawApplication("Click any figure to switch state to proper tool...",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE));
+                            HotStoneDrawingType.OPPONENT_MODE));
     editor.open();
     // TODO: Solve exercise by developing a HotSeatStateTool
     editor.setTool(new HotSeatStateTool(editor, game));

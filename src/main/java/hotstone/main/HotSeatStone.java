@@ -39,7 +39,7 @@ public class HotSeatStone {
     DrawingEditor editor =
             new MiniDrawApplication( "HotSeat: Variant ",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE) );
+                            HotStoneDrawingType.OPPONENT_MODE) );
     editor.open();
     editor.setTool(new HotSeatStateTool(editor, game));
   }

@@ -50,7 +50,7 @@ public class ShowMinionAttackTool {
     DrawingEditor editor =
             new MiniDrawApplication("Drag Minions to perform attacks...",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE));
+                            HotStoneDrawingType.OPPONENT_MODE));
     editor.open();
     // TODO: Solve exercise by developing a MinionAttackTool
     editor.setTool(new MinionAttackTool(editor,game,Player.FINDUS));

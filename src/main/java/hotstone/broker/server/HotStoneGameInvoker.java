@@ -177,12 +177,13 @@ public class HotStoneGameInvoker implements Invoker {
                 Hero hero = game.getHero(playerInTurn);
                 String id = hero.getId();
                 System.out.println(id);
-                heroNameService.putHero(id,hero);
+                heroNameService.putHero(id, hero);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(id));
             }
             // **************** Hero Invoker ********************
 
             if (requestObject.getOperationName().startsWith(OperationNames.HERO_PREFIX)) {
+
             Hero servant = lookupHero(heroId);
 
             if(requestObject.getOperationName().equals(OperationNames.HERO_GET_MANA)){

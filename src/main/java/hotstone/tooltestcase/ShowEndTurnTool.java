@@ -35,7 +35,7 @@ public class ShowEndTurnTool {
     DrawingEditor editor =
             new MiniDrawApplication( "Click End of Turn button to enact 'end of turn' tool",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE) );
+                            HotStoneDrawingType.OPPONENT_MODE) );
     editor.open();
     editor.setTool(new EndTurnTool(editor, game));
   }

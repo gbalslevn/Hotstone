@@ -24,13 +24,46 @@ import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.common.BrokerConstants;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.view.core.HotStoneDrawingType;
+import hotstone.view.core.HotStoneFactory;
+import minidraw.framework.DrawingEditor;
+import minidraw.framework.Factory;
+import minidraw.standard.MiniDrawApplication;
+import minidraw.standard.NullTool;
 
 public class HotStoneStoryTest {
   public static void main(String[] args)  {
-    // Get the name of the host from the commandline parameters
-    String host = args[0];
+    String host = "localhost";
+    Player whoToPlay = Player.FINDUS;
+    String gameID = GameClientProxy.GAME_OPBJECTID;
+
+    if(args.length != 2){
+      System.out.println("needs: host, who, id");
+      System.out.println("host = localhost || IP address");
+      System.out.println("who = findus or peddersen");
+    } else {
+      // Get the name of the host from the commandline parameters
+      host = args[0];
+      whoToPlay = Player.PEDDERSEN;
+      if(args[1].equals("findus") || args[1].equals("Findus")){
+        whoToPlay = Player.FINDUS;
+      }
+    }
+
+    // Create the client side Broker roles
+    UriTunnelClientRequestHandler clientRequestHandler
+            = new UriTunnelClientRequestHandler(host, BrokerConstants.HOTSTONE_PORT,
+            false, BrokerConstants.HOTSTONE_TUNNEL_PATH);
+    Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
+
+    Game game = new GameClientProxy(requestor);
+    Factory factory = new HotStoneFactory(game, whoToPlay, HotStoneDrawingType.OPPONENT_MODE);
+    DrawingEditor editor = new MiniDrawApplication( "Playing: " + whoToPlay + "on GameID: " + gameID, factory );
+
+    editor.open();
+    editor.setTool(new NullTool());
     // and execute the story test, talking to the server with that name
-    new HotStoneStoryTest(host);
+    // new HotStoneStoryTest(host);
   }
 
   public HotStoneStoryTest(String host) {

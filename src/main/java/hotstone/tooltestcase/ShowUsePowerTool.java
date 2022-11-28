@@ -36,7 +36,7 @@ public class ShowUsePowerTool {
     DrawingEditor editor =
             new MiniDrawApplication("Click Hero to use power...",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE));
+                            HotStoneDrawingType.OPPONENT_MODE));
     editor.open();
     // TODO: Solve exercise by developing a UsePowerTool
     editor.setTool(new UsePowerTool(editor, game, Player.FINDUS));

@@ -39,17 +39,17 @@ public class StubHeroForBrokerTest {
 
     @Test
     public void shouldHaveMana1(){
-        assertThat(hero.getMana(), is(1));
+        assertThat(hero.getMana(), is(3));
     }
 
     @Test
     public void shouldHave7Health(){
-        assertThat(hero.getHealth(), is(7));
+        assertThat(hero.getHealth(), is(21));
     }
 
     @Test
     public void shouldHeroBeActive(){
-        assertThat(hero.isActive(), is(false));
+        assertThat(hero.isActive(), is(true));
     }
 
     @Test

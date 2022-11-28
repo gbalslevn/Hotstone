@@ -35,7 +35,7 @@ public class ShowPlayCardTool {
     DrawingEditor editor =
             new MiniDrawApplication( "Drag Cards from the hand to the field...",
                     new HotStoneFactory(game, Player.FINDUS,
-                            HotStoneDrawingType.HOTSEAT_MODE) );
+                            HotStoneDrawingType.OPPONENT_MODE) );
     editor.open();
     // TODO: Solve exercise by developing a PlayCardTool
     editor.setTool(new CardPlayTool(editor, game, Player.FINDUS));
