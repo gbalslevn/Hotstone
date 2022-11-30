@@ -34,10 +34,8 @@ import minidraw.standard.MiniDrawApplication;
 public class HotStoneStoryTest {
   public static void main(String[] args)  {
     String host = "localhost";
-    Player whoToPlay = Player.FINDUS;
+    Player whoToPlay = Player.PEDDERSEN;
     String gameID = GameClientProxy.GAME_OPBJECTID;
-
-
 
     // Create the client side Broker roles
     UriTunnelClientRequestHandler clientRequestHandler
@@ -51,9 +49,16 @@ public class HotStoneStoryTest {
 
     editor.open();
     editor.setTool(new DualInterfaceTool(editor,game,whoToPlay));
+
     // and execute the story test, talking to the server with that name
     // new HotStoneStoryTest(host);
   }
+
+
+
+
+
+
 
   public HotStoneStoryTest(String host) {
     // Create the client side Broker roles
