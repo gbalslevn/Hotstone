@@ -187,7 +187,10 @@ public class HotStoneGameInvoker implements Invoker {
                 int mana = servant.getMana();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((mana)));
             }
-
+            if(requestObject.getOperationName().equals(OperationNames.HERO_GET_EFFECT_DESCRIPTION)){
+                String description = servant.getEffectDescription();
+                reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((description)));
+            }
             if(requestObject.getOperationName().equals((OperationNames.HERO_GET_HEALTH))){
                 int health = servant.getHealth();
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson((health)));

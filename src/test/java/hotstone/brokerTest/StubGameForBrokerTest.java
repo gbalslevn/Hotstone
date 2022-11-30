@@ -168,7 +168,7 @@ public class StubGameForBrokerTest {
         game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS,2));
         Card findusCard = game.getCardInField(Player.FINDUS, 0);
         game.endTurn();
-//      assertThat(game.attackHero(Player.FINDUS,findusCard), is(Status.OK));
+      assertThat(game.attackHero(Player.FINDUS,findusCard), is(Status.OK));
     }
 
 

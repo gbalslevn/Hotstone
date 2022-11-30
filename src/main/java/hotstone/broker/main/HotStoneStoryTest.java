@@ -26,10 +26,10 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.DualInterfaceTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Factory;
 import minidraw.standard.MiniDrawApplication;
-import minidraw.standard.NullTool;
 
 public class HotStoneStoryTest {
   public static void main(String[] args)  {
@@ -50,7 +50,7 @@ public class HotStoneStoryTest {
     DrawingEditor editor = new MiniDrawApplication( "Playing: " + whoToPlay + "on GameID: " + gameID, factory );
 
     editor.open();
-    editor.setTool(new NullTool());
+    editor.setTool(new DualInterfaceTool(editor,game,whoToPlay));
     // and execute the story test, talking to the server with that name
     // new HotStoneStoryTest(host);
   }

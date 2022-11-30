@@ -46,7 +46,8 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public String getEffectDescription() {
-        return null;
+        String description = requestor.sendRequestAndAwaitReply(objectId, OperationNames.HERO_GET_EFFECT_DESCRIPTION, String.class);
+        return description;
     }
 
     @Override

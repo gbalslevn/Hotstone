@@ -12,7 +12,6 @@ import minidraw.framework.Tool;
 import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 /** Template for the State tool - similar to MiniDraw SelectionTool
  * it is a tool that delegates all mouse events to a subtool, and
@@ -32,7 +31,7 @@ public class DualInterfaceTool extends NullTool {
 
     private Player player;
 
-    public DualInterfaceTool(DrawingEditor editor, Game game, Player whoToPlay) {
+        public DualInterfaceTool(DrawingEditor editor, Game game, Player whoToPlay) {
         this.editor = editor;
         this.game = game;
         model = editor.drawing();

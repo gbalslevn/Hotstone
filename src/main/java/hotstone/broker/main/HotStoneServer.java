@@ -20,9 +20,10 @@ package hotstone.broker.main;
 import frds.broker.Invoker;
 import frds.broker.ipc.http.UriTunnelServerRequestHandler;
 import hotstone.broker.common.BrokerConstants;
-import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
 import hotstone.framework.Game;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.AbstractFactory.AlphaStoneFactory;
 
 /** The main program running the HotStone Server,
  * using the FRDS.Broker library's ServerRequestHandler
@@ -36,7 +37,7 @@ public class HotStoneServer {
   public HotStoneServer() {
     int port = BrokerConstants.HOTSTONE_PORT;
     // Define the server side root servant
-    Game servant = new StubGameForBroker();
+    Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
 
     // Create server side implementation of Broker roles
     Invoker invoker = new HotStoneGameInvoker(servant);
