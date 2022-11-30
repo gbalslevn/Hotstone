@@ -37,18 +37,7 @@ public class HotStoneStoryTest {
     Player whoToPlay = Player.FINDUS;
     String gameID = GameClientProxy.GAME_OPBJECTID;
 
-    if(args.length != 2){
-      System.out.println("needs: host, who, id");
-      System.out.println("host = localhost || IP address");
-      System.out.println("who = findus or peddersen");
-    } else {
-      // Get the name of the host from the commandline parameters
-      host = args[0];
-      whoToPlay = Player.PEDDERSEN;
-      if(args[1].equals("findus") || args[1].equals("Findus")){
-        whoToPlay = Player.FINDUS;
-      }
-    }
+
 
     // Create the client side Broker roles
     UriTunnelClientRequestHandler clientRequestHandler

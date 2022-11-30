@@ -36,8 +36,6 @@ public class HotStoneGameInvoker implements Invoker {
 
     private final NameService nameService = new NameServiceClass();
 
-    private final HeroNameService heroNameService = new HeroNameServiceClass();
-
 
     public HotStoneGameInvoker(Game servant) {
         game = servant;
@@ -176,8 +174,7 @@ public class HotStoneGameInvoker implements Invoker {
                 Player playerInTurn = gson.fromJson(array.get(0), Player.class);
                 Hero hero = game.getHero(playerInTurn);
                 String id = hero.getId();
-                System.out.println(id);
-                heroNameService.putHero(id, hero);
+                nameService.putHero(id, hero);
                 reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(id));
             }
             // **************** Hero Invoker ********************
@@ -251,7 +248,7 @@ public class HotStoneGameInvoker implements Invoker {
     }
 
     private Hero lookupHero(String heroId) {
-       return heroNameService.getHero(heroId);
+       return nameService.getHero(heroId);
     }
 
     private Card lookupCard(String cardId) {
