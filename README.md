@@ -10,3 +10,5 @@ We used Gradle to automate the building, testing, and deployment of the project.
 ### Video-demo of the game
 https://user-images.githubusercontent.com/97167089/220421108-7d4f5299-aadd-4c38-9066-2062a1a794bc.mov
 
+### Overview of design patterns 
+[DesignPatternsCheatsheet.pdf](https://github.com/gbalslevn/Hotstone/files/10796525/DesignPatternsCheatsheet.pdf)
